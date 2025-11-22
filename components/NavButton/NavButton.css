@@ -1,0 +1,24 @@
+.nav-button {
+  width: 100px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #ffffff;
+  color: #111;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+/* disabled state */
+.nav-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* current/active state */
+.nav-button.current {
+  background: #0b5cff;
+  color: #fff;
+  border-color: #0747c3;
+}
