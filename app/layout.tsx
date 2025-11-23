@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="app-container">{children}</body>
+      <body className="min-h-full m-0 font-sans">{children}</body>
     </html>
   );
 }
