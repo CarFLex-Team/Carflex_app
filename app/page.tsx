@@ -1,8 +1,10 @@
-import SideNav from '../components/SideNav/Nav';
-import Main from '../components/Main/Main';
+import Nav from "../components/SideNav/Nav";
+import Listings from "../components/Listings/Listings";
 export default function Home() {
-  return <>
-    <SideNav/>
-    <Main/>
-  </>;
+  return (
+    <>
+      <Nav />
+      <Listings page="All" />
+    </>
+  );
 }
