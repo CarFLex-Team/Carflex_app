@@ -20,9 +20,9 @@ export default function NavButton(props: NavButtonProps) {
       href={`${item.href}`}
       className={`${className} ${
         isActive
-          ? "text-white bg-black shadow-[0_0px_15px_rgba(0,0,0,0.5)] rounded-xl " +
-            colorMap[item.label]
-          : ""
+          ? "text-white bg-primary shadow-[0_0px_12px_rgba(0,0,0,0.5)] rounded-xl "
+          : //+ colorMap[item.label]
+            ""
       }`}
       onClick={onClick}
     >

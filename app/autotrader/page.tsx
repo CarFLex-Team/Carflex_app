@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <SideNav />
 
-      <Listings page="Autotrader" />
+      <Listings />
     </>
   );
 }

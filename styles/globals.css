@@ -1,1 +1,9 @@
-@import "tailwindcss";
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+
+@theme {
+  --color-primary: #915a5a;
+  --color-secondary: #000000;
+  --color-accent: #ffffff;
+}

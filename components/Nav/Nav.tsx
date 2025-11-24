@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import NavButton from "../NavButton/NavButton";
-// import "./Nav.css";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 type Item = {
@@ -20,14 +20,14 @@ const ITEMS: Item[] = [
 export default function Nav() {
   const pathname = usePathname() ?? "/";
   const activeId = ITEMS.find((i) => pathname === i.href)?.id ?? ITEMS[0].id;
-
+  const [open, setOpen] = useState(false);
   const [active, setActive] = useState(
     ITEMS.find((i) => i.id === activeId)?.label || "All"
   );
 
   return (
     <nav
-      className="flex justify-center items-center h-20"
+      className="flex sm:flex-col justify-between sm:justify-center items-center h-fit pt-8 px-6 sm:px-9 gap-12  mb-8 "
       aria-label="Listings navigation"
     >
       <div className="max-sm:hidden flex justify-between min-w-md sm:min-w-lg h-11 bg-white rounded-xl shadow-[0_0_10px_rgba(0,31,104,0.3)]">
@@ -43,6 +43,15 @@ export default function Nav() {
           </NavButton>
         ))}
       </div>
+      <div className="sm:w-full  ">
+        <p className="text-black text-2xl md:text-3xl font-bold tracking-wide">
+          {active} Listings
+        </p>
+      </div>
+
+      <button onClick={() => setOpen(!open)} className="sm:hidden">
+        {open ? <X size={28} /> : <Menu size={28} />}
+      </button>
     </nav>
   );
 }
