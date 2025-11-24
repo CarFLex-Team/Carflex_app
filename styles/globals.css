@@ -3,7 +3,8 @@
 @import "tailwindcss/utilities.css";
 
 @theme {
-  --color-primary: #915a5a;
+  /* --color-primary: #915a5a; */
+  --color-primary: #1d2a51;
   --color-secondary: #000000;
   --color-accent: #ffffff;
 }
