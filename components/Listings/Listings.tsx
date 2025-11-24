@@ -1,16 +1,71 @@
 import CarCard from "../CarCard/CarCard";
 export default function Listings() {
   const carDetails = {
-    //Missing: discription in autotrader
+    // Missing: description in autotrader
+    // Missing: Car Status
     id: 1,
-    title: "2020 Honda Civic",
+    Source: "Autotrader",
+    title: "2020 Honda Civic Sedan 4dr Auto LX",
     price: 25000,
     location: "Toronto, ON",
-    odometer: "/cars/civic2020.jpg",
-    mileage: 15000,
+    image_src:
+      "https://ww.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
+    odometer: 15000,
     ad_link: "/listings/1",
-    discription: "A well-maintained sedan with great fuel efficiency.",
+    description: `2015 Civic Sedan
+        Automatic
+        125K
+        Car drives well, in great condition.
+        Selling because my wife got a new car. 2015 Civic Sedan
+        Automatic
+        125K
+        Car drives well, in great condition.
+        Selling because my wife got a new car.`,
   };
+  // const carDetails2 = {
+  //   // Missing: description in autotrader
+  //   // Missing: Car Status
+  //   id: 2,
+  //   Source: "Kijiji",
+  //   title: "2020 Honda Civic Sedan 4dr Auto LX",
+  //   price: 25000,
+  //   location: "Toronto, ON",
+  //   image_src:
+  //     "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
+  //   odometer: 15000,
+  //   ad_link: "/listings/1",
+  //   description: `2015 Civic Sedan
+  //       Automatic
+  //       125K
+  //       Car drives well, in great condition.
+  //       Selling because my wife got a new car. 2015 Civic Sedan
+  //       Automatic
+  //       125K
+  //       Car drives well, in great condition.
+  //       Selling because my wife got a new car.`,
+  // };
+  // const carDetails3 = {
+  //   // Missing: description in autotrader
+  //   // Missing: Car Status
+  //   id: 3,
+  //   Source: "Kijiji",
+  //   title: "2020 Honda Civic Sedan 4dr Auto LX",
+  //   price: 25000,
+  //   location: "Toronto, ON",
+  //   image_src:
+  //     "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
+  //   odometer: 15000,
+  //   ad_link: "/listings/1",
+  //   description: `2015 Civic Sedan
+  //       Automatic
+  //       125K
+  //       Car drives well, in great condition.
+  //       Selling because my wife got a new car. 2015 Civic Sedan
+  //       Automatic
+  //       125K
+  //       Car drives well, in great condition.
+  //       Selling because my wife got a new car.`,
+  // };
   return (
     <div className=" px-6 sm:px-9 py-6 ">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
