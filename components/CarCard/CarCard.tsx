@@ -1,7 +1,33 @@
-// import AutotraderLogo from "../Logos/AutotraderLogo";
-// import KijijiLogo from "../Logos/Kijiji";
+import { JSX } from "react";
+import AutotraderLogo from "../Logos/AutotraderLogo";
+import FacebookLogo from "../Logos/FacebookLogo";
+import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge } from "lucide-react";
 export default function CarCard({ carDetails }: { carDetails: any }) {
+  const logoMap: Record<string, JSX.Element> = {
+    Autotrader: <AutotraderLogo className="w-10" />,
+    Kijiji: <KijijiLogo className="w-10" />,
+    Marketplace: <FacebookLogo className="w-8" />,
+  };
+  const statusStyleMap: Record<string, { bg: string; border: string }> = {
+    Steal: {
+      bg: "bg-green-700",
+      border: "border-green-700",
+    },
+    Good: {
+      bg: "bg-green-400",
+      border: "border-green-400",
+    },
+    Fair: {
+      bg: "bg-yellow-500",
+      border: "border-yellow-500",
+    },
+    Pass: {
+      bg: "bg-red-500",
+      border: "border-red-500",
+    },
+  } as const;
+
   return (
     <div className=" h-110 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out ">
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
@@ -11,19 +37,31 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           className="w-full object-cover h-full"
         />
       </div>
-      <div className="w-full h-1/2 p-5 pb-8 flex flex-col justify-between">
-        {/* <div className="w-full flex items-center gap-3 flex-row ">
-          {carDetails.Source === "Autotrader" && (
-            <AutotraderLogo className="w-10 " />
-          )}
-          {carDetails.Source === "Kijiji" && <KijijiLogo className="w-10 " />}
-          <p className="bg-green-700 text-white px-2  rounded-4xl">Steal</p>
-        </div> */}
-        <div className="flex justify-between flex-wrap">
-          <p className="text-black font-bold text-lg">{carDetails.title}</p>
+      <div className="w-full h-1/2 p-5 lg:pb-8 flex flex-col justify-between">
+        <div className="w-full flex items-center gap-3 flex-row ">
+          {logoMap[carDetails.Source]}
+
+          <p
+            className={` ${statusStyleMap[carDetails.status]?.bg}
+              text-white px-2.5 py-0.5 rounded-4xl`}
+          >
+            {carDetails.status}
+          </p>
+        </div>
+        <div className="flex justify-between flex-wrap items-center ">
+          <p className="text-black font-bold text-lg pr-2.5">
+            {carDetails.title}
+          </p>
           <p className="text-gray-400 text-sm">{carDetails.location}</p>
         </div>
-        <p className="text-black text-base">CA${carDetails.price}</p>
+        <p
+          className={`border border-solid ${
+            statusStyleMap[carDetails.status]?.border
+          }
+            shadow-md  text-gray-700 px-2.5 py-0.5  rounded-md text-base w-fit`}
+        >
+          CA${carDetails.price}
+        </p>
         <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
           {carDetails.description}
         </p>
