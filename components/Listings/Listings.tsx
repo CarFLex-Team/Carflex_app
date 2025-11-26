@@ -1,6 +1,6 @@
 import { stat } from "fs";
 import CarCard from "../CarCard/CarCard";
-export default function Listings() {
+export default function Listings({ active }: { active: string }) {
   const carDetailsArray = [
     {
       id: 1,
@@ -90,6 +90,11 @@ export default function Listings() {
 
   return (
     <div className=" px-6 sm:px-9 py-6 ">
+      <div className="sm:w-full mb-8">
+        <p className="text-black text-2xl md:text-3xl font-bold tracking-wide">
+          {active} Listings
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
         <CarCard carDetails={carDetailsArray[0]} />
         <CarCard carDetails={carDetailsArray[1]} />
