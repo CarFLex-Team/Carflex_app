@@ -29,7 +29,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
   } as const;
 
   return (
-    <div className=" h-110 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out ">
+    <div className=" h-115 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out ">
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
           src={carDetails.image_src}
@@ -48,20 +48,29 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             {carDetails.status}
           </p>
         </div>
-        <div className="flex justify-between flex-wrap items-center ">
+        <div className="flex justify-between flex-wrap items-center  ">
           <p className="text-black font-bold text-lg pr-2.5">
             {carDetails.title}
           </p>
           <p className="text-gray-400 text-sm">{carDetails.location}</p>
         </div>
-        <p
-          className={`border border-solid ${
-            statusStyleMap[carDetails.status]?.border
-          }
-            shadow-md  text-gray-700 px-2.5 py-0.5  rounded-md text-base w-fit`}
-        >
-          CA${carDetails.price}
-        </p>
+        <div className="flex gap-2 flex-wrap ">
+          <p
+            className={`border border-solid border-gray-300 text-gray-200 bg-primary  
+             
+          shadow-md   px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
+          >
+            CA${carDetails.price}
+          </p>
+          <p
+            className={`border border-solid ${
+              statusStyleMap[carDetails.status]?.border
+            } 
+         flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
+          >
+            Est. value ~ CA${carDetails.estValue}
+          </p>
+        </div>
         <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
           {carDetails.description}
         </p>

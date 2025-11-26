@@ -11,6 +11,7 @@ export default function Listings({ active }: { active: string }) {
       image_src:
         "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
       odometer: 15000,
+      estValue: 28000,
       status: "Steal",
       ad_link: "/listings/1",
       description: `2015 Civic Sedan
@@ -32,6 +33,7 @@ export default function Listings({ active }: { active: string }) {
       image_src:
         "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
       odometer: 15000,
+      estValue: 26000,
       status: "Good",
       ad_link: "/listings/1",
       description: `2015 Civic Sedan
@@ -53,6 +55,7 @@ export default function Listings({ active }: { active: string }) {
       image_src:
         "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
       odometer: 15000,
+      estValue: 25000,
       status: "Fair",
       ad_link: "/listings/1",
       description: `2015 Civic Sedan
@@ -74,6 +77,7 @@ export default function Listings({ active }: { active: string }) {
       image_src:
         "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
       odometer: 15000,
+      estValue: 22000,
       status: "Pass",
       ad_link: "/listings/1",
       description: `2015 Civic Sedan
@@ -89,7 +93,7 @@ export default function Listings({ active }: { active: string }) {
   ];
 
   return (
-    <div className=" px-6 sm:px-9 py-6 ">
+    <div className=" px-4 sm:px-9 py-6 ">
       <div className="sm:w-full mb-8">
         <p className="text-black text-2xl md:text-3xl font-bold tracking-wide">
           {active} Listings
