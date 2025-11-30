@@ -3,6 +3,7 @@ import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge } from "lucide-react";
+import Link from "next/link";
 export default function CarCard({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
     Autotrader: <AutotraderLogo className="w-10" />,
@@ -29,7 +30,10 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
   } as const;
 
   return (
-    <div className=" h-115 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out ">
+    <Link
+      href={`cars/${carDetails.id}`}
+      className=" h-115 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out "
+    >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
           src={carDetails.image_src}
@@ -79,6 +83,6 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           {carDetails.odometer.toLocaleString()} Km
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

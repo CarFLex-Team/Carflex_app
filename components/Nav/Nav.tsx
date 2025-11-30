@@ -33,21 +33,21 @@ export default function Nav() {
       >
         <button
           onClick={() => setOpen(true)}
-          className="md:opacity-0 md:w-25  max-[900px]:hidden max-md:block"
+          className="md:opacity-0 md:w-25 max-md:block"
           aria-controls="mobile-listings-aside"
           aria-expanded={open}
           aria-label={open ? "Close listings menu" : "Open listings menu"}
         >
           <Menu size={28} />
         </button>
-        <div className="max-md:hidden flex justify-between min-w-md md:min-w-lg h-11 bg-white rounded-xl shadow-[0_0_10px_rgba(0,31,104,0.3)]">
+        <div className="max-md:hidden flex justify-between min-w-md lg:min-w-lg h-11 bg-white rounded-xl shadow-[0_0_10px_rgba(0,31,104,0.3)]">
           {ITEMS.map((item) => (
             <NavButton
               key={item.id}
               onClick={() => setActive(item.label)}
               item={item}
               isActive={active === item.label}
-              className={`w-full flex items-center justify-center text-sm sm:text-base rounded-xl no-underline px-1.5 sm:px-2 py-0 border-0 cursor-pointer text-gray-400 z-10 transition-colors duration-200 ease-in-out`}
+              className={`w-full flex items-center justify-center text-sm sm:text-base rounded-xl no-underline py-0 border-0 cursor-pointer text-gray-400 z-10 transition-colors duration-200 ease-in-out`}
             >
               {item.label}
             </NavButton>

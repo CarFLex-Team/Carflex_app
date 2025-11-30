@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import CarCard from "../CarCard/CarCard";
 export default function Listings({ active }: { active: string }) {
   const carDetailsArray = [
