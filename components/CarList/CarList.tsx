@@ -6,9 +6,9 @@ import { CircleGauge } from "lucide-react";
 import Link from "next/link";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
-    Autotrader: <AutotraderLogo className="w-10" />,
-    Kijiji: <KijijiLogo className="w-10" />,
-    Marketplace: <FacebookLogo className="w-8" />,
+    Autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
+    Kijiji: <KijijiLogo className="w-8 sm:w-10" />,
+    Marketplace: <FacebookLogo className="w-6 sm:w-8" />,
   };
   const statusStyleMap: Record<string, { bg: string; border: string }> = {
     Steal: {
@@ -38,7 +38,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           className="w-full object-cover h-full "
         />
       </div>
-      <div className="absolute top-2 left-2 opacity-50">
+      <div className="absolute top-2 left-2 opacity-45 ">
         {logoMap[carDetails.Source]}
       </div>
       <div className="w-full h-full p-5  flex flex-col justify-between">
