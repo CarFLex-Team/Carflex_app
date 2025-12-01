@@ -30,12 +30,12 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   } as const;
 
   return (
-    <div className=" h-40  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative ">
+    <div className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative ">
       <div className="w-40 sm:w-60 md:w-3xs h-full overflow-hidden rounded-md ">
         <img
           src={carDetails.image_src}
           alt={carDetails.title}
-          className="w-full object-cover h-full"
+          className="w-full object-cover h-full "
         />
       </div>
       <div className="absolute top-2 left-2 opacity-50">
@@ -50,10 +50,16 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           >
             CA${carDetails.price}
           </p>
+          <p
+            className={` ${statusStyleMap[carDetails.status]?.bg}
+              text-white px-2.5 py-0.5 rounded-md min-[490px]:hidden text-xs`}
+          >
+            {carDetails.status}
+          </p>
           <div className="flex">
             <p
               className={` ${statusStyleMap[carDetails.status]?.bg}
-              text-white px-2.5 py-0.5 rounded-l-md`}
+              text-white px-2.5 py-0.5 rounded-l-md max-[490px]:hidden text-xs  sm:text-base`}
             >
               {carDetails.status}
             </p>
@@ -61,7 +67,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
               className={`border border-solid ${
                 statusStyleMap[carDetails.status]?.border
               } 
-            flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-r-md text-xs w-fit sm:text-base`}
+            flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-base`}
             >
               Est. value ~ CA${carDetails.estValue}
             </p>
