@@ -1,6 +1,15 @@
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
-export default function Listings({ active }: { active: string }) {
+import SelectView from "../SelectView/SelectView";
+
+export default async function Listings({
+  active,
+  view,
+}: {
+  active: string;
+  view: string;
+}) {
+  console.log("Listings component view prop:", view);
   const carDetailsArray = [
     {
       id: 1,
@@ -96,47 +105,52 @@ export default function Listings({ active }: { active: string }) {
 
   return (
     <div className=" px-4 sm:px-9 py-6 ">
-      <div className="sm:w-full mb-8">
+      <div className="sm:w-full mb-8 flex justify-between items-center">
         <p className="text-black text-2xl md:text-3xl font-bold tracking-wide">
           {active} Listings
         </p>
+        <SelectView initial={view} />
       </div>
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[1]} />
-        <CarCard carDetails={carDetailsArray[2]} />
-        <CarCard carDetails={carDetailsArray[3]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-        <CarCard carDetails={carDetailsArray[0]} />
-      </div> */}
-      <div className="grid grid-cols-1 gap-5">
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[1]} />
-        <CarList carDetails={carDetailsArray[2]} />
-        <CarList carDetails={carDetailsArray[3]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-        <CarList carDetails={carDetailsArray[0]} />
-      </div>
+      {/* {view === "list" ? ( */}
+      {true ? (
+        <div className="grid grid-cols-1 gap-5">
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[1]} />
+          <CarList carDetails={carDetailsArray[2]} />
+          <CarList carDetails={carDetailsArray[3]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+          <CarList carDetails={carDetailsArray[0]} />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[1]} />
+          <CarCard carDetails={carDetailsArray[2]} />
+          <CarCard carDetails={carDetailsArray[3]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+          <CarCard carDetails={carDetailsArray[0]} />
+        </div>
+      )}
     </div>
   );
 }

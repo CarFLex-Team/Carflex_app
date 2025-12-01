@@ -1,11 +1,16 @@
-import SideNav from "../../components/Nav/Nav";
+import Nav from "../../components/Nav/Nav";
 import Listings from "../../components/Listings/Listings";
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string }>;
+}) {
+  const { view = "card" } = await searchParams;
+
   return (
     <>
-      <SideNav />
-
-      <Listings active="Marketplace" />
+      <Nav />
+      <Listings active="Marketplace" view={view} />
     </>
   );
 }

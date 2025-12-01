@@ -1,10 +1,16 @@
 import Nav from "../components/Nav/Nav";
 import Listings from "../components/Listings/Listings";
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string }>;
+}) {
+  const { view = "card" } = await searchParams;
+
   return (
     <>
       <Nav />
-      <Listings active="All" />
+      <Listings active="All" view={view} />
     </>
   );
 }
