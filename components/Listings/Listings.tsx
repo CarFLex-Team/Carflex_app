@@ -105,8 +105,8 @@ export default async function Listings({
 
   return (
     <div className=" px-4 sm:px-9 py-6 ">
-      <div className="sm:w-full mb-8 flex justify-between items-center">
-        <p className="text-black text-2xl md:text-3xl font-bold tracking-wide">
+      <div className="sm:w-full mb-8 flex justify-between items-center ">
+        <p className="text-black text-2xl md:text-3xl font-bold tracking-wide ">
           {active} Listings
         </p>
         <SelectView initial={view} />
