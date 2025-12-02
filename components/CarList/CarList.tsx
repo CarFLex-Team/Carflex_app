@@ -30,7 +30,10 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   } as const;
 
   return (
-    <div className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative ">
+    <Link
+      href={`${carDetails.ad_link}`}
+      className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative "
+    >
       <div className="w-40 sm:w-60 md:w-3xs h-full overflow-hidden rounded-md ">
         <img
           src={carDetails.image_src}
@@ -87,6 +90,6 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           {carDetails.odometer.toLocaleString()} Km
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
