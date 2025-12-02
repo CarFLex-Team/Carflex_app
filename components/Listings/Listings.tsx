@@ -111,8 +111,7 @@ export default async function Listings({
         </p>
         <SelectView initial={view} />
       </div>
-      {/* {view === "list" ? ( */}
-      {true ? (
+      {view === "list" ? (
         <div className="grid grid-cols-1 gap-5">
           <CarList carDetails={carDetailsArray[0]} />
           <CarList carDetails={carDetailsArray[1]} />

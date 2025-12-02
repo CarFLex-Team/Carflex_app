@@ -31,7 +31,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
 
   return (
     <Link
-      href={`cars/${carDetails.id}`}
+      href={`${carDetails.ad_link}`}
       className=" h-115 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out "
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
