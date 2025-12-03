@@ -6,9 +6,7 @@ export default async function Home({
   searchParams: Promise<{ view?: string }>;
 }) {
   const { view = "card" } = await searchParams;
-  const res = await fetch("http://localhost:3000/api/allCars");
-  const json = await res.json();
-  console.log(json);
+
   return (
     <>
       <Nav />
