@@ -1,3 +1,4 @@
+import AutoSwitch from "../AutoSwitch/AutoSwitch";
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
 import SelectView from "../SelectView/SelectView";
@@ -19,7 +20,7 @@ export default async function Listings({
       location: "Toronto, ON",
       image_src:
         "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg",
-      odometer: 15000,
+      odometer: 15000000,
       estValue: 280000,
       status: "Steal",
       ad_link:
@@ -109,7 +110,10 @@ export default async function Listings({
         <p className="text-black text-2xl md:text-3xl font-bold tracking-wide ">
           {active} Listings
         </p>
-        <SelectView initial={view} />
+        <div className="flex items-center gap-4">
+          {/* <AutoSwitch /> */}
+          <SelectView initial={view} />
+        </div>
       </div>
       {view === "list" ? (
         <div className="grid grid-cols-1 gap-5">

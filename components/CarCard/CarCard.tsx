@@ -32,7 +32,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
   return (
     <Link
       href={`${carDetails.ad_link}`}
-      className=" h-115 bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out "
+      className="h-120 min-h-fit bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out "
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
@@ -41,19 +41,25 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           className="w-full object-cover h-full"
         />
       </div>
-      <div className="w-full h-1/2 p-5 lg:pb-8 flex flex-col justify-between">
-        <div className="w-full flex items-center gap-3 flex-row ">
-          {logoMap[carDetails.Source]}
+      <div className="w-full min-h-1/2 p-5 lg:pb-8 flex flex-col justify-between">
+        <div className=" w-full flex justify-between items-center ">
+          <div className=" flex items-center gap-3 flex-row ">
+            {logoMap[carDetails.Source]}
 
-          <p
-            className={` ${statusStyleMap[carDetails.status]?.bg}
-              text-white px-2.5 py-0.5 rounded-4xl`}
-          >
-            {carDetails.status}
+            <p
+              className={` ${statusStyleMap[carDetails.status]?.bg}
+            text-white px-2.5 py-0.5 rounded-4xl`}
+            >
+              {carDetails.status}
+            </p>
+          </div>
+          <p className="text-gray-500 flex items-center gap-2">
+            <CircleGauge className="w-4 h-4" />
+            {carDetails.odometer.toLocaleString()} Km
           </p>
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
-          <p className="text-black font-bold text-lg pr-2.5">
+          <p className="text-black font-bold text-lg pr-2.5 line-clamp-2">
             {carDetails.title}
           </p>
           <p className="text-gray-400 text-sm">{carDetails.location}</p>
@@ -75,12 +81,8 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             Est. value ~ CA${carDetails.estValue}
           </p>
         </div>
-        <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
+        <p className="text-black overflow-ellipsis line-clamp-2 text-sm">
           {carDetails.description}
-        </p>
-        <p className="text-gray-500 flex items-center gap-2">
-          <CircleGauge className="w-4 h-4" />
-          {carDetails.odometer.toLocaleString()} Km
         </p>
       </div>
     </Link>
