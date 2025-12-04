@@ -37,10 +37,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
-          src={
-            carDetails.image_src[0] ||
-            "https://www.hdcarwallpapers.com/thumbs/2020/2020_honda_civic_type_r_5k_4-t2.jpg"
-          }
+          src={carDetails.image_src[0] || "/car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full"
         />

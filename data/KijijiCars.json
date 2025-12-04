@@ -17,7 +17,7 @@
     "location": "Quebec",
     "odometer": "200,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/51/511ee970-3be8-4609-80d2-a69d18c667d9?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/51/511ee970-3be8-4609-80d2-a69d18c667d9?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/st-catharines/05-suburban-and-06-monte-carlo-for-1000/1729646785",
     "created_at": "2025-11-30T12:11:45+00:00",
@@ -30,7 +30,7 @@
     "location": "Ontario",
     "odometer": "237,800 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/2a/2a9e0ff2-d59f-485e-bb0b-8da63d18e887?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/2a/2a9e0ff2-d59f-485e-bb0b-8da63d18e887?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/ottawa/2016-jeep-wrangler-unlimited-75th-anniversary-sahara/1729646512",
     "created_at": "2025-11-30T11:58:27+00:00",
@@ -43,7 +43,7 @@
     "location": "Quebec",
     "odometer": "371,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/c9/c969c3b3-f78f-4bee-a060-12a07dba3d1a?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/c9/c969c3b3-f78f-4bee-a060-12a07dba3d1a?rule=kijijica-640-webp"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/st-catharines/2013-chevrolet-ambulance-camper-conversion-w-solar-system/1729646389",
     "created_at": "2025-11-30T11:51:37+00:00",
@@ -56,7 +56,7 @@
     "location": "Ontario",
     "odometer": "246,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/ae/aed16c76-5cad-4866-aeff-c1a31192b8a5?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/ae/aed16c76-5cad-4866-aeff-c1a31192b8a5?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/renfrew/2017-subaru-impreza-awd-sport-tech-package/1729646386",
     "created_at": "2025-11-30T11:51:33+00:00",
@@ -69,7 +69,7 @@
     "location": "Quebec",
     "odometer": "162,622 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/4c/4c3de947-e538-411e-a0ff-c8a78cfec108?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/4c/4c3de947-e538-411e-a0ff-c8a78cfec108?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/kitchener-waterloo/2013-kia-soul-certified/1729645972",
     "created_at": "2025-11-30T11:21:30+00:00",
@@ -82,7 +82,7 @@
     "location": "Ontario",
     "odometer": "145,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/82/824a2914-f273-4435-9bc1-d7d6bad611eb?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/82/824a2914-f273-4435-9bc1-d7d6bad611eb?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/oakville-halton-region/2011-mercedes-r350-amg-private-sale/1725359066",
     "created_at": "2025-09-17T02:51:56+00:00",
@@ -95,7 +95,7 @@
     "location": "Quebec",
     "odometer": "99,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/bb/bbb82a3a-fae2-4c20-b42b-a6cd57462f5e?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/bb/bbb82a3a-fae2-4c20-b42b-a6cd57462f5e?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/2018-elantra/1729645876",
     "created_at": "2025-11-30T11:15:26+00:00",
@@ -108,7 +108,7 @@
     "location": "Ontario",
     "odometer": "125,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/10/1089a899-b1c4-4414-a121-a1742d85c63f?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/10/1089a899-b1c4-4414-a121-a1742d85c63f?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/clean-title-no-accident/1729645504",
     "created_at": "2025-11-30T11:03:30+00:00",
@@ -121,7 +121,7 @@
     "location": "Quebec",
     "odometer": "261,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/df/dfccbf7e-00a4-41ff-be07-0e99328b853e?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/df/dfccbf7e-00a4-41ff-be07-0e99328b853e?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/hamilton/2012-volkswagen-jetta-trendline-plus-for-sale/1729645479",
     "created_at": "2025-11-30T11:02:33+00:00",
@@ -134,7 +134,7 @@
     "location": "Ontario",
     "odometer": "242,950 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/a4/a430f90e-ebd2-4cda-b507-7d1f940b388c?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/a4/a430f90e-ebd2-4cda-b507-7d1f940b388c?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/thetford-mines/dodge-1500-sport/1729644113",
     "created_at": "2025-11-30T09:58:22+00:00",
@@ -147,7 +147,7 @@
     "location": "Quebec",
     "odometer": "180,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/68/68a00b34-e04c-4c86-ba98-1dc11deaa736?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/68/68a00b34-e04c-4c86-ba98-1dc11deaa736?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/2012-volvo-xc60-for-sale/1729643803",
     "created_at": "2025-11-30T09:46:17+00:00",
@@ -160,7 +160,7 @@
     "location": "Ontario",
     "odometer": "230,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/00/00fe59aa-8c47-4d6f-963e-b506e53cc174?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/00/00fe59aa-8c47-4d6f-963e-b506e53cc174?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/hamilton/2011-nissan-juke-sl/1729642726",
     "created_at": "2025-11-30T08:55:57+00:00",
@@ -173,7 +173,7 @@
     "location": "Quebec",
     "odometer": "178,000 km",
     "image_src": [
-      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/df/dff12ebb-f3f0-4f8a-bb23-ecbba25aa550?rule=kijijica-200-jpg"
+      "https://media.kijiji.ca/api/v1/ca-prod-fsbo-ads/images/df/dff12ebb-f3f0-4f8a-bb23-ecbba25aa550?rule=kijijica-640-jpg"
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/dodge-ram-2014-laramie/1729641661",
     "created_at": "2025-11-30T07:59:25+00:00",

@@ -36,7 +36,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
     >
       <div className="w-40 sm:w-60 md:w-3xs max-h-40 overflow-hidden rounded-md ">
         <img
-          src={carDetails.image_src}
+          src={carDetails.image_src || "/car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full "
         />
