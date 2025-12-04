@@ -79,7 +79,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             } 
          flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            Est. value ~ CA${carDetails.estValue}
+            Est. value ~ CA{carDetails.estValue}
           </p>
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">

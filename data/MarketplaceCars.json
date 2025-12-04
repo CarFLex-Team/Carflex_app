@@ -12,7 +12,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Fair"
+    "status": "Fair",
+    "estValue": "$12,000"
   },
   {
     "id": 3,
@@ -27,7 +28,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Pass"
+    "status": "Pass",
+    "estValue": "$11,000"
   },
   {
     "id": 4,
@@ -42,7 +44,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Good"
+    "status": "Good",
+    "estValue": "$22,000"
   },
   {
     "id": 5,
@@ -57,7 +60,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Fair"
+    "status": "Fair",
+    "estValue": "$7,000"
   },
   {
     "id": 6,
@@ -72,7 +76,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Good"
+    "status": "Good",
+    "estValue": "$ 55,000"
   },
   {
     "id": 7,
@@ -87,7 +92,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Pass"
+    "status": "Pass",
+    "estValue": "$ 6,000"
   },
   {
     "id": 8,
@@ -102,7 +108,8 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Fair"
+    "status": "Fair",
+    "estValue": "$20,000"
   },
   {
     "id": 12,
@@ -117,6 +124,7 @@
     "created_at": "30/11/2025 14:23",
     "source": "marketplace",
     "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
-    "status": "Steal"
+    "status": "Steal",
+    "estValue": "$30,000"
   }
 ]

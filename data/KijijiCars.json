@@ -8,7 +8,10 @@
     "image_src": "",
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/laval-rive-nord/2013-nissan-rouge-fully-loaded/1729646910",
     "created_at": "2025-11-30T12:19:12+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2013 Nissan rouge fully loaded located in Ontario. 160,000 km on the clock. Asking $3,800.",
+    "status": "Good",
+    "estValue": "$4,180"
   },
   {
     "id": 2,
@@ -21,7 +24,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/st-catharines/05-suburban-and-06-monte-carlo-for-1000/1729646785",
     "created_at": "2025-11-30T12:11:45+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "05 Suburban AND 06 Monte Carlo for $1000 located in Quebec. 200,000 km on the clock. Asking $1,000.",
+    "status": "Steal",
+    "estValue": "$900"
   },
   {
     "id": 3,
@@ -34,7 +40,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/ottawa/2016-jeep-wrangler-unlimited-75th-anniversary-sahara/1729646512",
     "created_at": "2025-11-30T11:58:27+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2016 JEEP WRANGLER UNLIMITED 75th Anniversary SAHARA located in Ontario. 237,800 km on the clock. Asking $19,995.",
+    "status": "Pass",
+    "estValue": "$17,996"
   },
   {
     "id": 4,
@@ -47,7 +56,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/st-catharines/2013-chevrolet-ambulance-camper-conversion-w-solar-system/1729646389",
     "created_at": "2025-11-30T11:51:37+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2013 Chevrolet Ambulance Camper Conversion w/ Solar System located in Quebec. 371,000 km on the clock. Asking $15,000.",
+    "status": "Pass",
+    "estValue": "$10,500"
   },
   {
     "id": 5,
@@ -60,7 +72,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/renfrew/2017-subaru-impreza-awd-sport-tech-package/1729646386",
     "created_at": "2025-11-30T11:51:33+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2017 Subaru Impreza AWD Sport-Tech Package located in Ontario. 246,000 km on the clock. Asking $9,500.",
+    "status": "Pass",
+    "estValue": "$8,550"
   },
   {
     "id": 6,
@@ -73,7 +88,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/kitchener-waterloo/2013-kia-soul-certified/1729645972",
     "created_at": "2025-11-30T11:21:30+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2013 Kia Soul - CERTIFIED located in Quebec. 162,622 km on the clock. Asking $4,500.",
+    "status": "Good",
+    "estValue": "$4,950"
   },
   {
     "id": 7,
@@ -86,7 +104,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/oakville-halton-region/2011-mercedes-r350-amg-private-sale/1725359066",
     "created_at": "2025-09-17T02:51:56+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2011 Mercedes R350 AMG located in Ontario. 145,000 km on the clock. Asking $9,000.",
+    "status": "Good",
+    "estValue": "$9,900"
   },
   {
     "id": 8,
@@ -99,7 +120,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/2018-elantra/1729645876",
     "created_at": "2025-11-30T11:15:26+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2018 Elantra located in Quebec. 99,000 km on the clock. Asking $14,500.",
+    "status": "Pass",
+    "estValue": "$17,400"
   },
   {
     "id": 9,
@@ -112,7 +136,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/clean-title-no-accident/1729645504",
     "created_at": "2025-11-30T11:03:30+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "Clean title no accident located in Ontario. 125,000 km on the clock. Asking $7,450.",
+    "status": "Fair",
+    "estValue": "$8,195"
   },
   {
     "id": 10,
@@ -125,7 +152,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/hamilton/2012-volkswagen-jetta-trendline-plus-for-sale/1729645479",
     "created_at": "2025-11-30T11:02:33+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2012 Volkswagen Jetta Trendline Plus for Sale located in Quebec. 261,000 km on the clock. Asking $5,500.",
+    "status": "Pass",
+    "estValue": "$3,850"
   },
   {
     "id": 11,
@@ -138,7 +168,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/thetford-mines/dodge-1500-sport/1729644113",
     "created_at": "2025-11-30T09:58:22+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "Dodge 1500 Sport located in Ontario. 242,950 km on the clock. Asking $5,500.",
+    "status": "Pass",
+    "estValue": "$4,950"
   },
   {
     "id": 12,
@@ -151,7 +184,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/2012-volvo-xc60-for-sale/1729643803",
     "created_at": "2025-11-30T09:46:17+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2012 Volvo XC60 For Sale located in Quebec. 180,000 km on the clock. Asking $7,500.",
+    "status": "Good",
+    "estValue": "$8,250"
   },
   {
     "id": 13,
@@ -164,7 +200,10 @@
     ],
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/hamilton/2011-nissan-juke-sl/1729642726",
     "created_at": "2025-11-30T08:55:57+00:00",
-    "source": "kijiji"
+    "source": "kijiji",
+    "description": "2011 Nissan juke sl located in Ontario. 230,000 km on the clock. Asking $3,300.",
+    "status": "Good",
+    "estValue": "$2,970"
   },
   {
     "id": 14,
@@ -178,6 +217,8 @@
     "ad_link": "https://www.kijiji.ca/v-cars-trucks/mississauga-peel-region/dodge-ram-2014-laramie/1729641661",
     "created_at": "2025-11-30T07:59:25+00:00",
     "source": "kijiji",
-    "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car."
+    "description": "2015 Civic Sedan Automatic 125K Car drives well, in great condition. Selling because my wife got a new car. 2015 Civic Sedan Automati 125K Car drives well, in great condition.Selling because my wife got a new car.",
+    "status": "Good",
+    "estValue": "$6,820"
   }
 ]
