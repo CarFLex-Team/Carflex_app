@@ -29,7 +29,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       border: "border-red-500",
     },
   } as const;
-  console.log(carDetails.source);
+
   return (
     <Link
       href={`${carDetails.ad_link}`}
@@ -37,7 +37,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
-          src={carDetails.image_src[0] || "/car-placeholder.png"}
+          src={carDetails.image_src[0] || "/Car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full"
         />

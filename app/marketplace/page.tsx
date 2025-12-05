@@ -7,7 +7,7 @@ export default async function Home({
   searchParams: Promise<{ view?: string }>;
 }) {
   const { view = "card" } = await searchParams;
-  console.log("Array", carDetailsArray);
+
   return (
     <>
       <Nav />
