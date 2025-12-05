@@ -63,7 +63,9 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           <p className="text-black font-bold text-lg pr-2.5 line-clamp-2">
             {carDetails.title}
           </p>
-          <p className="text-gray-400 text-sm">{carDetails.location}</p>
+          <p className="text-gray-400 text-sm">
+            {carDetails.location.toUpperCase()}
+          </p>
         </div>
         <div className="flex gap-2 flex-wrap ">
           <p
