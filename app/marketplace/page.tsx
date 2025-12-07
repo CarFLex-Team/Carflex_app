@@ -1,5 +1,6 @@
 import Nav from "../../components/Nav/Nav";
 import Listings from "../../components/Listings/Listings";
+import carDetailsArray from "../../data/MarketplaceCars.json";
 export default async function Home({
   searchParams,
 }: {
@@ -10,7 +11,11 @@ export default async function Home({
   return (
     <>
       <Nav />
-      <Listings active="Marketplace" view={view} />
+      <Listings
+        active="Marketplace"
+        view={view}
+        carDetailsArray={carDetailsArray}
+      />
     </>
   );
 }

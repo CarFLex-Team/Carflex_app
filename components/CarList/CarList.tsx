@@ -6,9 +6,9 @@ import { CircleGauge } from "lucide-react";
 import Link from "next/link";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
-    Autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
-    Kijiji: <KijijiLogo className="w-8 sm:w-10" />,
-    Marketplace: <FacebookLogo className="w-6 sm:w-8" />,
+    autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
+    kijiji: <KijijiLogo className="w-8 sm:w-10" />,
+    marketplace: <FacebookLogo className="w-6 sm:w-8" />,
   };
   const statusStyleMap: Record<string, { bg: string; border: string }> = {
     Steal: {
@@ -34,15 +34,15 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       href={`${carDetails.ad_link}`}
       className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative "
     >
-      <div className="w-40 sm:w-60 md:w-3xs h-full overflow-hidden rounded-md ">
+      <div className="w-40 sm:w-60 md:w-3xs max-h-40 overflow-hidden rounded-md ">
         <img
-          src={carDetails.image_src}
+          src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full "
         />
       </div>
-      <div className="absolute top-2 left-2 opacity-45 ">
-        {logoMap[carDetails.Source]}
+      <div className="absolute top-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">
+        {logoMap[carDetails.source]}
       </div>
       <div className="w-full h-full p-5  flex flex-col justify-between">
         <div className="flex gap-2 flex-wrap ">
@@ -72,7 +72,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
               } 
             flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-base`}
             >
-              Est. value ~ CA${carDetails.estValue}
+              Est. value ~ CA{carDetails.estValue}
             </p>
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
         </p>
         <p className="text-gray-500 flex items-center text-sm sm:text-base gap-2">
           <CircleGauge className="w-4 h-4" />
-          {carDetails.odometer.toLocaleString()} Km
+          {carDetails.odometer.toUpperCase().toLocaleString()}
         </p>
       </div>
     </Link>
