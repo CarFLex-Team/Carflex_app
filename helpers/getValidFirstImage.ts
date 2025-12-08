@@ -3,22 +3,18 @@ async function getValidFirstImage(raw: string | null): Promise<string> {
 
   let list: string[] = [];
 
-  // Try parsing JSON array
   try {
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) list = parsed.map(String);
   } catch {
-    // raw is a single string
     list = [raw];
   }
 
   if (list.length === 0) return "";
 
-  // Take first image
   let url = list[0].trim();
   if (!url || url === "N/A") return "";
 
-  // Normalize Autoscout: strip /250x188.webp
   url = url.replace(/\.jpg\/.*$/, ".jpg");
 
   // Validate via HEAD request

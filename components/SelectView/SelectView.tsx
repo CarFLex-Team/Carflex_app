@@ -1,29 +1,21 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { LayoutGrid, LayoutList } from "lucide-react";
 
-export default function SelectView({ initial }: { initial?: string }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export default function SelectView({
+  view,
+  setView,
+}: {
+  view: "card" | "list";
+  setView: React.Dispatch<React.SetStateAction<"card" | "list">>;
+}) {
   const [open, setOpen] = useState(false);
-  const [view, setView] = useState(initial ?? "card");
 
-  // Sync from URL after mount (useSearchParams is available in client)
-  useEffect(() => {
-    const v = searchParams?.get("view");
-    if (v === "list" || v === "card") setView(v);
-  }, [searchParams]);
-
-  const changeView = useCallback(
-    (next: "card" | "list") => {
-      setView(next);
-      router.push(`?view=${next}`, { scroll: false });
-      setOpen(false);
-    },
-    [router]
-  );
+  const changeView = (next: "card" | "list") => {
+    setView(next);
+    setOpen(false);
+  };
 
   return (
     <div className="relative inline-block text-left">

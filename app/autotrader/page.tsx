@@ -8,15 +8,11 @@ export default async function Home({
   searchParams: Promise<{ view?: string }>;
 }) {
   const { view = "card" } = await searchParams;
-  const carData = await fetchData({ name: "autotrader", limit: 20 });
+
   return (
     <>
       <Nav />
-      <Listings
-        active="Autotrader"
-        view={view}
-        carDetailsArray={carData.items}
-      />
+      <Listings active="Autotrader" />
     </>
   );
 }
