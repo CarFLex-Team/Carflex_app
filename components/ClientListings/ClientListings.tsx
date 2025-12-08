@@ -15,6 +15,10 @@ type Item = {
   image: string; // single validated image URL or ""
   ad_link: string;
   created_at: string;
+  description: string;
+  status: string;
+  estValue: string;
+  source: string;
 };
 
 export default function ClientListings({
@@ -24,11 +28,10 @@ export default function ClientListings({
   active: string;
   initialCarsData: any[];
 }) {
-  console.log(active);
   const [view, setView] = useState<"card" | "list">("card");
   const { data, error, isLoading } = useSWR(
-    ["autotraderCars", 20],
-    () => fetchData({ name: "autotrader", limit: 20 }),
+    [`${active.toLowerCase()}Cars`, 20],
+    () => fetchData({ name: active.toLowerCase(), limit: 20 }),
     {
       // refreshInterval: 30_000, // poll every 30 seconds
       fallbackData: { items: initialCarsData },

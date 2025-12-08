@@ -10,7 +10,7 @@ export async function GET(req: Request) {
     const limit = Math.max(1, Math.min(500, parseInt(limitParam, 10) || 50));
 
     const stmt = db.prepare(
-      `SELECT id, title, price, location, odometer, image_src, ad_link, created_at, status, estValue FROM autotrader ORDER BY id LIMIT  ?`
+      `SELECT id, title, price, location, odometer, image_src, ad_link, created_at, status, estValue, description FROM autotrader ORDER BY id LIMIT  ?`
     );
     const rows = stmt.all(limit) as AutoTraderRow[];
     const items = [];

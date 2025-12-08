@@ -32,6 +32,20 @@ export type AutoTraderRow = {
   created_at: string | null;
   status: string | null;
   estValue: string | null;
+  description: string | null;
 };
-
+export type allRow = {
+  id: number;
+  source: string;
+  title: string;
+  price: string | null;
+  location: string | null;
+  odometer: string | null;
+  image_src: string | null;
+  ad_link: string | null;
+  created_at: string | null;
+  status: string | null;
+  estValue: string | null;
+  description: string | null;
+};
 export default db;
