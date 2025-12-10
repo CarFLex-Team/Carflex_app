@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import AutoSwitch from "../AutoSwitch/AutoSwitch";
+
 import useSWR from "swr";
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
