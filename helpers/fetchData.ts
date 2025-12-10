@@ -5,7 +5,7 @@ export default async function fetchData({
   name: string;
   limit?: number;
 }) {
-  console.log(process.env.NEXT_PUBLIC_BASE_URL);
+  console.log("Base URL: " + process.env.NEXT_PUBLIC_BASE_URL);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/${name}Cars?limit=${limit}`,
     {
