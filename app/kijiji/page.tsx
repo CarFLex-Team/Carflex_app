@@ -11,7 +11,7 @@ export default async function Home({
   return (
     <>
       <Nav />
-      <Listings active="Kijiji" view={view} carDetailsArray={carDetailsArray} />
+      <Listings active="Kijiji" />
     </>
   );
 }

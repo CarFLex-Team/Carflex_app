@@ -37,7 +37,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
-          src={carDetails.image_src[0] || "/Car-placeholder.png"}
+          src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full"
         />

@@ -1,6 +1,7 @@
 import Nav from "../../components/Nav/Nav";
 import Listings from "../../components/Listings/Listings";
-import carDetailsArray from "../../data/AutotraderCars.json";
+
+import fetchData from "@/helpers/fetchData";
 export default async function Home({
   searchParams,
 }: {
@@ -11,11 +12,7 @@ export default async function Home({
   return (
     <>
       <Nav />
-      <Listings
-        active="Autotrader"
-        view={view}
-        carDetailsArray={carDetailsArray}
-      />
+      <Listings active="Autotrader" />
     </>
   );
 }
