@@ -12,7 +12,7 @@ type Item = {
   price: string;
   location: string;
   odometer: string;
-  image: string; // single validated image URL or ""
+  image: string;
   ad_link: string;
   created_at: string;
   description: string;

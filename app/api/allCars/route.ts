@@ -1,4 +1,3 @@
-// app/api/allCars/route.ts
 import { NextResponse } from "next/server";
 import db, { allRow } from "@/lib/db.sqlite";
 import getValidFirstImage from "@/helpers/getValidFirstImage";

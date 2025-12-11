@@ -1,4 +1,3 @@
-// app/api/autotrader/route.ts
 import { NextResponse } from "next/server";
 import db, { AutoTraderRow } from "@/lib/db.sqlite";
 import getValidFirstImage from "@/helpers/getValidFirstImage";

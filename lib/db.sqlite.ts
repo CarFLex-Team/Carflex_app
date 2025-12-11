@@ -1,4 +1,3 @@
-// lib/sqlite.ts
 import path from "path";
 import Database from "better-sqlite3";
 
