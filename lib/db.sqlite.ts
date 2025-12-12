@@ -19,24 +19,11 @@ if (process.env.NODE_ENV === "development") {
   global.__sqlite_db__ = db;
 }
 
-export type AutoTraderRow = {
-  id: number;
-  source: string;
-  title: string;
-  price: string | null;
-  location: string | null;
-  odometer: string | null;
-  image_src: string | null;
-  ad_link: string | null;
-  created_at: string | null;
-  status: string | null;
-  estValue: string | null;
-  description: string | null;
-};
 export type allRow = {
   id: number;
   source: string;
   title: string;
+  description: string | null;
   price: string | null;
   location: string | null;
   odometer: string | null;
@@ -45,6 +32,6 @@ export type allRow = {
   created_at: string | null;
   status: string | null;
   estValue: string | null;
-  description: string | null;
 };
+
 export default db;

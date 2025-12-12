@@ -3,8 +3,13 @@ async function getValidFirstImage(raw: string | null): Promise<string> {
 
   let list: string[] = [];
 
+  let normalized = raw.trim();
+  if (normalized.startsWith("[") && normalized.includes("'")) {
+    normalized = normalized.replace(/'/g, '"');
+  }
+
   try {
-    const parsed = JSON.parse(raw);
+    const parsed = JSON.parse(normalized);
     if (Array.isArray(parsed)) list = parsed.map(String);
   } catch {
     list = [raw];
@@ -13,11 +18,13 @@ async function getValidFirstImage(raw: string | null): Promise<string> {
   if (list.length === 0) return "";
 
   let url = list[0].trim();
+
   if (!url || url === "N/A") return "";
 
-  url = url.replace(/\.jpg\/.*$/, ".jpg");
+  url = url
+    .replace(/\.jpg\/.*$/, ".jpg")
+    .replace("kijijica-200", "kijijica-800");
 
-  // Validate via HEAD request
   try {
     const res = await fetch(url, { method: "HEAD" });
     if (res.ok && res.status < 400) {
@@ -27,4 +34,5 @@ async function getValidFirstImage(raw: string | null): Promise<string> {
 
   return "";
 }
+
 export default getValidFirstImage;
