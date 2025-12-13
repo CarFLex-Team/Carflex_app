@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -49,5 +49,5 @@ export default function TopLoaderAppRouter() {
     NProgress.done();
   }, [pathname, searchParams?.toString()]);
 
-  return null;
+  return <Suspense fallback={null}></Suspense>;
 }
