@@ -1,13 +1,14 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "@/styles/nprogress-custom.css";
+
 NProgress.configure({ showSpinner: false, minimum: 0.08 });
 
-export default function TopLoaderAppRouter() {
+function TopLoaderInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -49,5 +50,13 @@ export default function TopLoaderAppRouter() {
     NProgress.done();
   }, [pathname, searchParams?.toString()]);
 
-  return <Suspense fallback={null}></Suspense>;
+  return null;
+}
+
+export default function TopLoaderAppRouter() {
+  return (
+    <Suspense fallback={null}>
+      <TopLoaderInner />
+    </Suspense>
+  );
 }
