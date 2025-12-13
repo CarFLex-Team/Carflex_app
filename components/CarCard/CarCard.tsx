@@ -5,6 +5,7 @@ import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge } from "lucide-react";
 import Link from "next/link";
 import AutotraderLogo from "../Logos/AutotraderLogo";
+import formatNumber from "@/helpers/formatNumber";
 export default function CarCard({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-10" />,
@@ -29,7 +30,6 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       border: "border-red-500",
     },
   } as const;
-
   return (
     <Link
       href={`${carDetails.ad_link}`}
@@ -56,7 +56,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           </div>
           <p className="text-gray-500 flex items-center gap-2">
             <CircleGauge className="w-4 h-4" />
-            {carDetails.odometer.toUpperCase().toLocaleString()}
+            {formatNumber(carDetails.odometer)} Km
           </p>
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
@@ -73,7 +73,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
              
           shadow-md   px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            CA${carDetails.price}
+            CA${formatNumber(carDetails.price)}
           </p>
           <p
             className={`border border-solid ${
@@ -81,7 +81,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             } 
          flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            Est. value ~ CA{carDetails.estValue}
+            Est. value ~ CA${formatNumber(carDetails.estValue)}
           </p>
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">

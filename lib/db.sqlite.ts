@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === "development") {
 
 export type allRow = {
   id: number;
-  source: string;
   title: string;
   description: string | null;
   price: string | null;
@@ -32,6 +31,7 @@ export type allRow = {
   created_at: string | null;
   status: string | null;
   estValue: string | null;
+  source: string;
 };
 
 export default db;
