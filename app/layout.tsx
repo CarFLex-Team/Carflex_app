@@ -2,6 +2,7 @@ import TopLoader from "@/components/TopLoader/TopLoader";
 import "../styles/globals.css";
 
 import type { Metadata } from "next";
+import ClientProviders from "@/components/ClientProviders/ClientProviders";
 
 export const metadata: Metadata = {
   title: "Carflex Cars",
@@ -16,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-full m-0 font-sans">
-        <TopLoader />
-        {children}
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );
