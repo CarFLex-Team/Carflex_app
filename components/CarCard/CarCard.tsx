@@ -1,14 +1,16 @@
 import { JSX } from "react";
-import AutotraderLogo from "../Logos/AutotraderLogo";
+
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge } from "lucide-react";
 import Link from "next/link";
+import AutotraderLogo from "../Logos/AutotraderLogo";
+import formatNumber from "@/helpers/formatNumber";
 export default function CarCard({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
-    Autotrader: <AutotraderLogo className="w-10" />,
-    Kijiji: <KijijiLogo className="w-10" />,
-    Marketplace: <FacebookLogo className="w-8" />,
+    autotrader: <AutotraderLogo className="w-10" />,
+    kijiji: <KijijiLogo className="w-10" />,
+    marketplace: <FacebookLogo className="w-8" />,
   };
   const statusStyleMap: Record<string, { bg: string; border: string }> = {
     Steal: {
@@ -28,7 +30,6 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       border: "border-red-500",
     },
   } as const;
-
   return (
     <Link
       href={`${carDetails.ad_link}`}
@@ -36,7 +37,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
     >
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
-          src={carDetails.image_src}
+          src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
           className="w-full object-cover h-full"
         />
@@ -44,7 +45,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       <div className="w-full min-h-1/2 p-5 lg:pb-8 flex flex-col justify-between">
         <div className=" w-full flex justify-between items-center ">
           <div className=" flex items-center gap-3 flex-row ">
-            {logoMap[carDetails.Source]}
+            {logoMap[carDetails.source]}
 
             <p
               className={` ${statusStyleMap[carDetails.status]?.bg}
@@ -55,14 +56,16 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
           </div>
           <p className="text-gray-500 flex items-center gap-2">
             <CircleGauge className="w-4 h-4" />
-            {carDetails.odometer.toLocaleString()} Km
+            {formatNumber(carDetails.odometer)} Km
           </p>
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
           <p className="text-black font-bold text-lg pr-2.5 line-clamp-2">
             {carDetails.title}
           </p>
-          <p className="text-gray-400 text-sm">{carDetails.location}</p>
+          <p className="text-gray-400 text-sm">
+            {carDetails.location?.toUpperCase()}
+          </p>
         </div>
         <div className="flex gap-2 flex-wrap ">
           <p
@@ -70,7 +73,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
              
           shadow-md   px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            CA${carDetails.price}
+            CA${formatNumber(carDetails.price)}
           </p>
           <p
             className={`border border-solid ${
@@ -78,7 +81,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             } 
          flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            Est. value ~ CA${carDetails.estValue}
+            Est. value ~ CA${formatNumber(carDetails.estValue)}
           </p>
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">

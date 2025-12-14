@@ -1,22 +1,29 @@
-// app/api/users/route.ts
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { sqlQuery } from "@/lib/db.mysql";
+import db, { allRow } from "@/lib/db.sqlite";
+import getValidFirstImage from "@/helpers/getValidFirstImage";
 
-type Car = { id: number; title: string; description: string };
-
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
-    const limitParam = url.searchParams.get("limit") ?? "100";
-    const limit = Math.min(1000, Math.max(1, parseInt(limitParam, 10) || 100));
+    const limitParam = url.searchParams.get("limit") || "50";
+    const limit = Math.max(1, Math.min(500, parseInt(limitParam, 10) || 50));
 
-    // Use ? placeholders for params (mysql2)
-    const cars = await sqlQuery<Car>(
-      "SELECT id, title, description FROM cars ORDER BY id LIMIT ?",
-      [limit]
+    const stmt = db.prepare(
+      `SELECT id, title, price, location, odometer, image_src, ad_link, created_at, status, estValue, description FROM 'all' ORDER BY id LIMIT  ?`
     );
-    return NextResponse.json({ cars });
+    const rows = stmt.all(limit) as allRow[];
+    const items = [];
+    for (const r of rows) {
+      const firstImage = await getValidFirstImage(r.image_src);
+
+      items.push({
+        ...r,
+        image_src: firstImage,
+        source: "all",
+      });
+    }
+
+    return NextResponse.json({ items });
   } catch (err) {
     console.error("GET /api/allCars error", err);
     return NextResponse.json(
