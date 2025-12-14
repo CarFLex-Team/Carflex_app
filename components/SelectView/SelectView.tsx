@@ -21,7 +21,7 @@ export default function SelectView({
     <div className="relative inline-block text-left">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="p-2 rounded-md border border-gray-300 shadow-sm hover:bg-gray-100 transition"
+        className="p-2 rounded-md border border-gray-300 shadow-sm hover:bg-gray-100 transition cursor-pointer"
       >
         {view === "list" ? (
           <LayoutList size={18} className="text-gray-600" />

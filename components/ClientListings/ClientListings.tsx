@@ -6,6 +6,7 @@ import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
 import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
+import SearchVin from "../SearchVin/SearchVin";
 type Item = {
   id: number;
   title: string;
@@ -52,6 +53,7 @@ export default function ClientListings({
         <div className="flex items-center gap-4">
           {/* <AutoSwitch /> */}
           <SelectView view={view} setView={setView} />
+          <SearchVin />
         </div>
       </div>
       {view === "list" ? (
