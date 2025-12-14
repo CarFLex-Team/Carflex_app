@@ -1,14 +1,20 @@
-"use client";
-
 import Link from "next/link";
-
-export default function SearchVin() {
+import { ArrowBigLeft } from "lucide-react";
+export default function SearchVin({ label }: { label?: string }) {
   return (
     <Link
-      href={"/vin-decoder"}
+      href={label ? "/" : "/vin-decoder"}
       className="p-2 rounded-md border bg-primary text-white border-gray-300 shadow-sm hover:bg-lightPrimary transition cursor-pointer"
     >
-      <span className="sm:inline hidden">VIN</span> Decoder
+      {label ? (
+        <div className="flex items-center gap-1">
+          <ArrowBigLeft size={20} /> <div>{label}</div>
+        </div>
+      ) : (
+        <>
+          <span className="sm:inline hidden">VIN</span> Decoder
+        </>
+      )}
     </Link>
   );
 }

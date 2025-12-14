@@ -29,7 +29,24 @@ function TopLoaderInner() {
 
     const onClick = (e: MouseEvent) => {
       const el = e.target as HTMLElement | null;
+      const anchor = el?.closest("a") as HTMLAnchorElement | null;
+      if (!anchor) return;
+
       if (!isInternalLink(el)) return;
+
+      const href = anchor.getAttribute("href");
+      if (!href) return;
+
+      const targetUrl = new URL(href, window.location.href);
+      const currentUrl = new URL(window.location.href);
+
+      if (
+        targetUrl.pathname === currentUrl.pathname &&
+        targetUrl.search === currentUrl.search
+      ) {
+        return;
+      }
+
       NProgress.start();
     };
 
@@ -38,11 +55,9 @@ function TopLoaderInner() {
     };
 
     document.addEventListener("click", onClick, true);
-    window.addEventListener("popstate", onPop);
 
     return () => {
       document.removeEventListener("click", onClick, true);
-      window.removeEventListener("popstate", onPop);
     };
   }, []);
 

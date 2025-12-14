@@ -1,9 +1,11 @@
-import Nav from "../../components/Nav/Nav";
+import DecodeBlock from "@/components/DecodeBlock/DecodeBlock";
+import DecoderNav from "@/components/DecoderNav/DecoderNav";
 
-export default async function Home() {
+export default async function vinDecoder() {
   return (
     <>
-      <Nav />
+      <DecoderNav />
+      <DecodeBlock />
     </>
   );
 }
