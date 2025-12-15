@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 import useSWR from "swr";
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
@@ -53,7 +52,7 @@ export default function ClientListings({
         <div className="flex items-center gap-4">
           {/* <AutoSwitch /> */}
           <SelectView view={view} setView={setView} />
-          <SearchVin />
+          {/* <SearchVin /> */}
         </div>
       </div>
       {view === "list" ? (

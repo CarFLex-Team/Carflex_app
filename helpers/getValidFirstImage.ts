@@ -1,24 +1,36 @@
-async function getValidFirstImage(raw: string | null): Promise<string> {
+async function getValidFirstImage(
+  raw: string | string[] | Record<string, any> | null
+): Promise<string> {
   if (!raw) return "";
 
   let list: string[] = [];
 
-  let normalized = raw.trim();
-  if (normalized.startsWith("[") && normalized.includes("'")) {
-    normalized = normalized.replace(/'/g, '"');
-  }
+  if (Array.isArray(raw)) {
+    list = raw.map(String);
+  } else if (typeof raw === "object") {
+    list = Object.values(raw).map(String);
+  } else if (typeof raw === "string") {
+    let normalized = raw.trim();
 
-  try {
-    const parsed = JSON.parse(normalized);
-    if (Array.isArray(parsed)) list = parsed.map(String);
-  } catch {
-    list = [raw];
+    if (normalized.startsWith("[") && normalized.includes("'")) {
+      normalized = normalized.replace(/'/g, '"');
+    }
+
+    try {
+      const parsed = JSON.parse(normalized);
+      if (Array.isArray(parsed)) {
+        list = parsed.map(String);
+      } else {
+        list = [normalized];
+      }
+    } catch {
+      list = [normalized];
+    }
   }
 
   if (list.length === 0) return "";
 
-  let url = list[0].trim();
-
+  let url = list[0]?.trim();
   if (!url || url === "N/A") return "";
 
   url = url
