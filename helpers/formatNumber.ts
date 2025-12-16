@@ -1,9 +1,12 @@
 function formatNumber(value: string): string {
+  let num: number;
   if (!value) return "";
-
-  const num = Number(value.replace(/\D+/g, ""));
-  if (isNaN(num)) return value;
-
+  if (typeof value === "string") {
+    num = Number(value.replace(/\D+/g, ""));
+    if (isNaN(num)) return value;
+  } else {
+    num = value;
+  }
   return `${num.toLocaleString()}`;
 }
 export default formatNumber;

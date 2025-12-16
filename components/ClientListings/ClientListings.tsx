@@ -17,7 +17,7 @@ type Item = {
   created_at: string;
   description: string;
   status: string;
-  estValue: string;
+  est_value: string;
   source: string;
 };
 

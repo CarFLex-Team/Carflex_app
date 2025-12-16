@@ -43,7 +43,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
         />
       </div>
       <div className="absolute top-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">
-        {logoMap[carDetails.source]}
+        {logoMap[carDetails.source.toLowerCase()]}
       </div>
       <div className="w-full h-full p-5  flex flex-col justify-between">
         <div className="flex gap-2 flex-wrap ">
@@ -73,7 +73,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
               } 
             flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-base`}
             >
-              Est. value ~ CA${formatNumber(carDetails.estValue)}
+              Est. value ~ CA${formatNumber(carDetails.est_value)}
             </p>
           </div>
         </div>

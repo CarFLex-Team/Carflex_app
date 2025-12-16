@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     const limit = Math.max(1, Math.min(500, parseInt(limitParam, 10) || 50));
 
     const stmt = db.prepare(
-      `SELECT id, name as title, price, mileage_value  AS odometer, image as image_src, url as ad_link, sortingDate,  description, status, estValue FROM kjiji ORDER BY sortingDate LIMIT  ?`
+      `SELECT id, name as title, price, mileage_value  AS odometer, image as image_src, url as ad_link, sortingDate,  description, status, est_value FROM kjiji ORDER BY sortingDate LIMIT  ?`
     );
     const rows = stmt.all(limit) as allRow[];
 

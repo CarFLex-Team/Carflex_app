@@ -19,7 +19,7 @@ export async function GET(req: Request) {
         ad_link,
         created_at,
         status,
-        estValue,
+        est_value,
         description
       FROM \`all\`
       ORDER BY id
@@ -55,7 +55,7 @@ export async function GET(req: Request) {
 //     const limit = Math.max(1, Math.min(500, parseInt(limitParam, 10) || 50));
 
 //     const stmt = db.prepare(
-//       `SELECT id, title, price, location, odometer, image_src, ad_link, created_at, status, estValue, description FROM 'all' ORDER BY id LIMIT  ?`
+//       `SELECT id, title, price, location, odometer, image_src, ad_link, created_at, status, est_value, description FROM 'all' ORDER BY id LIMIT  ?`
 //     );
 //     const rows = stmt.all(limit) as allRow[];
 //     const items = [];

@@ -1,25 +1,25 @@
 import "server-only";
-import mysql from "mysql2/promise";
-import type { RowDataPacket } from "mysql2";
+import { Pool } from "pg";
+
 declare global {
   // eslint-disable-next-line no-var
-  var __mysqlPool__: mysql.Pool | undefined;
+  var __pgPool__: Pool | undefined;
 }
 
 const pool =
-  global.__mysqlPool__ ??
-  mysql.createPool({
-    uri: process.env.DATABASE_URL!,
-    waitForConnections: true,
-    connectionLimit: 10,
+  global.__pgPool__ ??
+  new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }, // required for Supabase
   });
 
 if (process.env.NODE_ENV === "development") {
-  global.__mysqlPool__ = pool;
+  global.__pgPool__ = pool;
 }
 
 export default pool;
-export type allRow = RowDataPacket & {
+
+export type allRow = {
   id: number;
   title: string;
   description: string | null;

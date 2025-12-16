@@ -12,6 +12,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
     kijiji: <KijijiLogo className="w-10" />,
     marketplace: <FacebookLogo className="w-8" />,
   };
+
   const statusStyleMap: Record<string, { bg: string; border: string }> = {
     Steal: {
       bg: "bg-green-700",
@@ -45,7 +46,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       <div className="w-full min-h-1/2 p-5 lg:pb-8 flex flex-col justify-between">
         <div className=" w-full flex justify-between items-center ">
           <div className=" flex items-center gap-3 flex-row ">
-            {logoMap[carDetails.source]}
+            {logoMap[carDetails.source.toLowerCase()]}
 
             <p
               className={` ${statusStyleMap[carDetails.status]?.bg}
@@ -81,7 +82,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             } 
          flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
           >
-            Est. value ~ CA${formatNumber(carDetails.estValue)}
+            Est. value ~ CA${formatNumber(carDetails.est_value)}
           </p>
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">
