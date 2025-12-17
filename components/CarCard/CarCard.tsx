@@ -22,13 +22,17 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       bg: "bg-green-400",
       border: "border-green-400",
     },
-    Fair: {
+    Potential: {
       bg: "bg-yellow-500",
       border: "border-yellow-500",
     },
-    Pass: {
+    Entertain: {
       bg: "bg-red-500",
       border: "border-red-500",
+    },
+    Unknown: {
+      bg: "bg-gray-500",
+      border: "border-gray-500",
     },
   } as const;
   return (

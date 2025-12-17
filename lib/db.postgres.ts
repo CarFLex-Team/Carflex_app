@@ -23,13 +23,13 @@ export type allRow = {
   id: number;
   title: string;
   description: string | null;
-  price: string | null;
+  price: number | null;
   location: string | null;
   odometer: string | null;
   image_src: string | null;
   ad_link: string | null;
   created_at: string | null;
   status: string | null;
-  est_value: string | null;
+  est_value: number | null;
   source: string;
 };

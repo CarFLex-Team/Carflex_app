@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import type { allRow } from "@/lib/db.postgres";
 import getValidFirstImage from "@/helpers/getValidFirstImage";
+import priceStatus from "@/helpers/priceStatus";
 
 export async function GET(req: Request) {
   try {
@@ -20,7 +21,6 @@ export async function GET(req: Request) {
         image_src,
         ad_link,
         created_at,
-        status,
         est_value,
         description,
         source
@@ -35,6 +35,7 @@ export async function GET(req: Request) {
       rows.map(async (r) => ({
         ...r,
         image_src: await getValidFirstImage(r.image_src),
+        status: await priceStatus(r.price, r.est_value),
       }))
     );
 
