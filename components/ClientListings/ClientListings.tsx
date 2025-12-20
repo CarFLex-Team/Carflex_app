@@ -52,7 +52,7 @@ export default function ClientListings({
         <div className="flex items-center gap-4">
           {/* <AutoSwitch /> */}
           <SelectView view={view} setView={setView} />
-          {/* <SearchVin /> */}
+          <SearchVin />
         </div>
       </div>
       {view === "list" ? (

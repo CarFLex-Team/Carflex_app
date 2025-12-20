@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import DecodeResults from "../DecodeResults/DecodeResults";
-import { set } from "nprogress";
 
 export default function DecodeBlock() {
   const [vin, setVin] = useState("");
@@ -12,7 +11,7 @@ export default function DecodeBlock() {
     setVinInput("");
   };
   return (
-    <div className="p-4  rounded-md ">
+    <div className="p-4  rounded-md44 ">
       <div className="text-center text-2xl lg:text-3xl font-semibold mb-5">
         Find out everything about a vehicle.
       </div>
@@ -41,11 +40,7 @@ export default function DecodeBlock() {
         </button>
       </div>
 
-      {vin && vinInput ? (
-        <DecodeResults vin={vin} onaAnotherVin={onaAnotherVin} />
-      ) : (
-        ""
-      )}
+      {vin ? <DecodeResults vin={vin} onaAnotherVin={onaAnotherVin} /> : ""}
     </div>
   );
 }

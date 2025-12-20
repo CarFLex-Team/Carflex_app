@@ -1,4 +1,8 @@
 "use client";
+
+import decodeVin from "@/helpers/decodeVin";
+import useSWR from "swr";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 export default function DecodeResults({
   vin,
   onaAnotherVin,
@@ -6,20 +10,55 @@ export default function DecodeResults({
   vin: string;
   onaAnotherVin: () => void;
 }) {
+  const { data, error, isLoading } = useSWR(
+    [`vinDecode`, vin],
+    () => decodeVin(vin),
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  if (error) return <div className="text-red-600">Failed to load</div>;
+  if (isLoading && !data)
+    return (
+      <div className="flex justify-center mt-10">
+        <LoadingSpinner />
+      </div>
+    );
+
+  console.log("Decoded Data in Component:", data);
   return (
     <div className=" flex justify-between mt-4 bg-gray-100 rounded-md border border-gray-300 p-4">
-      <div>
-        <p className="text-xl md:text-2xl font-medium my-2">
-          2015 Toyota Sienna Base
-        </p>
-        <p className="my-1 text-base md:text-lg">
-          Mini-van, Passenger | 3.5L V6 | FWD
-        </p>
-        <p className="my-1 text-base md:text-lg">5TDZK3DC9FS629267</p>
-        <p className="my-1 text-base md:text-lg">
-          Country of Assembly: United States
-        </p>
-      </div>
+      {data.ErrorCode !== "0" ? (
+        <div className="text-red-600">
+          Unable to decode VIN. Please check the VIN and try again.
+        </div>
+      ) : (
+        <div>
+          <p className="text-xl md:text-2xl font-medium my-2">
+            {data.ModelYear} {data.Make.toUpperCase()}{" "}
+            {data.Model.toUpperCase()} {data.Trim}
+          </p>
+          <p className="my-1 text-base md:text-lg">{vin}</p>
+          <p className="my-1 text-base md:text-lg">
+            {data.BodyClass}, {data.VehicleType.toLowerCase()} |{" "}
+            {data.DisplacementL}L V{data.EngineCylinders} |{" "}
+            {data.DriveType.at(1) == "x"
+              ? data.DriveType.at(-1) + "WD"
+              : data.DriveType}
+          </p>
+          <p className="my-1 text-base md:text-lg">
+            Transmission: {data.TransmissionStyle}
+          </p>
+          <p className="my-1 text-base md:text-lg">
+            Fuel Type: {data.FuelTypePrimary}
+          </p>
+
+          <p className="my-1 text-base md:text-lg">
+            Country of Assembly: {data.PlantCountry}
+          </p>
+        </div>
+      )}
       <div
         className="cursor-pointer text-lightPrimary hover:underline md:text-base text-sm "
         onClick={onaAnotherVin}
