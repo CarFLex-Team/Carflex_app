@@ -26,7 +26,6 @@ export default function DecodeResults({
       </div>
     );
 
-  console.log("Decoded Data in Component:", data);
   return (
     <div className=" flex justify-between mt-4 bg-gray-100 rounded-md border border-gray-300 p-4">
       {data.ErrorCode !== "0" ? (
@@ -42,7 +41,10 @@ export default function DecodeResults({
           <p className="my-1 text-base md:text-lg">{vin}</p>
           <p className="my-1 text-base md:text-lg">
             {data.BodyClass}, {data.VehicleType.toLowerCase()} |{" "}
-            {data.DisplacementL}L V{data.EngineCylinders} |{" "}
+            {data.DisplacementL.at(2) === "9"
+              ? Math.round(Number(data.DisplacementL))
+              : data.DisplacementL}
+            L V{data.EngineCylinders} |{" "}
             {data.DriveType.at(1) == "x"
               ? data.DriveType.at(-1) + "WD"
               : data.DriveType}

@@ -11,7 +11,8 @@ async function getValidFirstImage(
     list = Object.values(raw).map(String);
   } else if (typeof raw === "string") {
     let normalized = raw.trim();
-
+    if (normalized.startsWith("{"))
+      normalized = normalized.replace(/^{/, "").replace(/}$/, "");
     if (normalized.startsWith("[") && normalized.includes("'")) {
       normalized = normalized.replace(/'/g, '"');
     }
