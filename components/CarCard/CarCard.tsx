@@ -10,7 +10,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-10" />,
     kijiji: <KijijiLogo className="w-10" />,
-    marketplace: <FacebookLogo className="w-8" />,
+    facebook: <FacebookLogo className="w-8" />,
   };
 
   const statusStyleMap: Record<string, { bg: string; border: string }> = {

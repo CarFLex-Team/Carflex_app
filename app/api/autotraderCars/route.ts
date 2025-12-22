@@ -26,7 +26,7 @@ export async function GET(req: Request) {
         description,
         source
       FROM "autotrader"
-      ORDER BY id
+      ORDER BY created_at DESC
       LIMIT $1
       `,
       [limit]
