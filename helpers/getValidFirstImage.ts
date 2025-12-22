@@ -5,26 +5,36 @@ async function getValidFirstImage(
 
   let list: string[] = [];
 
+  // Case 1: Already an array
   if (Array.isArray(raw)) {
     list = raw.map(String);
+
+    // Case 2: Object (e.g. {0: "...", 1: "..."})
   } else if (typeof raw === "object") {
     list = Object.values(raw).map(String);
+
+    // Case 3: String
   } else if (typeof raw === "string") {
     let normalized = raw.trim();
-    if (normalized.startsWith("{"))
-      normalized = normalized.replace(/^{/, "").replace(/}$/, "");
-    if (normalized.startsWith("[") && normalized.includes("'")) {
-      normalized = normalized.replace(/'/g, '"');
-    }
 
-    try {
-      const parsed = JSON.parse(normalized);
-      if (Array.isArray(parsed)) {
-        list = parsed.map(String);
-      } else {
+    // ✅ Postgres array text: {url1,url2}
+    if (normalized.startsWith("{") && normalized.endsWith("}")) {
+      normalized = normalized.slice(1, -1);
+      list = normalized.split(",").map((s) => s.trim());
+
+      // JSON array string: ["url1","url2"]
+    } else if (normalized.startsWith("[")) {
+      try {
+        const parsed = JSON.parse(normalized);
+        if (Array.isArray(parsed)) {
+          list = parsed.map(String);
+        }
+      } catch {
         list = [normalized];
       }
-    } catch {
+
+      // Plain string URL
+    } else {
       list = [normalized];
     }
   }
@@ -34,16 +44,18 @@ async function getValidFirstImage(
   let url = list[0]?.trim();
   if (!url || url === "N/A") return "";
 
+  // Normalize Kijiji image URL
   url = url
     .replace(/\.jpg\/.*$/, ".jpg")
     .replace("kijijica-200", "kijijica-800");
 
+  // Optional validation (can be removed for speed)
   try {
     const res = await fetch(url, { method: "HEAD" });
-    if (res.ok && res.status < 400) {
-      return url;
-    }
-  } catch {}
+    if (res.ok) return url;
+  } catch {
+    // ignore
+  }
 
   return "";
 }
