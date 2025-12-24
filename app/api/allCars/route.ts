@@ -25,7 +25,7 @@ export async function GET(req: Request) {
         description,
         source
       FROM "all"
-      ORDER BY id
+      ORDER BY created_at DESC
       LIMIT $1
       `,
       [limit]

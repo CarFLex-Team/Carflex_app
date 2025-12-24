@@ -12,9 +12,7 @@ export async function GET(req: Request) {
 
     const { rows } = await db.query<allRow>(
       `
-SELECT *
-FROM (
-    SELECT DISTINCT ON (ad_link)
+  SELECT
         id,
         title,
         price,
@@ -23,14 +21,13 @@ FROM (
         image_src,
         ad_link,
         created_at,
+       
         est_value,
         description,
         source
-    FROM "kijiji"
-    ORDER BY ad_link, created_at DESC
-) deduped
-ORDER BY created_at DESC
-LIMIT $1;
+      FROM "kijiji"
+      ORDER BY created_at DESC
+      LIMIT $1
       `,
       [limit]
     );
