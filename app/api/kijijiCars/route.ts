@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     const { rows } = await db.query<allRow>(
       `
   SELECT
-        id,
+        
         title,
         price,
         location,
@@ -21,7 +21,6 @@ export async function GET(req: Request) {
         image_src,
         ad_link,
         created_at,
-       
         est_value,
         description,
         source
