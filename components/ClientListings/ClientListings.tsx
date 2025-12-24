@@ -7,7 +7,7 @@ import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
 import SearchVin from "../SearchVin/SearchVin";
 type Item = {
-  // id: number;
+  id: number;
   title: string;
   price: string;
   location: string;
@@ -28,7 +28,7 @@ export default function ClientListings({
   active: string;
   initialCarsData: any[];
 }) {
-  const [view, setView] = useState<"card" | "list">("card");
+  const [view, setView] = useState<"card" | "list">("list");
   const { data, error, isLoading } = useSWR(
     [`${active.toLowerCase()}Cars`, 20],
     () => fetchData({ name: active.toLowerCase(), limit: 20 }),
@@ -58,13 +58,13 @@ export default function ClientListings({
       {view === "list" ? (
         <div className="grid grid-cols-1 gap-5">
           {items.map((carDetails) => (
-            <CarList key={carDetails.ad_link} carDetails={carDetails} />
+            <CarList key={carDetails.id} carDetails={carDetails} />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
           {items.map((carDetails) => (
-            <CarCard key={carDetails.ad_link} carDetails={carDetails} />
+            <CarCard key={carDetails.id} carDetails={carDetails} />
           ))}
         </div>
       )}

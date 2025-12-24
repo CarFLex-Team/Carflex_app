@@ -13,6 +13,7 @@ export async function GET(req: Request) {
     const { rows } = await db.query<allRow>(
       `
       SELECT
+      id,
         title,
         price,
         location,

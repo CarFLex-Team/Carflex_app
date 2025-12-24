@@ -39,11 +39,11 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       href={`${carDetails.ad_link}`}
       className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative "
     >
-      <div className="w-40 sm:w-60 md:w-3xs max-h-40 overflow-hidden rounded-md ">
+      <div className="relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0">
         <img
           src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
-          className="w-full object-cover h-full "
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
       <div className="absolute top-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">

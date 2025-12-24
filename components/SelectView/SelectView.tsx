@@ -34,15 +34,15 @@ export default function SelectView({
         <div className="absolute right-1 mt-2 w-36 bg-white border border-gray-200 shadow-lg rounded-md z-20">
           <button
             className="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition"
-            onClick={() => changeView("card")}
-          >
-            <LayoutGrid size={16} /> Card View
-          </button>
-          <button
-            className="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition"
             onClick={() => changeView("list")}
           >
             <LayoutList size={16} /> List View
+          </button>
+          <button
+            className="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 transition"
+            onClick={() => changeView("card")}
+          >
+            <LayoutGrid size={16} /> Card View
           </button>
         </div>
       )}
