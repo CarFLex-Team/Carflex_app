@@ -3,7 +3,7 @@ import "../styles/globals.css";
 
 import type { Metadata } from "next";
 import ClientProviders from "@/components/ClientProviders/ClientProviders";
-import Nav from "@/components/Nav/Nav";
+import Nav from "@/components/Sidebar/Sidebar";
 
 export const metadata: Metadata = {
   title: "Carflex Cars",
@@ -19,10 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="h-screen overflow-hidden font-sans">
         <TopLoader />
-        <div className="flex h-full">
-          <Nav />
-          <main className="flex-1 overflow-y-auto">{children}</main>
-        </div>
+        {children}
       </body>
     </html>
   );
