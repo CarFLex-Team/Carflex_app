@@ -7,11 +7,7 @@ interface NavButtonProps {
   item: { id: string; label: string; href: string };
   isActive?: boolean;
 }
-const colorMap: Record<string, string> = {
-  Autotrader: "bg-red-800",
-  Kijiji: "bg-violet-800",
-  Marketplace: "bg-blue-800", // example additional
-};
+
 export default function NavButton(props: NavButtonProps) {
   const { className, onClick, children, item, isActive } = props;
 

@@ -4,7 +4,7 @@ import DecoderNav from "@/components/DecoderNav/DecoderNav";
 export default async function vinDecoder() {
   return (
     <>
-      <DecoderNav />
+      {/* <DecoderNav /> */}
       <DecodeBlock />
     </>
   );

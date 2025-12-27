@@ -11,7 +11,7 @@ export default function DecodeBlock() {
     setVinInput("");
   };
   return (
-    <div className="p-4  rounded-md44 ">
+    <div className="px-4 sm:px-9 py-6">
       <div className="text-center text-2xl lg:text-3xl font-semibold mb-5">
         Find out everything about a vehicle.
       </div>

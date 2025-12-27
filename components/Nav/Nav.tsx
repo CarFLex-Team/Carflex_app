@@ -1,7 +1,15 @@
 "use client";
 import { useState } from "react";
 import NavButton from "../NavButton/NavButton";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+  PanelLeftClose,
+  LogOut,
+  Settings,
+  PanelLeftOpen,
+} from "lucide-react";
+
 import { usePathname } from "next/navigation";
 
 type Item = {
@@ -20,14 +28,14 @@ const ITEMS: Item[] = [
 export default function Nav() {
   const pathname = usePathname() ?? "/";
   const activeId = ITEMS.find((i) => pathname === i.href)?.id ?? ITEMS[0].id;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [active, setActive] = useState(
     ITEMS.find((i) => i.id === activeId)?.label || "All"
   );
 
   return (
     <>
-      <nav
+      {/* <nav
         className="flex justify-between  items-center h-fit pt-8 px-6 sm:px-9 gap-10 mb-4"
         aria-label="Listings navigation"
       >
@@ -57,59 +65,85 @@ export default function Nav() {
         <div className="w-25 ">
           <img src="/Logo.png" alt="Carflex Logo" className=" w-25" />
         </div>
-      </nav>
+      </nav> */}
 
-      <div
-        className={`md:hidden fixed inset-0 z-50 transition-opacity duration-200 ${
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none "
+      <nav
+        className={`h-screen flex flex-col justify-between bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  p-4 z-50  max-sm:fixed max-sm:inset-0transform transition-transform duration-300 ease-in-out ${
+          open ? "w-64" : "w-15 "
         }`}
-        inert={!open}
       >
-        <button
+        {/* <button
           type="button"
           className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${
             open ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setOpen(false)}
           aria-label="Close menu"
-        />
+        /> */}
 
-        <aside
+        <div
           id="mobile-listings-aside"
-          className={` fixed top-0 left-0 h-full w-64 max-w-[80%] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)] p-4 transform transition-transform duration-300 ease-in-out ${
-            open ? "translate-x-0" : "-translate-x-full"
-          }`}
+          // max-w-[80%]
+
           role="dialog"
           aria-modal="true"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Listings</h2>
+            {open && (
+              <img src="/Logo.png" alt="Carflex Logo" className=" w-20" />
+            )}
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => setOpen(!open)}
               aria-label="Close listings menu"
-              className="p-1 rounded-sm"
+              className="p-1 rounded-sm  hover:bg-gray-100 cursor-pointer"
             >
-              <X size={20} />
+              {open ? (
+                <PanelLeftClose size={20} />
+              ) : (
+                <PanelLeftOpen size={20} />
+              )}
             </button>
           </div>
 
-          <div className="flex flex-col gap-2" aria-label="Mobile listings">
-            {ITEMS.map((item) => (
-              <NavButton
-                key={item.id}
-                onClick={() => setActive(item.label)}
-                item={item}
-                isActive={active === item.label}
-                className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-              >
-                {item.label}
-              </NavButton>
-            ))}
-          </div>
-        </aside>
-      </div>
+          {open && (
+            <div className="flex flex-col">
+              <div className="flex flex-col gap-2" aria-label="Mobile listings">
+                <p className="text-gray-500 ">Listings</p>
+                {ITEMS.map((item) => (
+                  <NavButton
+                    key={item.id}
+                    onClick={() => setActive(item.label)}
+                    item={item}
+                    isActive={active === item.label}
+                    className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                  >
+                    {item.label}
+                  </NavButton>
+                ))}
+              </div>
+              <div className="  flex flex-col gap-2 mt-4">
+                <p className="text-gray-500 ">VIN</p>
+                <NavButton
+                  key="vin-decoder"
+                  item={{
+                    id: "vin-decoder",
+                    href: "/vin-decoder",
+                    label: "Vin Decoder",
+                  }}
+                  isActive={active === "Vin Decoder"}
+                  onClick={() => setActive("Vin Decoder")}
+                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                >
+                  Vin Decoder
+                </NavButton>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 px-3 py-2 rounded-lg">
+          <LogOut size={20} /> {open && <span>Sign Out</span>}
+        </div>
+      </nav>
     </>
   );
 }

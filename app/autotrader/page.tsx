@@ -2,10 +2,5 @@ import Nav from "../../components/Nav/Nav";
 import Listings from "../../components/Listings/Listings";
 
 export default async function Autotrader() {
-  return (
-    <>
-      <Nav />
-      <Listings active="Autotrader" />
-    </>
-  );
+  return <Listings active="Autotrader" />;
 }
