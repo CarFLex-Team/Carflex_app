@@ -1,9 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import TopNav from "../TopNav/TopNav";
+import { usePathname } from "next/navigation";
 export default function PageShell({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
   return (
     <div className="flex h-screen">
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
