@@ -5,7 +5,6 @@ import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
 import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
-import SearchVin from "../SearchVin/SearchVin";
 type Item = {
   id: number;
   title: string;
@@ -62,7 +61,7 @@ export default function ClientListings({
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12">
           {items.map((carDetails) => (
             <CarCard key={carDetails.id} carDetails={carDetails} />
           ))}
