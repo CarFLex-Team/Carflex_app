@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import TopNav from "../TopNav/TopNav";
 export default function PageShell({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   return (
     <div className="flex h-screen">
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />

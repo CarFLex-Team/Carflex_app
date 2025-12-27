@@ -39,65 +39,82 @@ export default function Sidebar({
   );
 
   return (
-    <aside
-      className={`h-screen flex flex-col justify-between bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  p-4 z-50  max-md:fixed max-md:inset-0 transform transition-transform duration-300 ease-in-out ${
-        open ? "w-58 max-md:translate-x-0" : "w-15 max-md:-translate-x-full"
-      }`}
-    >
-      <div className="overflow-auto">
-        <div className="flex items-center justify-between mb-4">
-          {open && <img src="/Logo.png" alt="Carflex Logo" className=" w-16" />}
-          <button
-            onClick={() => setOpen(!open)}
-            aria-label="Close listings menu"
-            className="p-1 rounded-sm  hover:bg-gray-100 cursor-pointer"
-          >
-            {open ? <PanelLeftClose size={20} /> : <PanelLeftOpen size={20} />}
-          </button>
-        </div>
+    <>
+      <button
+        type="button"
+        className={`absolute inset-0 bg-black/40 transition-opacity duration-200 z-20 md:hidden ${
+          open ? "opacity-100" : "hidden"
+        }`}
+        onClick={() => setOpen(false)}
+        aria-label="Close menu"
+      />
 
-        {open && (
-          <div className="flex flex-col ">
-            <div className="flex flex-col gap-2" aria-label="Mobile listings">
-              <p className="text-gray-500 ">Listings</p>
-              {ITEMS.map((item) => (
-                <NavButton
-                  key={item.id}
-                  onClick={() => setActive(item.label)}
-                  item={item}
-                  isActive={active === item.label}
-                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-                >
-                  {item.label}
-                </NavButton>
-              ))}
-            </div>
-            <div className="  flex flex-col gap-2 mt-4">
-              <p className="text-gray-500 ">VIN</p>
-              <NavButton
-                key="vin-decoder"
-                item={{
-                  id: "vin-decoder",
-                  href: "/vin-decoder",
-                  label: "Vin Decoder",
-                }}
-                isActive={active === "Vin Decoder"}
-                onClick={() => setActive("Vin Decoder")}
-                className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-              >
-                Vin Decoder
-              </NavButton>
-            </div>
-          </div>
-        )}
-      </div>
-      <div
-        className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 ${
-          open ? " px-3 py-2 rounded-lg" : "p-1 rounded-lg "
+      <aside
+        className={`h-screen flex flex-col justify-between bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  p-4 z-50  max-md:fixed max-md:inset-0 transform transition-transform duration-300 ease-in-out ${
+          open ? "w-58 max-md:translate-x-0" : "w-15 max-md:-translate-x-full"
         }`}
       >
-        <LogOut size={20} /> {open && <span>Sign Out</span>}
-      </div>
-    </aside>
+        <div className="overflow-auto">
+          <div className="flex items-center justify-between mb-4">
+            {open && (
+              <img src="/Logo.png" alt="Carflex Logo" className=" w-16" />
+            )}
+            <button
+              onClick={() => setOpen(!open)}
+              aria-label="Close listings menu"
+              className="p-1 rounded-sm  hover:bg-gray-100 cursor-pointer"
+            >
+              {open ? (
+                <PanelLeftClose size={20} />
+              ) : (
+                <PanelLeftOpen size={20} />
+              )}
+            </button>
+          </div>
+
+          {open && (
+            <div className="flex flex-col ">
+              <div className="flex flex-col gap-2" aria-label="Mobile listings">
+                <p className="text-gray-500 ">Listings</p>
+                {ITEMS.map((item) => (
+                  <NavButton
+                    key={item.id}
+                    onClick={() => setActive(item.label)}
+                    item={item}
+                    isActive={active === item.label}
+                    className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                  >
+                    {item.label}
+                  </NavButton>
+                ))}
+              </div>
+              <div className="  flex flex-col gap-2 mt-4">
+                <p className="text-gray-500 ">VIN</p>
+                <NavButton
+                  key="vin-decoder"
+                  item={{
+                    id: "vin-decoder",
+                    href: "/vin-decoder",
+                    label: "Vin Decoder",
+                  }}
+                  isActive={active === "Vin Decoder"}
+                  onClick={() => setActive("Vin Decoder")}
+                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                >
+                  Vin Decoder
+                </NavButton>
+              </div>
+            </div>
+          )}
+        </div>
+        <div
+          className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 ${
+            open ? " px-3 py-2 rounded-lg" : "p-1 rounded-lg "
+          }`}
+        >
+          <LogOut size={20} /> {open && <span>Sign Out</span>}
+        </div>
+      </aside>
+    </>
   );
 }
