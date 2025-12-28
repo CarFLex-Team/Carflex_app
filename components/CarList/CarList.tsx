@@ -5,12 +5,14 @@ import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge } from "lucide-react";
 import Link from "next/link";
 import formatNumber from "@/helpers/formatNumber";
+import CustomButton from "../CustomButton/CustomButton";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
     kijiji: <KijijiLogo className="w-8 sm:w-10" />,
     facebook: <FacebookLogo className="w-6 sm:w-8" />,
   };
+
   const statusStyleMap: Record<string, { bg: string; border: string }> = {
     Steal: {
       bg: "bg-green-700",
@@ -37,7 +39,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   return (
     <Link
       href={`${carDetails.ad_link}`}
-      className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative "
+      className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative "
     >
       <div className="relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0">
         <img
@@ -90,10 +92,14 @@ export default function CarList({ carDetails }: { carDetails: any }) {
         <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
           {carDetails.description}
         </p>
-        <p className="text-gray-500 flex items-center text-sm sm:text-base gap-2">
-          <CircleGauge className="w-4 h-4" />
-          {formatNumber(carDetails.odometer)} Km
-        </p>
+        <div className="w-full flex justify-between items-center mt-1">
+          <p className="text-gray-500 flex items-center text-sm sm:text-base gap-2">
+            <CircleGauge className="w-4 h-4" />
+            {formatNumber(carDetails.odometer)} Km
+          </p>
+
+          <CustomButton img={carDetails.image_src || ""} className="text-xs" />
+        </div>
       </div>
     </Link>
   );

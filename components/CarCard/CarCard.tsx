@@ -6,6 +6,7 @@ import { CircleGauge } from "lucide-react";
 import Link from "next/link";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import formatNumber from "@/helpers/formatNumber";
+import CustomButton from "../CustomButton/CustomButton";
 export default function CarCard({ carDetails }: { carDetails: any }) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-10" />,
@@ -59,7 +60,7 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
               {carDetails.status}
             </p>
           </div>
-          <p className="text-gray-500 flex items-center gap-2">
+          <p className="text-gray-500 flex items-center gap-0.5">
             <CircleGauge className="w-4 h-4" />
             {formatNumber(carDetails.odometer)} Km
           </p>
@@ -72,22 +73,25 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
             {carDetails.location?.toUpperCase()}
           </p>
         </div>
-        <div className="flex gap-2 flex-wrap ">
-          <p
-            className={`border border-solid border-gray-300 text-gray-200 bg-primary  
-             
-          shadow-md   px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
-          >
-            CA${formatNumber(carDetails.price)}
-          </p>
-          <p
-            className={`border border-solid ${
-              statusStyleMap[carDetails.status]?.border
-            } 
-         flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
-          >
-            Est. value ~ CA${formatNumber(carDetails.est_value)}
-          </p>
+        <div className="flex justify-between items-center  flex-wrap gap-2 ">
+          <div className="flex gap-2 flex-wrap ">
+            <p
+              className={`border border-solid border-gray-300 text-gray-200 bg-primary  
+              
+              shadow-md   px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
+            >
+              CA${formatNumber(carDetails.price)}
+            </p>
+            <p
+              className={`border border-solid ${
+                statusStyleMap[carDetails.status]?.border
+              } 
+            flex items-center shadow-md text-gray-700 px-2.5 py-0.5  rounded-md text-sm w-fit sm:text-base`}
+            >
+              Est. value ~ CA${formatNumber(carDetails.est_value)}
+            </p>
+          </div>
+          <CustomButton img={carDetails.image_src || ""} className="text-sm" />
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">
           {carDetails.description}
