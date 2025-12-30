@@ -107,13 +107,14 @@ export default function Sidebar({
             </div>
           )}
         </div>
-        <div
-          className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 ${
+        <a
+          href="/signup"
+          className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 decoration-none ${
             open ? " px-3 py-2 rounded-lg" : "p-1 rounded-lg "
           }`}
         >
           <LogOut size={20} /> {open && <span>Sign Out</span>}
-        </div>
+        </a>
       </aside>
     </>
   );

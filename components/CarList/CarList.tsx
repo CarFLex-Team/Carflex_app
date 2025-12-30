@@ -98,7 +98,10 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             {formatNumber(carDetails.odometer)} Km
           </p>
 
-          <CustomButton img={carDetails.image_src || ""} className="text-xs" />
+          <CustomButton
+            img={carDetails.image_src || ""}
+            className="text-xs bg-green-600 hover:bg-green-700"
+          />
         </div>
       </div>
     </Link>

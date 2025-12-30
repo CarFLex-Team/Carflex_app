@@ -91,7 +91,10 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
               Est. value ~ CA${formatNumber(carDetails.est_value)}
             </p>
           </div>
-          <CustomButton img={carDetails.image_src || ""} className="text-sm" />
+          <CustomButton
+            img={carDetails.image_src || ""}
+            className="text-sm bg-green-600 hover:bg-green-700"
+          />
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">
           {carDetails.description}

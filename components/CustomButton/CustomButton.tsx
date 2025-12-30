@@ -7,9 +7,11 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 export default function CustomButton({
   img,
   className,
+  title,
 }: {
   img: string;
   className?: string;
+  title?: string;
 }) {
   const [shouldFetch, setShouldFetch] = useState(false);
   const { data, isLoading, error } = useSWR(
@@ -27,10 +29,12 @@ export default function CustomButton({
 
   return (
     <button
-      className={`border border-solid border-gray-300 text-gray-200 bg-green-600 cursor-pointer shadow-md px-2.5 py-0.5 rounded-md  w-fit sm:text-base hover:bg-green-700 transition-colors duration-200 ${className}`}
+      className={`border border-solid border-gray-300 text-gray-200  cursor-pointer shadow-md px-2.5 py-0.5 rounded-md  w-fit sm:text-base  transition-colors duration-200 ${className}`}
       onClick={verifyCar}
     >
-      {isLoading ? (
+      {title ? (
+        title
+      ) : isLoading ? (
         <LoadingSpinner size={4} color="white" />
       ) : error ? (
         "Error"

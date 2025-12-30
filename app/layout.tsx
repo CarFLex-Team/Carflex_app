@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="h-screen overflow-hidden font-sans">
+      <body className="min-h-screen  font-sans">
         <TopLoader />
         {children}
       </body>
