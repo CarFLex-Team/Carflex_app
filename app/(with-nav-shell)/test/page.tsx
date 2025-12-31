@@ -1,3 +1,3 @@
-export default function Marketplace() {
+export default function Test() {
   return <div>Test</div>;
 }
