@@ -31,7 +31,7 @@ export default function SignUpPage() {
         </div>
 
         <h1 className="mb-4 text-center text-2xl font-semibold text-gray-900">
-          Create an account
+          Create anaccount
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
