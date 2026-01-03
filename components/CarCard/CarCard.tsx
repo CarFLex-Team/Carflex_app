@@ -2,12 +2,18 @@ import { JSX } from "react";
 
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import { CircleGauge } from "lucide-react";
+import { Bell, CircleGauge } from "lucide-react";
 import Link from "next/link";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import formatNumber from "@/helpers/formatNumber";
 import CustomButton from "../CustomButton/CustomButton";
-export default function CarCard({ carDetails }: { carDetails: any }) {
+export default function CarCard({
+  carDetails,
+  onNotify,
+}: {
+  carDetails: any;
+  onNotify: (e: React.MouseEvent) => void;
+}) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-10" />,
     kijiji: <KijijiLogo className="w-10" />,
@@ -36,11 +42,18 @@ export default function CarCard({ carDetails }: { carDetails: any }) {
       border: "border-gray-500",
     },
   } as const;
+
   return (
     <Link
       href={`${carDetails.ad_link}`}
-      className="h-120 min-h-fit bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out "
+      className="h-120 min-h-fit bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative"
     >
+      <button
+        onClick={onNotify}
+        className="absolute top-4 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer"
+      >
+        <Bell size={18} />
+      </button>
       <div className="w-full h-1/2 overflow-hidden rounded-md ">
         <img
           src={carDetails.image_src || "/Car-placeholder.png"}

@@ -2,11 +2,17 @@ import { JSX } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import { CircleGauge } from "lucide-react";
+import { CircleGauge, Bell } from "lucide-react";
 import Link from "next/link";
 import formatNumber from "@/helpers/formatNumber";
 import CustomButton from "../CustomButton/CustomButton";
-export default function CarList({ carDetails }: { carDetails: any }) {
+export default function CarList({
+  carDetails,
+  onNotify,
+}: {
+  carDetails: any;
+  onNotify: (e: React.MouseEvent) => void;
+}) {
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
     kijiji: <KijijiLogo className="w-8 sm:w-10" />,
@@ -47,10 +53,17 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           alt={carDetails.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <button
+          onClick={onNotify}
+          className="absolute top-2 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer"
+        >
+          <Bell size={18} />
+        </button>
       </div>
-      <div className="absolute top-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">
+      <div className="absolute bottom-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">
         {logoMap[carDetails.source.toLowerCase()]}
       </div>
+
       <div className="w-full h-full p-5  flex flex-col justify-between">
         <div className="flex gap-2 flex-wrap ">
           <p
