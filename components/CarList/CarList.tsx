@@ -45,7 +45,9 @@ export default function CarList({
   return (
     <Link
       href={`${carDetails.ad_link}`}
-      className=" h-full  flex bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative "
+      className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
+        carDetails.source === "r" ? "border-2 border-red-500 " : ""
+      } `}
     >
       <div className="relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0">
         <img

@@ -46,7 +46,9 @@ export default function CarCard({
   return (
     <Link
       href={`${carDetails.ad_link}`}
-      className="h-120 min-h-fit bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative"
+      className={`h-120 min-h-fit bg-gray-200 rounded-lg shadow-md cursor-pointer hover:shadow-xl transition-shadow duration-300 ease-in-out relative ${
+        carDetails.source === "r" ? "border-2 border-red-500 " : ""
+      }`}
     >
       <button
         onClick={onNotify}

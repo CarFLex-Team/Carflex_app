@@ -47,7 +47,6 @@ export default function ClientListings({
     try {
       setLoading(true);
 
-      // 🔥 CALL YOUR API HERE
       await fetch("/api/notify", { method: "POST" });
 
       setOpen(false);
