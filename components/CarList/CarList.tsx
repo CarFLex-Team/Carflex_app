@@ -115,7 +115,7 @@ export default function CarList({
           {carDetails.is_sus ? (
             <div
               className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm  ${
-                carDetails.is_sus === "SUS" ? "bg-red-600" : "bg-green-600"
+                carDetails.is_sus ? "bg-red-600" : "bg-green-600"
               }`}
             >
               {carDetails.is_sus}
