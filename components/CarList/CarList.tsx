@@ -118,7 +118,7 @@ export default function CarList({
                 carDetails.is_sus ? "bg-red-600" : "bg-green-600"
               }`}
             >
-              {carDetails.is_sus}
+              {carDetails.is_sus ? "Suspicious" : "Safe"}
             </div>
           ) : (
             <div
