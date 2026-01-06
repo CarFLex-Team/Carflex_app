@@ -23,7 +23,8 @@ export async function GET(req: Request) {
         created_at,
         est_value,
         description,
-        source
+        source,
+        is_sus
       FROM "kijiji"
       ORDER BY created_at DESC
       LIMIT $1

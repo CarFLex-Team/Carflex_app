@@ -24,7 +24,8 @@ export async function GET(req: Request) {
        
         est_value,
         description,
-        source
+        source,
+        is_sus
       FROM "autotrader"
       ORDER BY created_at DESC
       LIMIT $1

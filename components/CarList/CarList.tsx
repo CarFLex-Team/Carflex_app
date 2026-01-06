@@ -112,11 +112,21 @@ export default function CarList({
             <CircleGauge className="w-4 h-4" />
             {formatNumber(carDetails.odometer)} Km
           </p>
-
-          <CustomButton
-            img={carDetails.image_src || ""}
-            className="text-xs bg-green-600 hover:bg-green-700"
-          />
+          {carDetails.is_sus ? (
+            <div
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm  ${
+                carDetails.is_sus === "SUS" ? "bg-red-600" : "bg-green-600"
+              }`}
+            >
+              {carDetails.is_sus}
+            </div>
+          ) : (
+            <div
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm bg-gray-500 `}
+            >
+              Unknown
+            </div>
+          )}
         </div>
       </div>
     </Link>

@@ -24,7 +24,8 @@ export async function GET(req: Request) {
         created_at,       
         est_value,
         description,
-        source
+        source,
+        is_sus
       FROM "all"
         ORDER BY title, price, odometer, created_at DESC)deduped
       ORDER BY created_at DESC
