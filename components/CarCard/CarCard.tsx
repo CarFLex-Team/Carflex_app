@@ -106,9 +106,21 @@ export default function CarCard({
               Est. value ~ CA${formatNumber(carDetails.est_value)}
             </p>
           </div>
-          <div className="border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm  bg-red-600 ">
-            SUS
-          </div>
+          {carDetails.is_sus !== null ? (
+            <div
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm  ${
+                carDetails.is_sus ? "bg-red-600" : "bg-green-600"
+              }`}
+            >
+              {carDetails.is_sus ? "Suspicious" : "Safe"}
+            </div>
+          ) : (
+            <div
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm bg-gray-500 `}
+            >
+              Unknown
+            </div>
+          )}
         </div>
         <p className="text-black overflow-ellipsis line-clamp-2 text-sm">
           {carDetails.description}
