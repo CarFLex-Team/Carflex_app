@@ -50,7 +50,7 @@ export default function Sidebar({
       />
 
       <aside
-        className={`h-screen flex flex-col justify-between bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  p-4 z-50  max-md:fixed max-md:inset-0 transform transition-transform duration-300 ease-in-out ${
+        className={`h-screen flex flex-col justify-around sm:justify-between bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)]  px-4 py-6  z-50  max-md:fixed max-md:inset-0 transform transition-transform duration-300 ease-in-out ${
           open ? "w-58 max-md:translate-x-0" : "w-15 max-md:-translate-x-full"
         }`}
       >
