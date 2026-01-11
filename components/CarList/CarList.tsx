@@ -5,7 +5,7 @@ import KijijiLogo from "../Logos/KijijiLogo";
 import { CircleGauge, Bell } from "lucide-react";
 import Link from "next/link";
 import formatNumber from "@/helpers/formatNumber";
-import CustomButton from "../CustomButton/CustomButton";
+import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
 export default function CarList({
   carDetails,
   onNotify,
@@ -97,6 +97,7 @@ export default function CarList({
               Est. value ~ CA${formatNumber(carDetails.est_value)}
             </p>
           </div>
+          <CopyToClipboardButton text={carDetails.ad_link} />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
           <p className="text-black  overflow-ellipsis line-clamp-2  sm:line-clamp-1 font-bold text-base sm:text-lg pr-2.5">
