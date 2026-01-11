@@ -45,6 +45,8 @@ export default function CarList({
   return (
     <Link
       href={`${carDetails.ad_link}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
