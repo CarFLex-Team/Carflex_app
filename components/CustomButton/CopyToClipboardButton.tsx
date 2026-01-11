@@ -9,7 +9,7 @@ export default function CopyToClipboardButton({ text }: { text: string }) {
   const handleCopyClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
-      await copy(text);
+      await copy(text + "\nCopied from Carflex App");
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
