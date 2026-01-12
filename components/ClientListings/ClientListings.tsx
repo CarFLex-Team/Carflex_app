@@ -31,6 +31,7 @@ export default function ClientListings({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<"card" | "list">("list");
+
   const { data, error, isLoading } = useSWR(
     [`${active.toLowerCase()}Cars`, 20],
     () => fetchData({ name: active.toLowerCase(), limit: 20 }),
@@ -56,11 +57,7 @@ export default function ClientListings({
       setLoading(false);
     }
   };
-  const onNotify = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpen(true);
-  };
+
   const items: Item[] = data.items;
   return (
     <>
@@ -78,33 +75,25 @@ export default function ClientListings({
         {view === "list" ? (
           <div className="grid grid-cols-1 gap-5">
             {items.map((carDetails) => (
-              <CarList
-                key={carDetails.id}
-                carDetails={carDetails}
-                onNotify={onNotify}
-              />
+              <CarList key={carDetails.id} carDetails={carDetails} />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12">
             {items.map((carDetails) => (
-              <CarCard
-                key={carDetails.id}
-                carDetails={carDetails}
-                onNotify={onNotify}
-              />
+              <CarCard key={carDetails.id} carDetails={carDetails} />
             ))}
           </div>
         )}
       </div>
-      <ConfirmDialog
+      {/* <ConfirmDialog
         isOpen={open}
         title="Notify?"
         description="Are you sure you want to send this car?"
         onCancel={() => setOpen(false)}
         onConfirm={callNotifyApi}
         loading={loading}
-      />
+      /> */}
     </>
   );
 }

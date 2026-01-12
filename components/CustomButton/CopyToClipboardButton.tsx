@@ -3,17 +3,31 @@ import { useState } from "react";
 import copy from "clipboard-copy";
 import { Check, Copy } from "lucide-react";
 
-export default function CopyToClipboardButton({ text }: { text: string }) {
+export default function CopyToClipboardButton({
+  carDetails,
+}: {
+  carDetails: any;
+}) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
-      await copy(text + "\nCopied from Carflex App");
+
+      await copy(carDetails.ad_link + "\nCopied from Carflex App");
+
+      await fetch("api/save-car", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(carDetails),
+      });
+
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
-      console.error("Failed to copy text to clipboard", error);
+      console.error("Failed to copy text or save car details", error);
     }
   };
 

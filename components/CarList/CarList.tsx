@@ -1,18 +1,26 @@
-import { JSX } from "react";
+"use client";
+import { JSX, useState } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import { CircleGauge, Bell } from "lucide-react";
+import { CheckCheck, CircleGauge, SearchCheck, X } from "lucide-react";
 import Link from "next/link";
 import formatNumber from "@/helpers/formatNumber";
 import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
-export default function CarList({
-  carDetails,
-  onNotify,
-}: {
-  carDetails: any;
-  onNotify: (e: React.MouseEvent) => void;
-}) {
+import timeAgo from "@/helpers/timeAgoCalculator";
+export default function CarList({ carDetails }: { carDetails: any }) {
+  const [trimStatus, setTrimStatus] = useState<{
+    status: boolean;
+    value: string;
+  }>();
+  const onCheck = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setTrimStatus({ status: true, value: "" });
+    setTimeout(() => {
+      setTrimStatus(undefined);
+    }, 3000);
+  };
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
     kijiji: <KijijiLogo className="w-8 sm:w-10" />,
@@ -51,17 +59,31 @@ export default function CarList({
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
     >
-      <div className="relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0">
+      <div
+        className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 ${
+          trimStatus?.status === true
+            ? "border-4 border-green-500"
+            : trimStatus?.status === false
+            ? "border-4 border-red-500"
+            : ""
+        }`}
+      >
         <img
           src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <button
-          onClick={onNotify}
+          onClick={onCheck}
           className="absolute top-2 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer"
         >
-          <Bell size={18} />
+          {trimStatus?.status === true ? (
+            <CheckCheck size={18} />
+          ) : trimStatus?.status === false ? (
+            trimStatus.value
+          ) : (
+            <SearchCheck size={18} />
+          )}
         </button>
       </div>
       <div className="absolute bottom-2 left-2 opacity-60 bg-gray-200 p-1 rounded-md ">
@@ -99,14 +121,16 @@ export default function CarList({
               Est. value ~ CA${formatNumber(carDetails.est_value)}
             </p>
           </div>
-          <CopyToClipboardButton text={carDetails.ad_link} />
+          <CopyToClipboardButton carDetails={carDetails} />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
-          <p className="text-black  overflow-ellipsis line-clamp-2  sm:line-clamp-1 font-bold text-base sm:text-lg pr-2.5">
+          <p className="text-black  overflow-ellipsis line-clamp-1 font-bold text-base sm:text-lg pr-2.5">
             {carDetails.title}
           </p>
+          <p className="text-gray-700 text-sm">
+            {timeAgo(carDetails.created_at)}
+          </p>
         </div>
-
         <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
           {carDetails.description}
         </p>

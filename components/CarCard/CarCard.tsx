@@ -1,19 +1,28 @@
-import { JSX } from "react";
+"use client";
+import { JSX, useState } from "react";
 
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import { Bell, CircleGauge } from "lucide-react";
+import { Bell, CheckCheck, CircleGauge, SearchCheck } from "lucide-react";
 import Link from "next/link";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import formatNumber from "@/helpers/formatNumber";
 import CustomButton from "../CustomButton/CustomButton";
-export default function CarCard({
-  carDetails,
-  onNotify,
-}: {
-  carDetails: any;
-  onNotify: (e: React.MouseEvent) => void;
-}) {
+import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
+import timeAgo from "@/helpers/timeAgoCalculator";
+export default function CarCard({ carDetails }: { carDetails: any }) {
+  const [trimStatus, setTrimStatus] = useState<{
+    status: boolean;
+    value: string;
+  }>();
+  const onCheck = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setTrimStatus({ status: false, value: "XLT" });
+    setTimeout(() => {
+      setTrimStatus(undefined);
+    }, 3000);
+  };
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-10" />,
     kijiji: <KijijiLogo className="w-10" />,
@@ -53,12 +62,26 @@ export default function CarCard({
       }`}
     >
       <button
-        onClick={onNotify}
-        className="absolute top-4 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer"
+        onClick={onCheck}
+        className="absolute top-4 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer "
       >
-        <Bell size={18} />
+        {trimStatus?.status === true ? (
+          <CheckCheck size={18} />
+        ) : trimStatus?.status === false ? (
+          trimStatus.value
+        ) : (
+          <SearchCheck size={18} />
+        )}
       </button>
-      <div className="w-full h-1/2 overflow-hidden rounded-md ">
+      <div
+        className={`w-full h-1/2 overflow-hidden rounded-md ${
+          trimStatus?.status === true
+            ? "border-4 border-green-500"
+            : trimStatus?.status === false
+            ? "border-4 border-red-500"
+            : ""
+        }`}
+      >
         <img
           src={carDetails.image_src || "/Car-placeholder.png"}
           alt={carDetails.title}
@@ -76,6 +99,7 @@ export default function CarCard({
             >
               {carDetails.status}
             </p>
+            <CopyToClipboardButton carDetails={carDetails} />
           </div>
           <p className="text-gray-500 flex items-center gap-0.5">
             <CircleGauge className="w-4 h-4" />
@@ -86,8 +110,8 @@ export default function CarCard({
           <p className="text-black font-bold text-lg pr-2.5 line-clamp-2">
             {carDetails.title}
           </p>
-          <p className="text-gray-400 text-sm">
-            {carDetails.location?.toUpperCase()}
+          <p className="text-gray-700 text-sm">
+            {timeAgo(carDetails.created_at)}
           </p>
         </div>
         <div className="flex justify-between items-center  flex-wrap gap-2 ">
