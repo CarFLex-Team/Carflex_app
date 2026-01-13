@@ -59,7 +59,8 @@ export async function GET(req: Request) {
         est_value,
         description,
         source,
-        is_sus
+        is_sus,
+        real_value
       FROM "marketplace"
       ORDER BY created_at DESC
       LIMIT $1
@@ -71,7 +72,7 @@ export async function GET(req: Request) {
       rows.map(async (r) => ({
         ...r,
         image_src: await getValidFirstImage(r.image_src),
-        status: await priceStatus(r.price, r.est_value),
+        status: await priceStatus(r.price, r.est_value, r.real_value),
       }))
     );
 

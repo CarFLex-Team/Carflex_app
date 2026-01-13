@@ -6,8 +6,12 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 export default function CopyToClipboardButton({
   carDetails,
+  status,
+  estimatedValue,
 }: {
   carDetails: any;
+  status?: string;
+  estimatedValue?: string;
 }) {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +20,18 @@ export default function CopyToClipboardButton({
     try {
       e.preventDefault();
       setIsLoading(true);
-      await copy(carDetails.ad_link + "\nCopied from Carflex App");
+      await copy(
+        carDetails.ad_link +
+          `\n${status === "Unknown" || !status ? "" : status?.toUpperCase()}` +
+          `${
+            estimatedValue
+              ? `\nEstimated Value: $${estimatedValue}`
+              : carDetails.est_value
+              ? `\nEstimated Value: $${carDetails.est_value}`
+              : ""
+          }` +
+          "\nGenerated using Carflex App"
+      );
 
       await fetch("api/save-car", {
         method: "POST",
@@ -39,7 +54,7 @@ export default function CopyToClipboardButton({
       onClick={handleCopyClick}
     >
       {isLoading ? (
-        <LoadingSpinner size={4} />
+        <LoadingSpinner size={4} color="white" />
       ) : isCopied ? (
         <Check size={18} />
       ) : (

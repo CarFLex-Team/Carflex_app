@@ -1,8 +1,13 @@
 export default async function priceStatus(
   price: number | null,
-  est_value: number | null
+  est_value: number | null,
+  real_value?: number | null
 ) {
+  if (real_value && !isNaN(real_value)) {
+    est_value = real_value;
+  }
   if (!est_value || !price || isNaN(price)) return "Unknown";
+
   const difference = est_value - price;
   const differencePercent = (difference / price) * 100;
   if (difference >= 0) {

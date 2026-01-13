@@ -32,4 +32,6 @@ export type allRow = {
   status: string | null;
   est_value: number | null;
   source: string;
+  is_sus: boolean;
+  real_value: number | null;
 };

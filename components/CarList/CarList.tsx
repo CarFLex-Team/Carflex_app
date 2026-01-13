@@ -1,18 +1,37 @@
 "use client";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import { CheckCheck, CircleGauge, SearchCheck, X } from "lucide-react";
+import {
+  CheckCheck,
+  CircleGauge,
+  Save,
+  SearchCheck,
+  SquarePen,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import formatNumber from "@/helpers/formatNumber";
 import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
 import timeAgo from "@/helpers/timeAgoCalculator";
+import { updateCarValue } from "@/helpers/updateCarValue";
+import { mutate } from "swr";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import priceStatus from "@/helpers/priceStatus";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const [trimStatus, setTrimStatus] = useState<{
     status: boolean;
     value: string;
   }>();
+  const [estimatedValue, setEstimatedValue] = useState<string>(
+    carDetails.real_value
+      ? formatNumber(carDetails.real_value)
+      : formatNumber(carDetails.est_value)
+  );
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string>(carDetails.status);
   const onCheck = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -21,6 +40,34 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       setTrimStatus(undefined);
     }, 3000);
   };
+
+  async function handleSave() {
+    if (estimatedValue === formatNumber(carDetails.est_value)) {
+      setEditMode(false);
+      return;
+    }
+    try {
+      setLoading(true);
+      await updateCarValue(
+        carDetails.ad_link,
+        carDetails.source,
+        estimatedValue
+      );
+      mutate(`/api/cars/${carDetails.ad_link}?source=${carDetails.source}`);
+      const newStatus = await priceStatus(
+        carDetails.price,
+        carDetails.est_value,
+        Number(estimatedValue)
+      );
+      setStatus(newStatus);
+      setEditMode(false);
+    } catch {
+      alert("Failed to update value");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const logoMap: Record<string, JSX.Element> = {
     autotrader: <AutotraderLogo className="w-8 sm:w-10" />,
     kijiji: <KijijiLogo className="w-8 sm:w-10" />,
@@ -100,28 +147,63 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             CA${formatNumber(carDetails.price)}
           </p>
           <p
-            className={` ${statusStyleMap[carDetails.status]?.bg}
+            className={` ${statusStyleMap[status]?.bg}
               text-white px-2.5 py-0.5 rounded-md min-[490px]:hidden text-xs`}
           >
-            {carDetails.status}
+            {status}
           </p>
           <div className="flex">
             <p
-              className={` ${statusStyleMap[carDetails.status]?.bg}
+              className={` ${statusStyleMap[status]?.bg}
               text-white px-2.5 py-0.5 rounded-l-md max-[490px]:hidden text-xs  sm:text-base`}
             >
-              {carDetails.status}
+              {status}
             </p>
             <p
-              className={`border border-solid ${
-                statusStyleMap[carDetails.status]?.border
-              } 
+              className={`border border-solid ${statusStyleMap[status]?.border} 
             flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-base`}
             >
-              Est. value ~ CA${formatNumber(carDetails.est_value)}
+              Est. ~ CA$
+              <input
+                onClick={(e) => e.preventDefault()}
+                type="text"
+                className={` max-w-13  text-gray-700 focus:outline-none${
+                  editMode ? " bg-white" : " bg-transparent"
+                }`}
+                value={estimatedValue}
+                disabled={!editMode}
+                onChange={(e) => {
+                  setEstimatedValue(e.target.value);
+                }}
+              />
+              <button className="ml-2 cursor-pointer">
+                {loading ? (
+                  <LoadingSpinner size={4} />
+                ) : editMode ? (
+                  <Save
+                    size={17}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSave();
+                    }}
+                  />
+                ) : (
+                  <SquarePen
+                    size={17}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setEditMode(true);
+                    }}
+                  />
+                )}
+              </button>
             </p>
           </div>
-          <CopyToClipboardButton carDetails={carDetails} />
+          <CopyToClipboardButton
+            carDetails={carDetails}
+            status={status}
+            estimatedValue={estimatedValue}
+          />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
           <p className="text-black  overflow-ellipsis line-clamp-1 font-bold text-base sm:text-lg pr-2.5">

@@ -25,7 +25,8 @@ export async function GET(req: Request) {
         est_value,
         description,
         source,
-        is_sus
+        is_sus,
+        real_value
       FROM "all"
         ORDER BY title, price, odometer, created_at DESC)deduped
       ORDER BY created_at DESC
@@ -38,7 +39,7 @@ export async function GET(req: Request) {
       rows.map(async (r) => ({
         ...r,
         image_src: await getValidFirstImage(r.image_src),
-        status: await priceStatus(r.price, r.est_value),
+        status: await priceStatus(r.price, r.est_value, r.real_value),
       }))
     );
 

@@ -19,6 +19,8 @@ type Item = {
   status: string;
   est_value: string;
   source: string;
+  is_sus: boolean;
+  real_value: string;
 };
 
 export default function ClientListings({
