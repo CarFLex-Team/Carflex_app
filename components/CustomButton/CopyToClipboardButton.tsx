@@ -38,7 +38,11 @@ export default function CopyToClipboardButton({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(carDetails),
+        body: JSON.stringify({
+          ...carDetails,
+          status: status,
+          real_value: estimatedValue,
+        }),
       });
       setIsLoading(false);
       setIsCopied(true);
