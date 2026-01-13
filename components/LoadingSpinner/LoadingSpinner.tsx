@@ -7,7 +7,7 @@ export default function LoadingSpinner({
 }) {
   return (
     <div
-      className={`inline-block animate-spin rounded-full border-4 border-solid border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] ${
+      className={`inline-block animate-spin rounded-full border-2 border-solid border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] ${
         size ? `h-${size} w-${size}` : "h-8 w-8"
       } ${color ? `border-${color}` : "border-primary"}`}
       role="status"
