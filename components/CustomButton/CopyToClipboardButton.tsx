@@ -33,7 +33,7 @@ export default function CopyToClipboardButton({
           "\nGenerated using Carflex App"
       );
 
-      await fetch("api/save-car", {
+      await fetch("api/cars/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

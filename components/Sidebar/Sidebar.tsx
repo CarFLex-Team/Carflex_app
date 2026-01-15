@@ -104,6 +104,22 @@ export default function Sidebar({
                   Vin Decoder
                 </NavButton>
               </div>
+              <div className="  flex flex-col gap-2 mt-4">
+                <p className="text-gray-500 ">SHEETS</p>
+                <NavButton
+                  key="sheet-dabou"
+                  item={{
+                    id: "sheet-dabou",
+                    href: "/sheet-dabou",
+                    label: "Sheet Dabou",
+                  }}
+                  isActive={active === "Sheet Dabou"}
+                  onClick={() => setActive("Sheet Dabou")}
+                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                >
+                  Dabou
+                </NavButton>
+              </div>
             </div>
           )}
         </div>
