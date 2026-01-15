@@ -12,26 +12,26 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import formatNumber from "@/helpers/formatNumber";
+
 import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
 import timeAgo from "@/helpers/timeAgoCalculator";
 import { updateCarValue } from "@/helpers/updateCarValue";
 import { mutate } from "swr";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import priceStatus from "@/helpers/priceStatus";
+import formatNumber from "@/helpers/formatNumber";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const [trimStatus, setTrimStatus] = useState<{
     status: boolean;
     value: string;
   }>();
-  const [estimatedValue, setEstimatedValue] = useState<string>(
-    carDetails.real_value
-      ? formatNumber(carDetails.real_value)
-      : formatNumber(carDetails.est_value)
+  const [estimatedValue, setEstimatedValue] = useState<number>(
+    carDetails.real_value ? carDetails.real_value : carDetails.est_value
   );
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string>(carDetails.status);
+
   const onCheck = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -42,7 +42,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   };
 
   async function handleSave() {
-    if (estimatedValue === formatNumber(carDetails.est_value)) {
+    if (estimatedValue === carDetails.est_value) {
       setEditMode(false);
       return;
     }
@@ -57,7 +57,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       const newStatus = await priceStatus(
         carDetails.price,
         carDetails.est_value,
-        Number(estimatedValue)
+        estimatedValue
       );
       setStatus(newStatus);
       setEditMode(false);
@@ -167,13 +167,13 @@ export default function CarList({ carDetails }: { carDetails: any }) {
               <input
                 onClick={(e) => e.preventDefault()}
                 type="text"
-                className={` max-w-13  text-gray-700 focus:outline-none${
+                className={` max-w-23  text-gray-700 focus:outline-none  ${
                   editMode ? " bg-white" : " bg-transparent"
                 }`}
-                value={estimatedValue}
+                value={estimatedValue ? estimatedValue.toLocaleString() : ""}
                 disabled={!editMode}
                 onChange={(e) => {
-                  setEstimatedValue(e.target.value);
+                  setEstimatedValue(Number(e.target.value.replace(/,/g, "")));
                 }}
               />
               <button className="ml-2 cursor-pointer">

@@ -1,4 +1,4 @@
-function formatNumber(value: string): string {
+function formatNumber(value: string | number): string {
   let num: number;
   if (!value) return "";
   if (typeof value === "string") {

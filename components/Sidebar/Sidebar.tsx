@@ -22,6 +22,16 @@ const ITEMS: Item[] = [
   { id: "autotrader", href: "/autotrader", label: "Autotrader" },
   { id: "kijiji", href: "/kijiji", label: "Kijiji" },
   { id: "marketplace", href: "/marketplace", label: "Marketplace" },
+  {
+    id: "sheet-dabou",
+    href: "/sheet-dabou",
+    label: "Sheet Dabou",
+  },
+  {
+    id: "vin-decoder",
+    href: "/vin-decoder",
+    label: "Vin Decoder",
+  },
 ];
 
 export default function Sidebar({
@@ -76,27 +86,28 @@ export default function Sidebar({
             <div className="flex flex-col ">
               <div className="flex flex-col gap-2" aria-label="Mobile listings">
                 <p className="text-gray-500 ">Listings</p>
-                {ITEMS.map((item) => (
-                  <NavButton
-                    key={item.id}
-                    onClick={() => setActive(item.label)}
-                    item={item}
-                    isActive={active === item.label}
-                    className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-                  >
-                    {item.label}
-                  </NavButton>
-                ))}
+                {ITEMS.map((item) => {
+                  if (item.id === "sheet-dabou" || item.id === "vin-decoder") {
+                    return null;
+                  }
+                  return (
+                    <NavButton
+                      key={item.id}
+                      onClick={() => setActive(item.label)}
+                      item={item}
+                      isActive={active === item.label}
+                      className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                    >
+                      {item.label}
+                    </NavButton>
+                  );
+                })}
               </div>
               <div className="  flex flex-col gap-2 mt-4">
                 <p className="text-gray-500 ">VIN</p>
                 <NavButton
                   key="vin-decoder"
-                  item={{
-                    id: "vin-decoder",
-                    href: "/vin-decoder",
-                    label: "Vin Decoder",
-                  }}
+                  item={ITEMS.find((i) => i.id === "vin-decoder")!}
                   isActive={active === "Vin Decoder"}
                   onClick={() => setActive("Vin Decoder")}
                   className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
@@ -108,11 +119,7 @@ export default function Sidebar({
                 <p className="text-gray-500 ">SHEETS</p>
                 <NavButton
                   key="sheet-dabou"
-                  item={{
-                    id: "sheet-dabou",
-                    href: "/sheet-dabou",
-                    label: "Sheet Dabou",
-                  }}
+                  item={ITEMS.find((i) => i.id === "sheet-dabou")!}
                   isActive={active === "Sheet Dabou"}
                   onClick={() => setActive("Sheet Dabou")}
                   className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}

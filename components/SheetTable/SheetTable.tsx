@@ -1,5 +1,6 @@
-import { Link } from "lucide-react";
+import { Edit, Link } from "lucide-react";
 import TableSkeleton from "../ui/TableSkeleton";
+import { EditableCell } from "./EditableCell";
 type Pagination = {
   page: number;
   pageSize: number;
@@ -9,6 +10,7 @@ type Pagination = {
 export type TableColumn<T> = {
   header: string;
   accessor: keyof T | ((row: T) => React.ReactNode);
+  render?: (row: T) => React.ReactNode;
   className?: string;
 };
 
@@ -33,6 +35,7 @@ export default function SheetTable<T>({
   onRowClick,
   renderActions,
 }: DataTableProps<T>) {
+  console.log("DataTable data:", data);
   const totalPages = pagination
     ? Math.ceil(pagination.total / pagination.pageSize)
     : 0;
@@ -90,28 +93,9 @@ export default function SheetTable<T>({
              overflow-auto 
               max-w-36 "
                     >
-                      {typeof col.accessor === "function" ? (
-                        col.accessor(row)
-                      ) : col.header === "Price" ? (
-                        "$" + (row[col.accessor] as React.ReactNode)
-                      ) : col.header === "Estimated" ? (
-                        row.real_value ? (
-                          "$" + (row.real_value as React.ReactNode)
-                        ) : row[col.accessor] ? (
-                          "$" + (row[col.accessor] as React.ReactNode)
-                        ) : (
-                          ""
-                        )
-                      ) : col.accessor === "ad_link" ? (
-                        <a
-                          className="underline text-blue-900"
-                          href={`${row[col.accessor]}`}
-                        >
-                          Click Here
-                        </a>
-                      ) : (
-                        (row[col.accessor] as React.ReactNode)
-                      )}
+                      {col.render
+                        ? col.render(row)
+                        : (row[col.accessor!] as React.ReactNode)}
                     </td>
                   ))}
                   {renderActions && (
