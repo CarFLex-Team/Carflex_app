@@ -165,15 +165,27 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             >
               Est. ~ CA$
               <input
+                autoFocus
                 onClick={(e) => e.preventDefault()}
                 type="text"
-                className={` max-w-23  text-gray-700 focus:outline-none  ${
+                className={` max-w-14  text-gray-700 focus:outline-none  ${
                   editMode ? " bg-white" : " bg-transparent"
                 }`}
                 value={estimatedValue ? estimatedValue.toLocaleString() : ""}
                 disabled={!editMode}
                 onChange={(e) => {
                   setEstimatedValue(Number(e.target.value.replace(/,/g, "")));
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleSave(); // 🔥 your existing save function
+                  }
+
+                  if (e.key === "Escape") {
+                    e.preventDefault();
+                    setEditMode(false); // optional but recommended
+                  }
                 }}
               />
               <button className="ml-2 cursor-pointer">

@@ -71,11 +71,11 @@ export default function CopyToClipboardButton({
         {isLoading ? (
           <LoadingSpinner size={4} color="white" />
         ) : error ? (
-          <X size={18} />
+          <X size={17} />
         ) : isCopied ? (
-          <Check size={18} />
+          <Check size={17} />
         ) : (
-          <Copy size={18} />
+          <Copy size={17} />
         )}
       </button>
       {open && <NotifyDialog title="Car already Sent" isOpen={open} />}

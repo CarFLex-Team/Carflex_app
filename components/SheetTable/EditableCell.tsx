@@ -26,6 +26,7 @@ export function EditableCell({
   const [loading, setLoading] = useState(false);
 
   async function save() {
+    if (loading) return;
     if (draft === value) {
       setEditing(false);
       return;
@@ -94,6 +95,7 @@ export function EditableCell({
         </select>
       ) : (
         <input
+          autoFocus
           type={type}
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
@@ -111,10 +113,10 @@ export function EditableCell({
           }}
         />
       )}
-      <button onClick={save} disabled={loading}>
+      {/* <button onClick={save} disabled={loading}>
         ✔
       </button>
-      <button onClick={() => setEditing(false)}>✖</button>
+      <button onClick={() => setEditing(false)}>✖</button> */}
     </div>
   );
 }
