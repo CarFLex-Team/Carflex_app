@@ -46,19 +46,6 @@ export default function ClientListings({
 
   if (error) return <div className="text-red-600">Failed to load</div>;
   if (isLoading && !data) return <div>Loading...</div>;
-  const callNotifyApi = async () => {
-    try {
-      setLoading(true);
-
-      await fetch("/api/notify", { method: "POST" });
-
-      setOpen(false);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const items: Item[] = data.items;
   return (
