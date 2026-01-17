@@ -46,7 +46,6 @@ export function EditableCell({
         body: JSON.stringify({ [field]: draft }),
       },
     );
-
     setLoading(false);
     setEditing(false);
     setDraft(null);
