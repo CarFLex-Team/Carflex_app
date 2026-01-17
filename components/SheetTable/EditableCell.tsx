@@ -75,6 +75,7 @@ export function EditableCell({
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
           className={`border max-w-30 ${className}`}
+          onBlur={() => save()}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -98,6 +99,7 @@ export function EditableCell({
           autoFocus
           type={type}
           value={draft ?? ""}
+          onBlur={() => save()}
           onChange={(e) => setDraft(e.target.value)}
           className={`border max-w-30 ${className}`}
           onKeyDown={(e) => {
