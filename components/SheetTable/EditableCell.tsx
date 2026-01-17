@@ -69,7 +69,6 @@ export function EditableCell({
       </div>
     );
   }
-
   return (
     <div className="flex gap-0.5">
       {type === "select" ? (
