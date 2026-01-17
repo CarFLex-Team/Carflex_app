@@ -1,5 +1,6 @@
 "use client";
 
+import formatDate from "@/lib/formatDate";
 import { useState } from "react";
 import { mutate } from "swr";
 
@@ -57,7 +58,11 @@ export function EditableCell({
         onClick={() => setEditing(true)}
         className="cursor-pointer border border-transparent hover:border-gray-300 "
       >
-        {value === "" || value == null ? "—" : value}
+        {value === "" || value == null
+          ? "—"
+          : type === "date"
+          ? formatDate(value)
+          : value}
       </div>
     );
   }
@@ -69,6 +74,17 @@ export function EditableCell({
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
           className={`border max-w-30 ${className}`}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              save(); // 🔥 your existing save function
+            }
+
+            if (e.key === "Escape") {
+              e.preventDefault();
+              setEditing(false); // optional but recommended
+            }
+          }}
         >
           {options?.map((option) => (
             <option key={option} value={option}>
@@ -78,9 +94,21 @@ export function EditableCell({
         </select>
       ) : (
         <input
+          type={type}
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
           className={`border max-w-30 ${className}`}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              save(); // 🔥 your existing save function
+            }
+
+            if (e.key === "Escape") {
+              e.preventDefault();
+              setEditing(false); // optional but recommended
+            }
+          }}
         />
       )}
       <button onClick={save} disabled={loading}>

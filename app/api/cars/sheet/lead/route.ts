@@ -12,6 +12,7 @@ export async function GET(req: Request) {
   SELECT
        *
       FROM "sheet_leads"
+      ORDER BY purch_date DESC
       LIMIT 150
       `
     );

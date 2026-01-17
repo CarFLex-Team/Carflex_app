@@ -27,9 +27,9 @@ export default function LeadsSheetPage() {
     purch_price: number;
     extra_cost: number;
     total_cost: number;
-    selling_price: number;
+    sell_price: number;
     p_l: number;
-    selling_date: string;
+    sell_date: string;
     purch_name: string;
     sell_address: string;
     file: string;
@@ -167,9 +167,14 @@ export default function LeadsSheetPage() {
       header: "P Date",
       accessor: "purch_date",
       render: (row) => (
-        <div>
-          <div>{formatDate(row.purch_date)}</div>
-        </div>
+        <EditableCell
+          type="date"
+          className="w-18"
+          value={row.purch_date ? `${row.purch_date}` : ""}
+          rowId={row.ad_link}
+          field="purch_date"
+          sheet="lead"
+        />
       ),
     },
     {
@@ -207,14 +212,14 @@ export default function LeadsSheetPage() {
     },
     {
       header: "S Price",
-      accessor: "selling_price",
+      accessor: "sell_price",
       render: (row) => (
         <EditableCell
           type="text"
           className="w-15"
-          value={row.selling_price ? `$${row.selling_price}` : ""}
+          value={row.sell_price ? `$${row.sell_price}` : ""}
           rowId={row.ad_link}
-          field="selling_price"
+          field="sell_price"
           sheet="lead"
         />
       ),
@@ -235,14 +240,14 @@ export default function LeadsSheetPage() {
     },
     {
       header: "S Date",
-      accessor: "selling_date",
+      accessor: "sell_date",
       render: (row) => (
         <EditableCell
-          type="text"
-          className="w-15"
-          value={row.selling_date ? `${row.selling_date}` : ""}
+          type="date"
+          className="w-18"
+          value={row.sell_date ? `${row.sell_date}` : ""}
           rowId={row.ad_link}
-          field="selling_date"
+          field="sell_date"
           sheet="lead"
         />
       ),
