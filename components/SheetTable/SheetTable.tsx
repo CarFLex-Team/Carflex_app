@@ -53,7 +53,7 @@ export default function SheetTable<T>({
           <thead>
             <tr className="border-b text-left text-sm text-gray-500 ">
               {columns.map((col, i) => (
-                <th key={i} className="p-2 min-w-17">
+                <th key={i} className="p-2 min-w-20">
                   {col.header}
                 </th>
               ))}
@@ -90,7 +90,7 @@ export default function SheetTable<T>({
                       key={colIndex}
                       className="py-3 px-2 text-sm  whitespace-nowrap 
              overflow-auto 
-              max-w-36 "
+              max-w-42 "
                     >
                       {col.render
                         ? col.render(row)

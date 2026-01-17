@@ -12,6 +12,7 @@ export function EditableCell({
   options,
   className,
   sheet,
+  noEditClassName,
 }: {
   value: any;
   rowId: string;
@@ -20,6 +21,7 @@ export function EditableCell({
   sheet: string;
   options?: string[];
   className?: string;
+  noEditClassName?: string;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
@@ -36,13 +38,13 @@ export function EditableCell({
 
     await fetch(
       `/api/cars/sheet/editCell?sheet=${sheet}&ad_link=${encodeURIComponent(
-        rowId
+        rowId,
       )}`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ [field]: draft }),
-      }
+      },
     );
 
     setLoading(false);
@@ -57,13 +59,13 @@ export function EditableCell({
     return (
       <div
         onClick={() => setEditing(true)}
-        className="cursor-pointer border border-transparent hover:border-gray-300 "
+        className={`cursor-pointer border border-transparent hover:border-gray-300 ${value ? noEditClassName : ""}`}
       >
         {value === "" || value == null
           ? "—"
           : type === "date"
-          ? formatDate(value)
-          : value}
+            ? formatDate(value)
+            : value}
       </div>
     );
   }
