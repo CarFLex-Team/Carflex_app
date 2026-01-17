@@ -19,7 +19,6 @@ export function removeClient(controller: ReadableStreamDefaultController) {
 
 export function emitEvent(event: EventPayload) {
   const message = `data: ${JSON.stringify(event)}\n\n`;
-  console.log(clients.length + " clients to notify about event", event.type);
   for (const client of clients) {
     try {
       client.enqueue(message);

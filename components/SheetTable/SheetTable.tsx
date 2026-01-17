@@ -35,7 +35,6 @@ export default function SheetTable<T>({
   onRowClick,
   renderActions,
 }: DataTableProps<T>) {
-  console.log("DataTable data:", data);
   const totalPages = pagination
     ? Math.ceil(pagination.total / pagination.pageSize)
     : 0;

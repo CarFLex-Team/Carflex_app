@@ -7,9 +7,7 @@ import { mutate } from "swr";
 export function SheetLiveListener() {
   useEffect(() => {
     const es = new EventSource("/api/cars/sheet/stream");
-    console.log(es);
     es.onmessage = (event) => {
-      console.log("SheetLiveListener received event", event.data);
       const payload = JSON.parse(event.data);
       switch (payload.type) {
         case "sheet:dabou:update":
