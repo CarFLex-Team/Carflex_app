@@ -10,11 +10,13 @@ export function EditableCell({
   type,
   options,
   className,
+  sheet,
 }: {
   value: any;
   rowId: string;
   field: string;
   type: string;
+  sheet: string;
   options?: string[];
   className?: string;
 }) {
@@ -30,18 +32,23 @@ export function EditableCell({
 
     setLoading(true);
 
-    await fetch(`/api/cars/sheet/editCell?ad_link=${rowId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ [field]: draft }),
-    });
+    await fetch(
+      `/api/cars/sheet/editCell?sheet=${sheet}&ad_link=${encodeURIComponent(
+        rowId
+      )}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: draft }),
+      }
+    );
 
     setLoading(false);
     setEditing(false);
     setDraft(null);
 
     // 🔥 update sheet
-    mutate("/api/cars/sheet");
+    mutate("/api/cars/sheet/" + sheet);
   }
 
   if (!editing) {

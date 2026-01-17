@@ -51,14 +51,13 @@
 
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
-import { notifySheetUpdate } from "@/lib/sheetEvents/sheetEvents";
+import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // 🔒 Validate (example)
-    if (!body.title || !body.price) {
+    if (!body) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
@@ -96,8 +95,7 @@ export async function POST(req: Request) {
       ]
     );
 
-    // 🔥 Notify sheet viewers
-    notifySheetUpdate();
+    emitEvent({ type: "sheet:dabou:update" });
 
     return NextResponse.json({ success: true });
   } catch (err) {

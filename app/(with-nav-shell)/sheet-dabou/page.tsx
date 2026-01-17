@@ -7,10 +7,11 @@ import { formatTime } from "@/lib/formatTime";
 import formatDate from "@/lib/formatDate";
 import { EditableCell } from "@/components/SheetTable/EditableCell";
 import { Forward } from "lucide-react";
+import ForwardButton from "@/components/CustomButton/ForwardButton";
 
 export default function CarsSheetPage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading, error } = useCarsSheet();
+  const { data, isLoading, error } = useCarsSheet("dabou");
   const pageSize = 15;
   type Car = {
     id: number;
@@ -20,7 +21,7 @@ export default function CarsSheetPage() {
     odometer: number;
     ad_link: string;
     est_value: number;
-    source: string;
+    // source: string;
     sent_at: string;
     notes: string;
     sent_by: string;
@@ -28,12 +29,42 @@ export default function CarsSheetPage() {
     status: string;
     seller_phone: string;
     real_value: number;
-    action: string;
+    purch_value: number;
+    vin: string;
+    color: string;
   };
   const CarColumns: TableColumn<Car>[] = [
     { header: "Title", accessor: "title" },
     { header: "Odometer", accessor: "odometer" },
     { header: "Price", accessor: "price", render: (row) => `$${row.price}` },
+    {
+      header: "VIN",
+      accessor: "vin",
+      render: (row) => (
+        <EditableCell
+          type="text"
+          className="w-20"
+          value={row.vin}
+          rowId={row.ad_link}
+          field="vin"
+          sheet="dabou"
+        />
+      ),
+    },
+    {
+      header: "Color",
+      accessor: "color",
+      render: (row) => (
+        <EditableCell
+          type="text"
+          className="w-13"
+          value={row.color}
+          rowId={row.ad_link}
+          field="color"
+          sheet="dabou"
+        />
+      ),
+    },
     {
       header: "Estimated",
       accessor: "est_value",
@@ -50,11 +81,25 @@ export default function CarsSheetPage() {
           }
           rowId={row.ad_link}
           field="real_value"
+          sheet="dabou"
         />
       ),
     },
     { header: "Status", accessor: "status" },
-    { header: "Location", accessor: "location" },
+    {
+      header: "Address",
+      accessor: "location",
+      render: (row) => (
+        <EditableCell
+          type="text"
+          value={row.location}
+          rowId={row.ad_link}
+          field="location"
+          className="w-20"
+          sheet="dabou"
+        />
+      ),
+    },
     {
       header: "Ad Link",
       accessor: "ad_link",
@@ -68,7 +113,7 @@ export default function CarsSheetPage() {
         </a>
       ),
     },
-    { header: "Source", accessor: "source" },
+    // { header: "Source", accessor: "source" },
     {
       header: "Seller Phone",
       accessor: "seller_phone",
@@ -79,6 +124,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="seller_phone"
           className="w-20"
+          sheet="dabou"
         />
       ),
     },
@@ -92,6 +138,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="call_status"
           options={["Calling", "Not Called", "Called", "No Answer"]}
+          sheet="dabou"
         />
       ),
     },
@@ -110,6 +157,20 @@ export default function CarsSheetPage() {
       ),
     },
     {
+      header: "Purch. Price",
+      accessor: "purch_value",
+      render: (row) => (
+        <EditableCell
+          type="text"
+          className="w-15"
+          value={row.purch_value ? `$${row.purch_value}` : ""}
+          rowId={row.ad_link}
+          field="purch_value"
+          sheet="dabou"
+        />
+      ),
+    },
+    {
       header: "Comment",
       accessor: "notes",
       render: (row) => (
@@ -118,6 +179,7 @@ export default function CarsSheetPage() {
           value={row.notes}
           rowId={row.ad_link}
           field="notes"
+          sheet="dabou"
         />
       ),
     },
@@ -146,14 +208,7 @@ export default function CarsSheetPage() {
           onPageChange: setPage,
         }}
         title="Car Sheet"
-        renderActions={(row) => (
-          <button
-            className="bg-primary rounded-lg p-1.5 text-white hover:bg-lightPrimary cursor-pointer text-center"
-            onClick={() => {}}
-          >
-            <Forward size={16} />
-          </button>
-        )}
+        renderActions={(row) => <ForwardButton carDetails={row} />}
       />
     </>
   );

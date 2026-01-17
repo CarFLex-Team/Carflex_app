@@ -3,7 +3,6 @@ import { useState } from "react";
 import copy from "clipboard-copy";
 import { Check, Copy, Loader, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
 
 export default function CopyToClipboardButton({

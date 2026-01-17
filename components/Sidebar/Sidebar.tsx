@@ -42,10 +42,10 @@ export default function Sidebar({
   setOpen: (open: boolean) => void;
 }) {
   const pathname = usePathname() ?? "/";
-  const activeId = ITEMS.find((i) => pathname === i.href)?.id ?? ITEMS[0].id;
+  const activeId = ITEMS.find((i) => pathname === i.href)?.id ?? null;
 
   const [active, setActive] = useState(
-    ITEMS.find((i) => i.id === activeId)?.label || "All"
+    ITEMS.find((i) => i.id === activeId)?.label
   );
 
   return (
