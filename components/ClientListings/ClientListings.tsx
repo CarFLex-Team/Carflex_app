@@ -40,8 +40,8 @@ export default function ClientListings({
     {
       refreshInterval: 30_000, // poll every 30 seconds
       fallbackData: { items: initialCarsData },
-      revalidateOnFocus: false,
-    }
+      revalidateOnFocus: true,
+    },
   );
 
   if (error) return <div className="text-red-600">Failed to load</div>;
