@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavButton from "../NavButton/NavButton";
 import {
   X,
@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { navByRole } from "@/nav.config";
 
 type Item = {
   id: string;
@@ -22,11 +24,7 @@ const ITEMS: Item[] = [
   { id: "autotrader", href: "/autotrader", label: "Autotrader" },
   { id: "kijiji", href: "/kijiji", label: "Kijiji" },
   { id: "marketplace", href: "/marketplace", label: "Marketplace" },
-  {
-    id: "sheet-dabou",
-    href: "/sheet-dabou",
-    label: "Sheet Dabou",
-  },
+
   {
     id: "vin-decoder",
     href: "/vin-decoder",
@@ -41,12 +39,26 @@ export default function Sidebar({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const { data: session, status } = useSession();
+  const [active, setActive] = useState<string | null>(null);
   const pathname = usePathname() ?? "/";
-  const activeId = ITEMS.find((i) => pathname === i.href)?.id ?? null;
+  const role = session?.user.role as "LEAD" | "CALLER" | "TEAM";
+  const navItems = role ? navByRole[role] : [];
+  useEffect(() => {
+    if (!navItems?.length) return;
 
-  const [active, setActive] = useState(
-    ITEMS.find((i) => i.id === activeId)?.label
-  );
+    const current = navItems.find((i) =>
+      i.items?.find((ii) => ii.href === pathname),
+    );
+
+    setActive(
+      current?.items?.find((ii) => ii.href === pathname)?.label || null,
+    );
+  }, [pathname, navItems]);
+  if (status === "loading") {
+    return null;
+  }
+  if (!session) return null;
 
   return (
     <>
@@ -64,7 +76,7 @@ export default function Sidebar({
           open ? "w-58 max-md:translate-x-0" : "w-15 max-md:-translate-x-full"
         }`}
       >
-        <div className="overflow-auto">
+        <div>
           <div className="flex items-center justify-between mb-4">
             {open && (
               <img src="/Logo.png" alt="Carflex Logo" className=" w-16" />
@@ -81,59 +93,45 @@ export default function Sidebar({
               )}
             </button>
           </div>
+          <div className="overflow-auto max-h-[80vh] no-scrollbar">
+            {open && (
+              <div className="flex flex-col ">
+                <div
+                  className="flex flex-col gap-2"
+                  aria-label="Mobile listings"
+                >
+                  {navItems.map((box) => {
+                    return (
+                      <div className="flex flex-col gap-2 mb-4" key={box.title}>
+                        <p className="text-gray-500 ">{box.title}</p>
 
-          {open && (
-            <div className="flex flex-col ">
-              <div className="flex flex-col gap-2" aria-label="Mobile listings">
-                <p className="text-gray-500 ">Listings</p>
-                {ITEMS.map((item) => {
-                  if (item.id === "sheet-dabou" || item.id === "vin-decoder") {
-                    return null;
-                  }
-                  return (
-                    <NavButton
-                      key={item.id}
-                      onClick={() => setActive(item.label)}
-                      item={item}
-                      isActive={active === item.label}
-                      className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-                    >
-                      {item.label}
-                    </NavButton>
-                  );
-                })}
+                        {box?.items?.map((item) => {
+                          return (
+                            <NavButton
+                              key={item.id}
+                              onClick={() => setActive(item.label)}
+                              item={item}
+                              isActive={active === item.label}
+                              className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
+                            >
+                              {item.label}
+                            </NavButton>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="  flex flex-col gap-2 mt-4">
-                <p className="text-gray-500 ">VIN</p>
-                <NavButton
-                  key="vin-decoder"
-                  item={ITEMS.find((i) => i.id === "vin-decoder")!}
-                  isActive={active === "Vin Decoder"}
-                  onClick={() => setActive("Vin Decoder")}
-                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-                >
-                  Vin Decoder
-                </NavButton>
-              </div>
-              <div className="  flex flex-col gap-2 mt-4">
-                <p className="text-gray-500 ">SHEETS</p>
-                <NavButton
-                  key="sheet-dabou"
-                  item={ITEMS.find((i) => i.id === "sheet-dabou")!}
-                  isActive={active === "Sheet Dabou"}
-                  onClick={() => setActive("Sheet Dabou")}
-                  className={`text-left w-full px-4 py-3 rounded-lg font-medium text-sm transition-colors`}
-                >
-                  Dabou
-                </NavButton>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <a
-          href="/signup"
-          className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 decoration-none ${
-            open ? " px-3 py-2 rounded-lg" : "p-1 rounded-lg "
+          onClick={() => {
+            signOut({ callbackUrl: "/login" });
+          }}
+          className={`flex items-center gap-2 text-red-600 cursor-pointer hover:bg-red-100 decoration-none rounded-lg ${
+            open ? " px-3 py-2 " : "p-1  "
           }`}
         >
           <LogOut size={20} /> {open && <span>Sign Out</span>}

@@ -9,12 +9,17 @@ import { EditableCell } from "@/components/SheetTable/EditableCell";
 import ForwardButton from "@/components/CustomButton/ForwardButton";
 import convertToADay from "@/lib/convertToADay";
 import downloadCSV from "@/lib/downloadCSV";
+import { useSession } from "next-auth/react";
 
 export default function CarsSheetPage() {
+  const { data: session, status } = useSession();
   const [page, setPage] = useState(1);
   const today = new Date().toISOString().slice(0, 10);
   const [date, setDate] = useState(today);
-  const { data, isLoading, error } = useCarsSheet("dabou", date);
+  const { data, isLoading, error } = useCarsSheet(
+    session?.user?.name || "",
+    date,
+  );
   const pageSize = 15;
   type Car = {
     id: number;
