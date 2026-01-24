@@ -8,6 +8,7 @@ import formatDate from "@/lib/formatDate";
 import { EditableCell } from "@/components/SheetTable/EditableCell";
 import ForwardButton from "@/components/CustomButton/ForwardButton";
 import convertToADay from "@/lib/convertToADay";
+import downloadCSV from "@/lib/downloadCSV";
 
 export default function CarsSheetPage() {
   const [page, setPage] = useState(1);
@@ -262,6 +263,14 @@ export default function CarsSheetPage() {
           onPageChange: setPage,
         }}
         title="Car Sheet"
+        action={
+          <button
+            className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+            onClick={() => downloadCSV(data ?? [])}
+          >
+            Export CSV
+          </button>
+        }
         renderActions={(row) => <ForwardButton carDetails={row} />}
       />
     </>

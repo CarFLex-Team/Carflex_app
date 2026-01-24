@@ -7,6 +7,7 @@ import { formatTime } from "@/lib/formatTime";
 import formatDate from "@/lib/formatDate";
 import { EditableCell } from "@/components/SheetTable/EditableCell";
 import { Forward } from "lucide-react";
+import downloadCSV from "@/lib/downloadCSV";
 
 export default function LeadsSheetPage() {
   const [page, setPage] = useState(1);
@@ -332,8 +333,8 @@ export default function LeadsSheetPage() {
           isLoading
             ? []
             : data
-            ? data.slice((page - 1) * pageSize, page * pageSize)
-            : []
+              ? data.slice((page - 1) * pageSize, page * pageSize)
+              : []
         }
         isLoading={isLoading}
         pagination={{
@@ -342,6 +343,14 @@ export default function LeadsSheetPage() {
           total: data?.length || 1,
           onPageChange: setPage,
         }}
+        action={
+          <button
+            className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+            onClick={() => downloadCSV(data ?? [])}
+          >
+            Export CSV
+          </button>
+        }
         title="Leads Sheet"
       />
     </>

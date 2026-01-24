@@ -26,7 +26,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
     value: string;
   }>();
   const [estimatedValue, setEstimatedValue] = useState<number>(
-    carDetails.real_value ? carDetails.real_value : carDetails.est_value
+    carDetails.real_value ? carDetails.real_value : carDetails.est_value,
   );
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
@@ -51,13 +51,13 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       await updateCarValue(
         carDetails.ad_link,
         carDetails.source,
-        estimatedValue
+        estimatedValue,
       );
       mutate(`/api/cars/${carDetails.ad_link}?source=${carDetails.source}`);
       const newStatus = await priceStatus(
         carDetails.price,
         carDetails.est_value,
-        estimatedValue
+        estimatedValue,
       );
       setStatus(newStatus);
       setEditMode(false);
@@ -111,8 +111,8 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           trimStatus?.status === true
             ? "border-4 border-green-500"
             : trimStatus?.status === false
-            ? "border-4 border-red-500"
-            : ""
+              ? "border-4 border-red-500"
+              : ""
         }`}
       >
         <img
@@ -225,9 +225,11 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             {timeAgo(carDetails.created_at)}
           </p>
         </div>
-        <p className="text-black overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
-          {carDetails.description}
-        </p>
+        <div className="max-w-3xl">
+          <p className="text-black max-w-full overflow-ellipsis max-sm:hidden line-clamp-1 lg:line-clamp-2 text-sm">
+            {carDetails.description}
+          </p>
+        </div>
         <div className="w-full flex justify-between items-center mt-1">
           <p className="text-gray-500 flex items-center text-sm sm:text-base gap-2">
             <CircleGauge className="w-4 h-4" />

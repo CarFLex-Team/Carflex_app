@@ -1,6 +1,6 @@
 export default async function fetchData({
   name,
-  limit = 20,
+  limit,
 }: {
   name: string;
   limit?: number;
@@ -9,7 +9,7 @@ export default async function fetchData({
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/${name}Cars?limit=${limit}`,
     {
       cache: "no-store", // always fetch fresh DB results
-    }
+    },
   );
 
   if (!res.ok) throw new Error("Failed to fetch data");
