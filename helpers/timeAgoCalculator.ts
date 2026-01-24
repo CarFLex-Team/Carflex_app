@@ -1,3 +1,4 @@
+"use client";
 function timeAgo(dateString: string) {
   const now = new Date();
   const past = new Date(dateString);
