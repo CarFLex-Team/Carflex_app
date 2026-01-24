@@ -12,7 +12,9 @@ import downloadCSV from "@/lib/downloadCSV";
 
 export default function CarsSheetPage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading, error } = useCarsSheet("dabou");
+  const today = new Date().toISOString().slice(0, 10);
+  const [date, setDate] = useState(today);
+  const { data, isLoading, error } = useCarsSheet("dabou", date);
   const pageSize = 15;
   type Car = {
     id: number;
@@ -264,12 +266,22 @@ export default function CarsSheetPage() {
         }}
         title="Car Sheet"
         action={
-          <button
-            className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
-            onClick={() => downloadCSV(data ?? [])}
-          >
-            Export CSV
-          </button>
+          <div className="flex gap-4">
+            <input
+              type="date"
+              value={date}
+              max={today}
+              onChange={(e) => setDate(e.target.value)}
+              className="rounded border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+            />
+
+            <button
+              className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+              onClick={() => downloadCSV(data ?? [])}
+            >
+              Export CSV
+            </button>
+          </div>
         }
         renderActions={(row) => <ForwardButton carDetails={row} />}
       />

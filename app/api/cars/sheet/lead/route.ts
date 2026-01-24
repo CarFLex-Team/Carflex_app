@@ -5,16 +5,20 @@ import priceStatus from "@/helpers/priceStatus";
 
 export async function GET(req: Request) {
   try {
-    const url = new URL(req.url);
+    const { searchParams } = new URL(req.url);
+    const date = searchParams.get("date");
 
     const { rows } = await db.query<allRow>(
       `
   SELECT
        *
       FROM "sheet_leads"
+      WHERE purch_date >= $1::date
+      AND purch_date < $1::date + INTERVAL '1 day'
       ORDER BY purch_date DESC
       LIMIT 150
-      `
+      `,
+      [date],
     );
 
     return NextResponse.json(rows);
@@ -22,7 +26,7 @@ export async function GET(req: Request) {
     console.error("GET /api/cars/sheet/lead error", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
