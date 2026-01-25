@@ -42,8 +42,9 @@ export default function Sidebar({
   const { data: session, status } = useSession();
   const [active, setActive] = useState<string | null>(null);
   const pathname = usePathname() ?? "/";
-  const role = session?.user.role as "LEAD" | "CALLER" | "TEAM";
-  const navItems = role ? navByRole[role] : [];
+  const role = session?.user.role as "LEAD" | "CALLER" | "TEAM" | "OTHER";
+  const navItems = role ? navByRole[role] : navByRole["OTHER"];
+  console.log("NAV ITEMS:", navItems);
   useEffect(() => {
     if (!navItems?.length) return;
 
@@ -58,7 +59,7 @@ export default function Sidebar({
   if (status === "loading") {
     return null;
   }
-  if (!session) return null;
+  // if (!session) return null;
 
   return (
     <>

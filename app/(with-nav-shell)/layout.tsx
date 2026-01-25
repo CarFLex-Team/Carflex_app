@@ -8,9 +8,9 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-  if (!session) {
-    redirect("/login");
-  }
+  // const session = await getServerSession();
+  // if (!session) {
+  //   redirect("/login");
+  // }
   return <PageShell>{children} </PageShell>;
 }

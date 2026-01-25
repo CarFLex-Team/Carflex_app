@@ -10,7 +10,7 @@ export type NavBox = {
   title: string;
   items?: NavItem[];
 };
-type Role = "LEAD" | "CALLER" | "TEAM";
+type Role = "LEAD" | "CALLER" | "TEAM" | "OTHER";
 
 export const navByRole: Record<Role, NavBox[]> = {
   LEAD: [
@@ -89,6 +89,31 @@ export const navByRole: Record<Role, NavBox[]> = {
     },
   ],
   TEAM: [
+    {
+      title: "Listings",
+      items: [
+        { id: "all", href: "/listings", label: "All" },
+        { id: "autotrader", href: "/listings/autotrader", label: "Autotrader" },
+        { id: "kijiji", href: "/listings/kijiji", label: "Kijiji" },
+        {
+          id: "marketplace",
+          href: "/listings/marketplace",
+          label: "Marketplace",
+        },
+      ],
+    },
+    {
+      title: "VIN",
+      items: [
+        {
+          id: "vin-decoder",
+          href: "/vin-decoder",
+          label: "Vin Decoder",
+        },
+      ],
+    },
+  ],
+  OTHER: [
     {
       title: "Listings",
       items: [

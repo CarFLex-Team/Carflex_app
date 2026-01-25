@@ -11,8 +11,6 @@ export default async function Home() {
     if (session.user.role === "CALLER") {
       redirect("/sheet-dabou");
     }
-    redirect("/listings");
   }
-
-  redirect("/login");
+  redirect("/listings");
 }
