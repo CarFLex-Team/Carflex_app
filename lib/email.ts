@@ -11,7 +11,7 @@ function getResendClient() {
 export async function sendResetPasswordEmail(to: string, resetLink: string) {
   const resend = getResendClient();
   await resend.emails.send({
-    from: "Tire Warehouse <onboarding@resend.dev>", // or
+    from: "CarFlex <onboarding@resend.dev>", // or
     to,
     subject: "Reset your password",
     html: `

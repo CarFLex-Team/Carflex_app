@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { db } from "@/lib/db";
+import db from "@/lib/db.postgres";
 import { hashPassword } from "@/lib/hash-pass";
 
 export async function POST(req: Request) {
@@ -15,14 +15,14 @@ export async function POST(req: Request) {
       AND used = false
       AND expires_at > NOW()
     `,
-    [hashedToken]
+    [hashedToken],
   );
 
   const reset = resetRes.rows[0];
   if (!reset) {
     return NextResponse.json(
       { error: "Invalid or expired token" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
   await db.query(
     'UPDATE "User" SET password = $1, updated_at = NOW() WHERE id = $2',
-    [newPassword, reset.user_id]
+    [newPassword, reset.user_id],
   );
 
   await db.query("UPDATE password_resets SET used = true WHERE id = $1", [
