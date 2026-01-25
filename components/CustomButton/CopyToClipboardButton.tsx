@@ -29,13 +29,13 @@ export default function CopyToClipboardButton({
             estimatedValue
               ? `\nEstimated Value: $${estimatedValue}`
               : carDetails.est_value
-              ? `\nEstimated Value: $${carDetails.est_value}`
-              : ""
+                ? `\nEstimated Value: $${carDetails.est_value}`
+                : ""
           }` +
-          "\nGenerated using Carflex App"
+          "\nGenerated using Carflex App",
       );
 
-      const res = await fetch("api/cars/send", {
+      const res = await fetch("/api/cars/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,6 +53,7 @@ export default function CopyToClipboardButton({
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
+      console.error(error);
       setIsLoading(false);
       setError(true);
       setOpen(true);
