@@ -17,14 +17,24 @@ export async function GET(
     }
 
     const { id } = await context.params;
-
     const date = searchParams.get("date");
-    let WherePart = "WHERE sheet_id = $1 ";
+    let WherePart = "WHERE sheet_id = $1 AND ";
     let queryParams: any[] = [id.toLowerCase()];
     if (date) {
       queryParams.push(date);
-      WherePart += `AND created_at >= $2::date
+      WherePart += `created_at >= $2::date
       AND created_at < $2::date + INTERVAL '1 day'`;
+    }
+    if (session.user.role === "LEAD") {
+      queryParams = [];
+      if (date) {
+        queryParams.push(date);
+        WherePart = `WHERE created_at >= $1::date
+      AND created_at < $1::date + INTERVAL '1 day'`;
+      }
+    }
+
+    if (session.user.role === "LEAD") {
     }
     const { rows } = await db.query<allRow>(
       `
