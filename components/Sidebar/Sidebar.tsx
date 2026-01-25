@@ -44,7 +44,6 @@ export default function Sidebar({
   const pathname = usePathname() ?? "/";
   const role = session?.user.role as "LEAD" | "CALLER" | "TEAM" | "OTHER";
   const navItems = role ? navByRole[role] : navByRole["OTHER"];
-  console.log("NAV ITEMS:", navItems);
   useEffect(() => {
     if (!navItems?.length) return;
 

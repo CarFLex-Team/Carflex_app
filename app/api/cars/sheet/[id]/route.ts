@@ -19,18 +19,23 @@ export async function GET(
     const { id } = await context.params;
 
     const date = searchParams.get("date");
+    let WherePart = "WHERE sheet_id = $1 ";
+    let queryParams: any[] = [id.toLowerCase()];
+    if (date) {
+      queryParams.push(date);
+      WherePart += `AND created_at >= $2::date
+      AND created_at < $2::date + INTERVAL '1 day'`;
+    }
     const { rows } = await db.query<allRow>(
       `
   SELECT
        *
       FROM "sheet_dabou"
-      WHERE created_at >= $1::date
-      AND created_at < $1::date + INTERVAL '1 day'
-      AND sheet_id = $2 
+      ${WherePart}
       ORDER BY sent_at DESC
       LIMIT 100
       `,
-      [date, id.toLowerCase()],
+      queryParams,
     );
 
     const items = await Promise.all(

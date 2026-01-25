@@ -13,14 +13,15 @@ import { useSession } from "next-auth/react";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const today = new Date().toISOString().slice(0, 10);
   const [date, setDate] = useState(today);
   const { data, isLoading, error } = useCarsSheet(
-    session?.user?.name || "",
+    session?.user?.name?.toLowerCase() || "",
     date,
   );
-  const pageSize = 15;
+  // const pageSize = 15;
   type Car = {
     id: number;
     title: string;
@@ -42,7 +43,9 @@ export default function CarsSheetPage() {
     color: string;
     follow_up_date: string;
     lowest_price: number;
+    source: string;
   };
+
   const CarColumns: TableColumn<Car>[] = [
     {
       header: "Sent At",
@@ -84,6 +87,7 @@ export default function CarsSheetPage() {
             "Text Message",
             "Sold",
           ]}
+          date={date}
           sheet="dabou"
         />
       ),
@@ -100,11 +104,26 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="follow_up_date"
           sheet="dabou"
+          date={date}
         />
       ),
     },
 
-    { header: "Title", accessor: "title" },
+    {
+      header: "Title",
+      accessor: "title",
+      render: (row) => (
+        <EditableCell
+          type="text"
+          className="w-20"
+          value={row.title}
+          rowId={row.ad_link}
+          field="title"
+          sheet="dabou"
+          date={date}
+        />
+      ),
+    },
     { header: "Odometer", accessor: "odometer" },
     {
       header: "Ad Link",
@@ -115,7 +134,7 @@ export default function CarsSheetPage() {
           className="underline text-blue-900"
           target="_blank"
         >
-          Click Here
+          {row.source}
         </a>
       ),
     },
@@ -130,6 +149,7 @@ export default function CarsSheetPage() {
           field="seller_phone"
           className="w-20"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -151,6 +171,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="real_value"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -172,6 +193,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="purch_value"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -186,6 +208,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="lowest_price"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -199,6 +222,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="notes"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -213,6 +237,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="vin"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -227,6 +252,7 @@ export default function CarsSheetPage() {
           rowId={row.ad_link}
           field="color"
           sheet="dabou"
+          date={date}
         />
       ),
     },
@@ -242,11 +268,21 @@ export default function CarsSheetPage() {
           field="location"
           className="w-20"
           sheet="dabou"
+          date={date}
         />
       ),
     },
   ];
-
+  const filteredCars = data?.filter((car: Car) => {
+    const value = search.toLowerCase();
+    return (
+      car.title.toLowerCase().includes(value) ||
+      car.ad_link.toLowerCase().includes(value) ||
+      car.seller_phone?.includes(value) ||
+      car.status.toLowerCase().includes(value) ||
+      car.vin?.toLowerCase().includes(value)
+    );
+  });
   if (error) return <p>Error loading sheet</p>;
 
   return (
@@ -255,37 +291,40 @@ export default function CarsSheetPage() {
       <SheetLiveListener />
       <SheetTable
         columns={CarColumns}
-        data={
-          isLoading
-            ? []
-            : data
-              ? data.slice((page - 1) * pageSize, page * pageSize)
-              : []
-        }
+        data={isLoading ? [] : filteredCars ? filteredCars : []}
         isLoading={isLoading}
-        pagination={{
-          page,
-          pageSize,
-          total: data?.length || 1,
-          onPageChange: setPage,
-        }}
-        title="Car Sheet"
+        // pagination={{
+        //   page,
+        //   pageSize,
+        //   total: data?.length || 1,
+        //   onPageChange: setPage,
+        // }}
+        // title="Car Sheet"
         action={
-          <div className="flex gap-4">
+          <div className="flex justify-between w-full items-center">
             <input
-              type="date"
-              value={date}
-              max={today}
-              onChange={(e) => setDate(e.target.value)}
-              className="rounded border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+              type="text"
+              placeholder="Search Cars..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className=" p-2 border-b border-gray-300 focus:outline-none min-w-25"
             />
+            <div className="flex gap-4">
+              <input
+                type="date"
+                value={date}
+                max={today}
+                onChange={(e) => setDate(e.target.value)}
+                className="rounded border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
+              />
 
-            <button
-              className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
-              onClick={() => downloadCSV(data ?? [])}
-            >
-              Export CSV
-            </button>
+              <button
+                className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+                onClick={() => downloadCSV(data ?? [])}
+              >
+                Export CSV
+              </button>
+            </div>
           </div>
         }
         renderActions={(row) => <ForwardButton carDetails={row} />}

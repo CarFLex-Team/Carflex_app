@@ -13,7 +13,7 @@ export async function PATCH(req: Request) {
     if (!sheet || !adLink) {
       return NextResponse.json(
         { error: "Missing sheet or ad_link" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,7 +28,7 @@ export async function PATCH(req: Request) {
     if (keys.length !== 1) {
       return NextResponse.json(
         { error: "Update one field at a time" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -37,7 +37,7 @@ export async function PATCH(req: Request) {
     if (!config.editableFields.has(field)) {
       return NextResponse.json(
         { error: "Field not editable for this sheet" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -47,7 +47,7 @@ export async function PATCH(req: Request) {
       SET ${field} = $1, updated_at = NOW()
       WHERE ad_link = $2
       `,
-      [body[field], adLink]
+      [body[field], adLink],
     );
 
     // 🔥 Notify only relevant sheet listeners

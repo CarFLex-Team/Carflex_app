@@ -7,18 +7,23 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const date = searchParams.get("date");
-
+    let WherePart = "";
+    let queryParams: any[] = [];
+    if (date) {
+      queryParams.push(date);
+      WherePart = `WHERE purch_date >= $1::date
+      AND purch_date < $1::date + INTERVAL '1 day'`;
+    }
     const { rows } = await db.query<allRow>(
       `
   SELECT
        *
       FROM "sheet_leads"
-      WHERE purch_date >= $1::date
-      AND purch_date < $1::date + INTERVAL '1 day'
+      ${WherePart}
       ORDER BY purch_date DESC
       LIMIT 150
       `,
-      [date],
+      queryParams,
     );
 
     return NextResponse.json(rows);

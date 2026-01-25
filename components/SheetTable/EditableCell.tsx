@@ -13,6 +13,7 @@ export function EditableCell({
   className,
   sheet,
   noEditClassName,
+  date,
 }: {
   value: any;
   rowId: string;
@@ -22,6 +23,7 @@ export function EditableCell({
   options?: string[];
   className?: string;
   noEditClassName?: string;
+  date?: string;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
@@ -48,10 +50,20 @@ export function EditableCell({
     );
     setLoading(false);
     setEditing(false);
-    setDraft(null);
+    // setDraft(null);
 
     // 🔥 update sheet
-    mutate("/api/cars/sheet/" + sheet);
+    mutate(
+      `/api/cars/sheet/${sheet}${date ? `?date=${date}` : ""}`,
+      (current: any) => {
+        if (!current) return current;
+        return current.map((row: any) =>
+          row.ad_link === rowId ? { ...row, [field]: draft } : row,
+        );
+      },
+
+      false,
+    );
   }
 
   if (!editing) {

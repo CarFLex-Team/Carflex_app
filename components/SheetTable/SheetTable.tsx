@@ -51,9 +51,9 @@ export default function SheetTable<T>({
       <div className="overflow-x-auto">
         <table className="w-full border-collapse ">
           <thead>
-            <tr className="border-b text-left text-sm text-gray-500 ">
+            <tr className="border-b border-gray-300  text-center text-sm text-gray-500 ">
               {columns.map((col, i) => (
-                <th key={i} className="p-2 min-w-20">
+                <th key={i} className="p-2 min-w-20 ">
                   {col.header}
                 </th>
               ))}
@@ -81,16 +81,14 @@ export default function SheetTable<T>({
                 <tr
                   key={rowIndex}
                   onClick={() => onRowClick?.(row)}
-                  className={`border-b last:border-0  ${
-                    onRowClick ? "cursor-pointer" : ""
-                  }`}
+                  className={`border border-gray-300 ${onRowClick ? "cursor-pointer" : ""}`}
                 >
                   {columns.map((col, colIndex) => (
                     <td
                       key={colIndex}
                       className="py-3 px-2 text-sm  whitespace-nowrap 
              overflow-auto 
-              max-w-42 "
+              max-w-42 text-center border border-gray-300"
                     >
                       {col.render
                         ? col.render(row)
