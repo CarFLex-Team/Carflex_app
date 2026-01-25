@@ -5,6 +5,7 @@ import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
 import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
+import CarWatcher from "../CarWatcher/CarWatcher";
 
 type Item = {
   id: number;
@@ -65,6 +66,7 @@ export default function ClientListings({
   );
   return (
     <>
+      <CarWatcher cars={data.items} />
       <div className=" px-4 sm:px-9 py-6 ">
         <div className="sm:w-full mb-8 flex justify-between items-center ">
           <p className="text-black text-2xl md:text-3xl font-bold tracking-wide ">
