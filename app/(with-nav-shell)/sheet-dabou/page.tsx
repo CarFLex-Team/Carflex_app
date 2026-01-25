@@ -10,6 +10,7 @@ import ForwardButton from "@/components/CustomButton/ForwardButton";
 import convertToADay from "@/lib/convertToADay";
 import downloadCSV from "@/lib/downloadCSV";
 import { useSession } from "next-auth/react";
+import CarWatcher from "@/components/CarWatcher/CarWatcher";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -287,6 +288,7 @@ export default function CarsSheetPage() {
 
   return (
     <>
+      <CarWatcher cars={data ?? []} otherSound={true} />
       {/* 👂 listens for SEND events */}
       <SheetLiveListener />
       <SheetTable

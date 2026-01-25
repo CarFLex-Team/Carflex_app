@@ -7,7 +7,7 @@ export function useCarsSheet(sheet: string, date?: string) {
     `/api/cars/sheet/${sheet}${date ? `?date=${date}` : ""}`,
     fetcher,
     {
-      refreshInterval: 10000, // fallback polling
+      refreshInterval: 30000, // fallback polling
       revalidateOnFocus: true,
     },
   );

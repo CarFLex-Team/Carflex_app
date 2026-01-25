@@ -5,7 +5,13 @@ import { useEffect, useRef } from "react";
 
 type Car = { id: string };
 
-export default function CarWatcher({ cars }: { cars: Car[] }) {
+export default function CarWatcher({
+  cars,
+  otherSound,
+}: {
+  cars: Car[];
+  otherSound?: boolean;
+}) {
   const lastCarIdRef = useRef<string | null>(null);
   const soundEnabled = useRef(false);
 
@@ -37,7 +43,9 @@ export default function CarWatcher({ cars }: { cars: Car[] }) {
       //   toast.success("🚗 New car added!");
 
       if (soundEnabled.current) {
-        const audio = new Audio("/notify.mp3");
+        const audio = new Audio(
+          otherSound ? "/other-notify.mp3" : "/notify.mp3",
+        );
         audio.play().catch(() => {});
       }
 
