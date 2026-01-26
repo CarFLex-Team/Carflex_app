@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
 import { SHEETS, SheetKey } from "@/lib/sheetConfig";
+export const runtime = "nodejs";
 
 export async function PATCH(req: Request) {
   try {

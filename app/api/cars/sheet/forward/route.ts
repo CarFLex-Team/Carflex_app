@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
         body.vin,
         body.color,
         body.purch_value,
-      ]
+      ],
     );
 
     emitEvent({ type: "sheet:lead:update" });

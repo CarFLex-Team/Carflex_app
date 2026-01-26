@@ -6,6 +6,7 @@ import CarList from "../CarList/CarList";
 import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
 import CarWatcher from "../CarWatcher/CarWatcher";
+import CallerPicker from "../CallerPicker/CallerPicker";
 
 type Item = {
   id: number;
@@ -72,14 +73,17 @@ export default function ClientListings({
           <p className="text-black text-2xl md:text-3xl font-bold tracking-wide ">
             {active} Listings
           </p>
+
           <div className="flex items-center gap-4">
             {/* <AutoSwitch /> */}
+            <CallerPicker />
+
             <SelectView view={view} setView={setView} />
             {/* <SearchVin /> */}
           </div>
         </div>
         {active === "All" && (
-          <div className="flex items-center gap-6 mb-5">
+          <div className="items-center gap-6 mb-5 hidden md:flex">
             <p className="font-semibold">Filter by source:</p>
 
             {SOURCES.map((s) => (
@@ -101,6 +105,7 @@ export default function ClientListings({
             </button>
           </div>
         )}
+
         {view === "list" ? (
           <div className="grid grid-cols-1 gap-5">
             {items.map((carDetails) => (

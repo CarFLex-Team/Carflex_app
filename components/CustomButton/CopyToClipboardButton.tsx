@@ -4,6 +4,7 @@ import copy from "clipboard-copy";
 import { Check, Copy, Loader, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
+import { useSettingsStore } from "@/store/useSettingStore";
 
 export default function CopyToClipboardButton({
   carDetails,
@@ -14,6 +15,7 @@ export default function CopyToClipboardButton({
   status?: string;
   estimatedValue?: number;
 }) {
+  const callerName = useSettingsStore((s) => s.callerName);
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -44,6 +46,7 @@ export default function CopyToClipboardButton({
           ...carDetails,
           status,
           real_value: Number(estimatedValue),
+          sheet_id: callerName,
         }),
       });
       setIsLoading(false);
@@ -57,8 +60,8 @@ export default function CopyToClipboardButton({
       setIsLoading(false);
       setError(true);
       setOpen(true);
-      setTimeout(() => setError(false), 2000);
-      setTimeout(() => setOpen(false), 1000);
+      setTimeout(() => setError(false), 3000);
+      setTimeout(() => setOpen(false), 3000);
       console.error("Failed to copy text or save car details", error);
     }
   };
@@ -79,7 +82,12 @@ export default function CopyToClipboardButton({
           <Copy size={17} />
         )}
       </button>
-      {open && <NotifyDialog title="Car already Sent" isOpen={open} />}
+      {open && (
+        <NotifyDialog
+          title="Car may be already sent or you missed to pick the caller"
+          isOpen={open}
+        />
+      )}
     </>
   );
 }

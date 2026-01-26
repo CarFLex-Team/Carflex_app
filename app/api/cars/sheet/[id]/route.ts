@@ -33,21 +33,17 @@ export async function GET(
       AND created_at < $1::date + INTERVAL '1 day'`;
       }
     }
-
-    if (session.user.role === "LEAD") {
-    }
     const { rows } = await db.query<allRow>(
       `
   SELECT
        *
-      FROM "sheet_dabou"
+      FROM "sheet_caller"
       ${WherePart}
       ORDER BY sent_at DESC
       LIMIT 100
       `,
       queryParams,
     );
-
     const items = await Promise.all(
       rows.map(async (r) => ({
         ...r,

@@ -1,6 +1,6 @@
 export const SHEETS = {
-  dabou: {
-    table: "sheet_dabou",
+  caller: {
+    table: "sheet_caller",
     editableFields: new Set([
       "notes",
       "call_status",
@@ -13,7 +13,7 @@ export const SHEETS = {
       "lowest_price",
       "follow_up_date",
     ]),
-    event: "sheet:dabou:update",
+    event: "sheet:caller:update",
   },
 
   lead: {
@@ -43,38 +43,38 @@ export const SHEETS = {
     event: "sheet:lead:update",
   },
 
-  ibrahim: {
-    table: "sheet_ibrahim",
-    editableFields: new Set([
-      "notes",
-      "call_status",
-      "status",
-      "seller_phone",
-      "real_value",
-      "purch_value",
-      "vin",
-      "color",
-      "lowest_price",
-      "follow_up_date",
-    ]),
-    event: "sheet:ibrahim:update",
-  },
-  omar: {
-    table: "sheet_omar",
-    editableFields: new Set([
-      "notes",
-      "call_status",
-      "status",
-      "seller_phone",
-      "real_value",
-      "purch_value",
-      "vin",
-      "color",
-      "lowest_price",
-      "follow_up_date",
-    ]),
-    event: "sheet:omar:update",
-  },
+  // ibrahim: {
+  //   table: "sheet_ibrahim",
+  //   editableFields: new Set([
+  //     "notes",
+  //     "call_status",
+  //     "status",
+  //     "seller_phone",
+  //     "real_value",
+  //     "purch_value",
+  //     "vin",
+  //     "color",
+  //     "lowest_price",
+  //     "follow_up_date",
+  //   ]),
+  //   event: "sheet:ibrahim:update",
+  // },
+  // omar: {
+  //   table: "sheet_omar",
+  //   editableFields: new Set([
+  //     "notes",
+  //     "call_status",
+  //     "status",
+  //     "seller_phone",
+  //     "real_value",
+  //     "purch_value",
+  //     "vin",
+  //     "color",
+  //     "lowest_price",
+  //     "follow_up_date",
+  //   ]),
+  //   event: "sheet:omar:update",
+  // },
 } as const;
 
 export type SheetKey = keyof typeof SHEETS;

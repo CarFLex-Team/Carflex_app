@@ -52,6 +52,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
+export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
@@ -60,10 +61,13 @@ export async function POST(req: Request) {
     if (!body) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
+    if (!body.sheet_id) {
+      return NextResponse.json({ error: "Missing Caller ID" }, { status: 400 });
+    }
 
     await db.query(
       `
-      INSERT INTO "sheet_dabou" (
+      INSERT INTO "sheet_caller" (
       id,
         title,
         price,      
@@ -75,9 +79,10 @@ export async function POST(req: Request) {
          description,
          source,
          is_sus,
-         real_value
+         real_value,
+        sheet_id
          )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       `,
       [
         body.id,
@@ -92,10 +97,11 @@ export async function POST(req: Request) {
         body.source,
         body.is_sus,
         body.real_value,
-      ]
+        body.sheet_id,
+      ],
     );
 
-    emitEvent({ type: "sheet:dabou:update" });
+    emitEvent({ type: "sheet:caller:update" });
 
     return NextResponse.json({ success: true });
   } catch (err) {

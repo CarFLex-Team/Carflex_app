@@ -9,7 +9,7 @@ export default async function Home() {
       redirect("/sheet-leads");
     }
     if (session.user.role === "CALLER") {
-      redirect("/sheet-dabou");
+      redirect("/sheet-caller");
     }
   }
   redirect("/listings");
