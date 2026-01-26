@@ -4,6 +4,7 @@ import type { allRow } from "@/lib/db.postgres";
 import priceStatus from "@/helpers/priceStatus";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
+import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
 
 export async function GET(
   req: Request,
@@ -58,5 +59,40 @@ export async function GET(
       { error: "Internal Server Error" },
       { status: 500 },
     );
+  }
+}
+export async function POST(
+  req: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { title, odometer, ad_link, price, source } = await req.json();
+    const session = await getServerSession(authOptions);
+    const { id } = await context.params;
+
+    if (!session?.user?.id) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    if (!title || !odometer || !ad_link || !price || !source || !id) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
+    }
+
+    const { rows } = await db.query(
+      `
+ INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW())
+      RETURNING *
+      `,
+      [title, odometer, ad_link, price, source, id.toLowerCase()],
+    );
+
+    emitEvent({ type: "sheet:caller:update" });
+    return NextResponse.json(rows[0], { status: 201 });
+  } catch (error: any) {
+    console.error("POST /api/cars/sheet/[id] error", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

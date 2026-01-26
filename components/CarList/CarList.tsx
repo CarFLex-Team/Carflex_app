@@ -26,7 +26,9 @@ export default function CarList({ carDetails }: { carDetails: any }) {
     value: string;
   }>();
   const [estimatedValue, setEstimatedValue] = useState<number>(
-    carDetails.real_value ? carDetails.real_value : carDetails.est_value,
+    carDetails.real_value || carDetails.real_value === 0
+      ? carDetails.real_value
+      : carDetails.est_value,
   );
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);

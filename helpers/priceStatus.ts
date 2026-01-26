@@ -1,9 +1,9 @@
 export default async function priceStatus(
   price: number | null,
   est_value: number | null,
-  real_value?: number | null
+  real_value?: number | null,
 ) {
-  if (real_value && !isNaN(real_value)) {
+  if ((real_value === 0 || real_value) && !isNaN(real_value)) {
     est_value = real_value;
   }
   if (!est_value || !price || isNaN(price)) return "Unknown";

@@ -11,9 +11,13 @@ import convertToADay from "@/lib/convertToADay";
 import downloadCSV from "@/lib/downloadCSV";
 import { useSession } from "next-auth/react";
 import CarWatcher from "@/components/CarWatcher/CarWatcher";
+import Modal from "@/components/ui/Modal";
+import { AddCarForm } from "@/components/AddCarForm/AddCarForm";
+import { Plus } from "lucide-react";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
+  const [open, setOpen] = useState(false);
   // const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const today = new Date().toISOString().slice(0, 10);
@@ -51,14 +55,25 @@ export default function CarsSheetPage() {
     {
       header: "Sent At",
       accessor: "sent_at",
-      render: (row) => (
-        <div>
-          <div>{formatDate(row.sent_at)}</div>
-          <div className="text-xs text-gray-400">
-            at {formatTime(row.sent_at)}
+      render: (row) =>
+        row.sent_at ? (
+          <div>
+            <div>{formatDate(row.sent_at)}</div>
+            <div className="text-xs text-gray-400">
+              at {formatTime(row.sent_at)}
+            </div>
           </div>
-        </div>
-      ),
+        ) : (
+          <EditableCell
+            type="date"
+            className={`w-18 `}
+            value={row.sent_at ? `${row.sent_at}` : ""}
+            rowId={row.ad_link}
+            field="sent_at"
+            sheet="caller"
+            date={date}
+          />
+        ),
     },
     { header: "Sent By", accessor: "sent_by" },
     {
@@ -125,19 +140,47 @@ export default function CarsSheetPage() {
         />
       ),
     },
-    { header: "Odometer", accessor: "odometer" },
+    {
+      header: "Odometer",
+      accessor: "odometer",
+      render: (row) =>
+        row.odometer ? (
+          `${row.odometer} km`
+        ) : (
+          <EditableCell
+            type="text"
+            className="w-15"
+            value={row.odometer ? `${row.odometer}` : ""}
+            rowId={row.ad_link}
+            field="odometer"
+            sheet="caller"
+            date={date}
+          />
+        ),
+    },
     {
       header: "Ad Link",
       accessor: "ad_link",
-      render: (row) => (
-        <a
-          href={row.ad_link}
-          className="underline text-blue-900"
-          target="_blank"
-        >
-          {row.source}
-        </a>
-      ),
+      render: (row) =>
+        row.ad_link ? (
+          <a
+            href={row.ad_link}
+            className="underline text-blue-900"
+            target="_blank"
+          >
+            {row.source}
+          </a>
+        ) : (
+          <EditableCell
+            type="text"
+            value={row.ad_link}
+            rowId={row.ad_link}
+            field="ad_link"
+            className="w-20"
+            sheet="caller"
+            date={date}
+          />
+        ),
     },
     {
       header: "Seller Phone",
@@ -179,7 +222,20 @@ export default function CarsSheetPage() {
     {
       header: "List Price",
       accessor: "price",
-      render: (row) => `$${row.price}`,
+      render: (row) =>
+        row.price ? (
+          `$${row.price}`
+        ) : (
+          <EditableCell
+            type="text"
+            className="w-15"
+            value={row.price ? `$${row.price}` : ""}
+            rowId={row.ad_link}
+            field="price"
+            sheet="caller"
+            date={date}
+          />
+        ),
     },
     { header: "Status", accessor: "status" },
 
@@ -288,6 +344,14 @@ export default function CarsSheetPage() {
 
   return (
     <>
+      {open && (
+        <Modal isOpen={open} onClose={() => setOpen(false)} title="Add Car">
+          <AddCarForm
+            onSuccess={() => setOpen(false)}
+            sheet={session?.user?.name?.toLowerCase()}
+          />
+        </Modal>
+      )}
       <CarWatcher cars={data ?? []} otherSound={true} />
       {/* 👂 listens for SEND events */}
       <SheetLiveListener />
@@ -312,6 +376,12 @@ export default function CarsSheetPage() {
               className=" p-2 border-b border-gray-300 focus:outline-none min-w-25"
             />
             <div className="flex gap-4">
+              <button
+                className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+                onClick={() => setOpen(true)}
+              >
+                <Plus className="" size={18} />
+              </button>
               <input
                 type="date"
                 value={date}
