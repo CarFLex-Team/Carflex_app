@@ -15,6 +15,7 @@ export const SHEETS = {
       "location",
       "odometer",
       "ad_link",
+      "title",
     ]),
     event: "sheet:caller:update",
   },
