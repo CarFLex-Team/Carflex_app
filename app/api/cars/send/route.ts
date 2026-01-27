@@ -64,7 +64,6 @@ export async function POST(req: Request) {
     if (!body.sheet_id) {
       return NextResponse.json({ error: "Missing Caller ID" }, { status: 400 });
     }
-
     await db.query(
       `
       INSERT INTO "sheet_caller" (
@@ -80,9 +79,10 @@ export async function POST(req: Request) {
          source,
          is_sus,
          real_value,
-        sheet_id
+        sheet_id,
+        sent_by
          )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       `,
       [
         body.id,
@@ -98,6 +98,7 @@ export async function POST(req: Request) {
         body.is_sus,
         body.real_value,
         body.sheet_id,
+        body.sent_by,
       ],
     );
 

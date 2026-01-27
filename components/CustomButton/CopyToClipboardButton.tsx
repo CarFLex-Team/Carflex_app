@@ -5,6 +5,7 @@ import { Check, Copy, Loader, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
 import { useSettingsStore } from "@/store/useSettingStore";
+import { useSession } from "next-auth/react";
 
 export default function CopyToClipboardButton({
   carDetails,
@@ -16,6 +17,7 @@ export default function CopyToClipboardButton({
   estimatedValue?: number;
 }) {
   const callerName = useSettingsStore((s) => s.callerName);
+  const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -47,11 +49,12 @@ export default function CopyToClipboardButton({
           status,
           real_value: Number(estimatedValue),
           sheet_id: callerName,
+          sent_by: session?.user?.name,
         }),
       });
       setIsLoading(false);
       if (!res.ok) {
-        throw new Error("Failed to save car details");
+        throw new Error("Failed to save car details" + res.statusText);
       }
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);

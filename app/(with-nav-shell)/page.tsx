@@ -11,6 +11,7 @@ export default async function Home() {
     if (session.user.role === "CALLER") {
       redirect("/sheet-caller");
     }
+    redirect("/listings");
   }
-  redirect("/listings");
+  redirect("/login");
 }
