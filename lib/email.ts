@@ -1,17 +1,32 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-function getResendClient() {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY is missing");
+function getBrevoTransporter() {
+  if (!process.env.BREVO_SMTP_USER) {
+    throw new Error("BREVO_SMTP_USER is missing");
   }
 
-  return new Resend(process.env.RESEND_API_KEY);
+  if (!process.env.BREVO_SMTP_PASS) {
+    throw new Error("BREVO_SMTP_PASS is missing");
+  }
+
+  return nodemailer.createTransport({
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false, // TLS
+    auth: {
+      user: process.env.BREVO_SMTP_USER,
+      pass: process.env.BREVO_SMTP_PASS,
+    },
+  });
 }
 
 export async function sendResetPasswordEmail(to: string, resetLink: string) {
-  const resend = getResendClient();
-  await resend.emails.send({
-    from: "CarFlex <onboarding@resend.dev>", // or
+  const transporter = getBrevoTransporter();
+
+  const fromEmail = process.env.FROM_EMAIL || "CarFlex <noreply@brevo.com>";
+
+  await transporter.sendMail({
+    from: fromEmail,
     to,
     subject: "Reset your password",
     html: `
