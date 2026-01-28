@@ -41,7 +41,7 @@ export default function ClientListings({
     [`${active.toLowerCase()}Cars`, limit ?? 20],
     () => fetchData({ name: active.toLowerCase(), limit: limit ?? 20 }),
     {
-      refreshInterval: 15_000, // poll every 15 seconds
+      refreshInterval: 30_000, // poll every 15 seconds
       fallbackData: { items: initialCarsData },
       revalidateOnFocus: true,
     },
