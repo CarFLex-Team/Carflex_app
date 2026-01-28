@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useEffect, useState } from "react";
+import { JSX, useState } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
@@ -9,10 +9,8 @@ import {
   Save,
   SearchCheck,
   SquarePen,
-  X,
 } from "lucide-react";
 import Link from "next/link";
-
 import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
 import timeAgo from "@/helpers/timeAgoCalculator";
 import { updateCarValue } from "@/helpers/updateCarValue";
@@ -170,7 +168,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
                 autoFocus
                 onClick={(e) => e.preventDefault()}
                 type="text"
-                className={` max-w-14  text-gray-700 focus:outline-none  ${
+                className={` max-w-10 text-gray-700 focus:outline-none  ${
                   editMode ? " bg-white" : " bg-transparent"
                 }`}
                 value={estimatedValue ? estimatedValue.toLocaleString() : ""}
