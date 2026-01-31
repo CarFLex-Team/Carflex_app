@@ -60,7 +60,6 @@ const ALLOWED_TABLES = new Set(["facebook", "kijiji", "autotrader"]);
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
     if (!body?.sheet_id) {
       return NextResponse.json({ error: "Missing sheet_id" }, { status: 400 });
     }
@@ -102,11 +101,21 @@ export async function POST(req: Request) {
 
     await db.query(
       `
-      UPDATE "${body.source}"
-      SET is_sent = $1
-      WHERE ad_link = $2
+    WITH update_table AS (
+    UPDATE "${body.source}"
+    SET is_sent = true
+    WHERE ad_link = $1
+      AND created_at >= CURRENT_DATE - INTERVAL '1 day'
+    RETURNING ad_link
+)
+UPDATE "all"
+SET is_sent = true
+FROM update_table
+WHERE "all".ad_link = update_table.ad_link
+  AND created_at >= CURRENT_DATE - INTERVAL '1 day';
+
       `,
-      [true, body.ad_link],
+      [body.ad_link],
     );
 
     await db.query("COMMIT");
