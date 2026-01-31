@@ -24,7 +24,7 @@ export function removeClient(controller: ReadableStreamDefaultController) {
   if (index !== -1) clients.splice(index, 1);
 }
 
-export function emitEvent(event: { type: string }) {
+export function emitEvent(event: EventPayload) {
   const msg = `data: ${JSON.stringify(event)}\n\n`;
 
   for (const client of clients) {
