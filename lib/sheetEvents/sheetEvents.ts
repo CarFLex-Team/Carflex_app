@@ -1,5 +1,5 @@
 type EventPayload = {
-  type: "sheet:caller:update" | "sheet:lead:update";
+  type: "sheet:caller:update" | "sheet:lead:update" | "sheet:team:update";
 
   data?: any;
 };
@@ -15,6 +15,8 @@ const clients = (global.__sheetClients ??= []);
 
 export function addClient(controller: ReadableStreamDefaultController) {
   clients.push(controller);
+
+  console.log("Client added. Total clients:", clients.length);
 }
 
 export function removeClient(controller: ReadableStreamDefaultController) {

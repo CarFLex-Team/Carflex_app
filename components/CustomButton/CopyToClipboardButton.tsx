@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import copy from "clipboard-copy";
 import { Check, Copy, Loader, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
@@ -18,26 +18,19 @@ export default function CopyToClipboardButton({
 }) {
   const callerName = useSettingsStore((s) => s.callerName);
   const { data: session } = useSession();
-  const [isCopied, setIsCopied] = useState(false);
+  const [isCopied, setIsCopied] = useState(carDetails.is_sent || false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (carDetails.is_sent) {
+      setIsCopied(true);
+    }
+  }, [carDetails.is_sent]);
   const handleCopyClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
       setIsLoading(true);
-      await copy(
-        carDetails.ad_link +
-          `\n${status === "Unknown" || !status ? "" : status?.toUpperCase()}` +
-          `${
-            estimatedValue
-              ? `\nEstimated Value: $${estimatedValue}`
-              : carDetails.est_value
-                ? `\nEstimated Value: $${carDetails.est_value}`
-                : ""
-          }` +
-          "\nGenerated using Carflex App",
-      );
 
       const res = await fetch("/api/cars/send", {
         method: "POST",
@@ -56,15 +49,30 @@ export default function CopyToClipboardButton({
       if (!res.ok) {
         throw new Error("Failed to save car details" + res.statusText);
       }
+      if (res.ok) {
+        await copy(
+          carDetails.ad_link +
+            `\n${status === "Unknown" || !status ? "" : status?.toUpperCase()}` +
+            `${
+              estimatedValue
+                ? `\nEstimated Value: $${estimatedValue}`
+                : carDetails.est_value
+                  ? `\nEstimated Value: $${carDetails.est_value}`
+                  : ""
+            }` +
+            "\nGenerated using Carflex App",
+        );
+      }
+
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      // setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {
       console.error(error);
       setIsLoading(false);
       setError(true);
       setOpen(true);
-      setTimeout(() => setError(false), 3000);
-      setTimeout(() => setOpen(false), 3000);
+      setTimeout(() => setError(false), 4000);
+      setTimeout(() => setOpen(false), 4000);
       console.error("Failed to copy text or save car details", error);
     }
   };

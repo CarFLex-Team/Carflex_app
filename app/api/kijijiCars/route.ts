@@ -25,12 +25,13 @@ export async function GET(req: Request) {
         description,
         source,
         is_sus,
-        real_value
+        real_value,
+        is_sent
       FROM "kijiji"
       ORDER BY created_at DESC
       LIMIT $1
       `,
-      [limit]
+      [limit],
     );
 
     const items = await Promise.all(
@@ -38,7 +39,7 @@ export async function GET(req: Request) {
         ...r,
         image_src: await getValidFirstImage(r.image_src),
         status: await priceStatus(r.price, r.est_value, r.real_value),
-      }))
+      })),
     );
 
     return NextResponse.json({ items });
@@ -46,7 +47,7 @@ export async function GET(req: Request) {
     console.error("GET /api/kijijiCars error", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

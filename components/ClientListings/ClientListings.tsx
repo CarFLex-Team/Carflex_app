@@ -7,6 +7,7 @@ import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
 import CarWatcher from "../CarWatcher/CarWatcher";
 import CallerPicker from "../CallerPicker/CallerPicker";
+import { SheetLiveListener } from "../sheetLiveListener/SheetLiveListener";
 
 type Item = {
   id: number;
@@ -38,10 +39,13 @@ export default function ClientListings({
   const SOURCES = ["facebook", "kijiji", "autotrader"];
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const { data, error, isLoading } = useSWR(
-    [`${active.toLowerCase()}Cars`, limit ?? 20],
-    () => fetchData({ name: active.toLowerCase(), limit: limit ?? 20 }),
+    [`${active.toLowerCase()}`, limit ?? 20],
+    ([name, limit]) => {
+      const result = fetchData({ name: name || "", limit });
+      return result;
+    },
     {
-      refreshInterval: 30_000, // poll every 15 seconds
+      refreshInterval: 30_000, // poll every 30 seconds
       fallbackData: { items: initialCarsData },
       revalidateOnFocus: true,
     },
@@ -65,8 +69,10 @@ export default function ClientListings({
     (item: { source: string }) =>
       selectedSources.length === 0 || selectedSources.includes(item.source),
   );
+
   return (
     <>
+      <SheetLiveListener name={`${active.toLowerCase()}`} limit={limit ?? 20} />
       <CarWatcher cars={data.items} />
       <div className=" px-4 sm:px-9 py-6 ">
         <div className="sm:w-full mb-8 flex justify-between items-center ">
