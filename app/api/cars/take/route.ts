@@ -10,7 +10,9 @@ export async function PUT(req: Request) {
     if (!body?.is_taken) {
       return NextResponse.json({ error: "Missing is_taken" }, { status: 400 });
     }
-
+    if (body.source === "facebook") {
+      body.source = "marketplace";
+    }
     await db.query(
       `
     WITH update_table AS (
