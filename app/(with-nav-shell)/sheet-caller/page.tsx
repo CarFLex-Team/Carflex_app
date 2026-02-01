@@ -206,7 +206,7 @@ export default function CarsSheetPage() {
           type="text"
           className="w-15"
           value={
-            row.real_value
+            row.real_value || row.real_value === 0
               ? `$${row.real_value}`
               : row.est_value
                 ? `$${row.est_value}`

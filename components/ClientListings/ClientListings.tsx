@@ -42,6 +42,7 @@ export default function ClientListings({
     [`${active.toLowerCase()}`, limit ?? 20],
     ([name, limit]) => {
       const result = fetchData({ name: name || "", limit });
+
       return result;
     },
     {

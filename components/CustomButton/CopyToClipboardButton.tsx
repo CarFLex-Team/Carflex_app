@@ -54,7 +54,7 @@ export default function CopyToClipboardButton({
           carDetails.ad_link +
             `\n${status === "Unknown" || !status ? "" : status?.toUpperCase()}` +
             `${
-              estimatedValue
+              estimatedValue || estimatedValue === 0
                 ? `\nEstimated Value: $${estimatedValue}`
                 : carDetails.est_value
                   ? `\nEstimated Value: $${carDetails.est_value}`

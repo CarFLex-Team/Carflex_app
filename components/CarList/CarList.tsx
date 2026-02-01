@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
@@ -23,15 +23,22 @@ export default function CarList({ carDetails }: { carDetails: any }) {
     status: boolean;
     value: string;
   }>();
+  const [isTaken, setIsTaken] = useState(carDetails.is_taken || false);
   const [estimatedValue, setEstimatedValue] = useState<number>(
-    carDetails.real_value || carDetails.real_value === 0
+    carDetails.real_value ||
+      carDetails.real_value === 0 ||
+      carDetails.real_value !== null
       ? carDetails.real_value
       : carDetails.est_value,
   );
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string>(carDetails.status);
-
+  useEffect(() => {
+    if (carDetails.is_taken) {
+      setIsTaken(true);
+    }
+  }, [carDetails.is_taken]);
   const onCheck = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -65,6 +72,27 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       alert("Failed to update value");
     } finally {
       setLoading(false);
+    }
+  }
+  async function handleIsTaken() {
+    try {
+      const res = await fetch("/api/cars/take", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          is_taken: true,
+          ad_link: carDetails.ad_link,
+          source: carDetails.source,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to take car" + res.statusText);
+      }
+      setIsTaken(true);
+    } catch (error) {
+      console.error("Failed to mark car as taken", error);
     }
   }
 
@@ -105,6 +133,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
+      onClick={handleIsTaken}
     >
       <div
         className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 ${
@@ -218,7 +247,9 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
-          <p className="text-black  overflow-ellipsis line-clamp-1 font-bold text-base sm:text-lg pr-2.5">
+          <p
+            className={`text-black  overflow-ellipsis line-clamp-1 font-bold text-base sm:text-lg pr-2.5 ${isTaken ? "line-through" : ""}`}
+          >
             {carDetails.title}
           </p>
           <p className="text-gray-700 text-sm">

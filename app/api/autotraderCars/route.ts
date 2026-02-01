@@ -27,7 +27,8 @@ export async function GET(req: Request) {
         source,
         is_sus,
         real_value,
-        is_sent
+        is_sent,
+        is_taken
       FROM "autotrader"
       ORDER BY created_at DESC
       LIMIT $1
