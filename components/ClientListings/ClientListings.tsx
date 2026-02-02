@@ -85,7 +85,7 @@ export default function ClientListings({
             {/* <AutoSwitch /> */}
             <CallerPicker />
 
-            <SelectView view={view} setView={setView} />
+            {/* <SelectView view={view} setView={setView} /> */}
             {/* <SearchVin /> */}
           </div>
         </div>

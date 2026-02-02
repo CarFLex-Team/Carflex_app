@@ -18,7 +18,9 @@ import { mutate } from "swr";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import priceStatus from "@/helpers/priceStatus";
 import formatNumber from "@/helpers/formatNumber";
+import { useSession } from "next-auth/react";
 export default function CarList({ carDetails }: { carDetails: any }) {
+  const { data: session } = useSession();
   const [trimStatus, setTrimStatus] = useState<{
     status: boolean;
     value: string;
@@ -34,6 +36,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<string>(carDetails.status);
+  const role = session?.user?.role;
   useEffect(() => {
     if (carDetails.is_taken) {
       setIsTaken(true);
@@ -133,7 +136,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
-      onClick={handleIsTaken}
+      onClick={role !== "LEAD" ? handleIsTaken : undefined}
     >
       <div
         className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 ${
