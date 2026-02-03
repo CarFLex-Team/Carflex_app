@@ -1,7 +1,7 @@
 "use client";
 
 import formatDate from "@/lib/formatDate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mutate } from "swr";
 
 export function EditableCell({
@@ -29,6 +29,9 @@ export function EditableCell({
   const [draft, setDraft] = useState(value);
   const [loading, setLoading] = useState(false);
   const [newValue, setNewValue] = useState(value);
+  useEffect(() => {
+    setNewValue(value);
+  }, [value]);
   async function save() {
     if (loading) return;
     if (draft === newValue) {
