@@ -16,6 +16,7 @@ export function AddCarForm({
   const [ad_link, setAdLink] = useState("");
   const [price, setPrice] = useState("");
   const [source, setSource] = useState("");
+  const [sent_by, setSentBy] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     try {
@@ -27,7 +28,14 @@ export function AddCarForm({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, odometer, ad_link, price, source }),
+        body: JSON.stringify({
+          title,
+          odometer,
+          ad_link,
+          price,
+          source,
+          sent_by,
+        }),
       });
       if (!res.ok) {
         throw new Error("Failed to save car details");
@@ -46,6 +54,33 @@ export function AddCarForm({
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
       <div className="flex justify-between items-center gap-4">
+        <label className=" flex-2">Sent By</label>
+        <select
+          name="sentBy"
+          id="sentBy"
+          className="p-2 border border-gray-300 rounded-lg flex-5"
+          value={sent_by}
+          onChange={(e) => setSentBy(e.target.value)}
+          required
+        >
+          <option value="" disabled>
+            Select Sent By
+          </option>
+          <option value="Pota Mohamed">Pota Mohamed</option>
+          <option value="George Eissa">George Eissa</option>
+          <option value="Mohamed Ragab">Mohamed Ragab</option>
+          <option value="Mido Khaled">Mido Khaled</option>
+          <option value="Hossam Hamdy">Hossam Hamdy</option>
+          <option value="Abdo Saeed">Abdo Saeed</option>
+          <option value="Gemy">Gemy</option>
+          <option value="Youssef Halawany">Youssef Halawany</option>
+          <option value="Youssef Mahmoud">Youssef Mahmoud</option>
+          <option value="Mohamed Faried">Mohamed Faried</option>
+          <option value="Ahmed Ragab">Ahmed Ragab</option>
+          <option value="Shehab Eissa">Shehab Eissa</option>
+        </select>
+      </div>
+      <div className="flex justify-between items-center gap-4">
         <label className=" flex-2">Title</label>
         <input
           type="text"
@@ -57,7 +92,7 @@ export function AddCarForm({
         />
       </div>
       <div className="flex justify-between items-center gap-4">
-        <label className=" flex-2">odometer</label>
+        <label className=" flex-2">Odometer</label>
         <input
           type="text"
           className="p-2 border border-gray-300 rounded-lg flex-5"

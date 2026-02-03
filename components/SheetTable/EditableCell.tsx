@@ -28,10 +28,10 @@ export function EditableCell({
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
   const [loading, setLoading] = useState(false);
-
+  const [newValue, setNewValue] = useState(value);
   async function save() {
     if (loading) return;
-    if (draft === value) {
+    if (draft === newValue) {
       setEditing(false);
       return;
     }
@@ -45,12 +45,15 @@ export function EditableCell({
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ [field]: draft }),
+        body: JSON.stringify({
+          [field]: !draft ? null : type === "number" ? Number(draft) : draft,
+        }),
       },
     );
+
     setLoading(false);
     setEditing(false);
-    // setDraft(null);
+    setNewValue(draft);
 
     // 🔥 update sheet
     mutate(
@@ -70,13 +73,13 @@ export function EditableCell({
     return (
       <div
         onClick={() => setEditing(true)}
-        className={`cursor-pointer border border-transparent hover:border-gray-300 ${value ? noEditClassName : ""}`}
+        className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""}`}
       >
-        {value === "" || value == null
+        {newValue === "" || newValue == null
           ? "—"
           : type === "date"
-            ? formatDate(value)
-            : value}
+            ? formatDate(newValue)
+            : newValue}
       </div>
     );
   }
