@@ -43,7 +43,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
           <main className="flex-1 overflow-auto ">{children}</main>
 
           {isChatbotOpen && (
-            <div className="absolute bottom-18 right-14 w-80 h-96 bg-white  rounded-4xl rounded-br-none shadow-xl z-50">
+            <div className="absolute bottom-18 right-14 w-96 h-4/6 bg-white  rounded-4xl rounded-br-none shadow-xl z-50">
               <Chatbot onClose={handleCloseChatbot} />
             </div>
           )}
