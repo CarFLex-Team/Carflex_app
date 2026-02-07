@@ -339,12 +339,12 @@ export default function LeadsSheetPage() {
               : []
         }
         isLoading={isLoading}
-        pagination={{
-          page,
-          pageSize,
-          total: data?.length || 1,
-          onPageChange: setPage,
-        }}
+        // pagination={{
+        //   page,
+        //   pageSize,
+        //   total: data?.length || 1,
+        //   onPageChange: setPage,
+        // }}
         action={
           <div className="flex gap-4">
             <input
