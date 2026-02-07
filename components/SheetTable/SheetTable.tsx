@@ -1,12 +1,5 @@
-import { Edit, Link } from "lucide-react";
-import TableSkeleton from "../ui/TableSkeleton";
-import { EditableCell } from "./EditableCell";
-type Pagination = {
-  page: number;
-  pageSize: number;
-  total: number;
-  onPageChange: (page: number) => void;
-};
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
 export type TableColumn<T> = {
   header: string;
   accessor: keyof T | ((row: T) => React.ReactNode);
@@ -19,7 +12,7 @@ type DataTableProps<T> = {
   columns: TableColumn<T>[];
   data: any[];
   action?: React.ReactNode;
-  pagination?: Pagination;
+
   isLoading?: boolean;
   onRowClick?: (row: T) => void;
   renderActions?: (row: T) => React.ReactNode;
@@ -30,15 +23,12 @@ export default function SheetTable<T>({
   columns,
   data,
   action,
-  pagination,
+
   isLoading = false,
   onRowClick,
   renderActions,
 }: DataTableProps<T>) {
-  const totalPages = pagination
-    ? Math.ceil(pagination.total / pagination.pageSize)
-    : 0;
-
+  console.log(isLoading);
   return (
     <div className="rounded-xl bg-white p-5 m-4 shadow-sm">
       {/* Header */}
@@ -63,10 +53,14 @@ export default function SheetTable<T>({
 
           <tbody>
             {isLoading ? (
-              <TableSkeleton
-                columns={columns.length}
-                length={pagination ? pagination.pageSize : 3}
-              />
+              <tr>
+                <td
+                  colSpan={renderActions ? columns.length + 1 : columns.length}
+                  className="py-6 text-center text-sm text-gray-500"
+                >
+                  <LoadingSpinner />
+                </td>
+              </tr>
             ) : data.length === 0 ? (
               <tr>
                 <td
@@ -104,31 +98,6 @@ export default function SheetTable<T>({
           </tbody>
         </table>
       </div>
-
-      {/* Pagination */}
-      {pagination && !isLoading && (
-        <div className="mt-4 flex items-center justify-between text-sm">
-          <button
-            onClick={() => pagination.onPageChange(pagination.page - 1)}
-            disabled={pagination.page === 1}
-            className="rounded border cursor-pointer px-3 py-1  text-white bg-primary disabled:opacity-50"
-          >
-            Previous
-          </button>
-
-          <span>
-            Page {pagination.page} of {totalPages}
-          </span>
-
-          <button
-            onClick={() => pagination.onPageChange(pagination.page + 1)}
-            disabled={pagination.page === totalPages}
-            className="rounded border cursor-pointer px-3 py-1 text-white bg-primary disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
     </div>
   );
 }

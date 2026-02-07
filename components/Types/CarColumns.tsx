@@ -4,8 +4,8 @@ import { EditableCell } from "../SheetTable/EditableCell";
 import formatTime from "@/lib/formatTime";
 import convertToADay from "@/lib/convertToADay";
 
-type Car = {
-  id: number;
+export type Car = {
+  id: string;
   title: string;
   price: number;
   location: string;
@@ -90,7 +90,7 @@ export const CarColumns: TableColumn<Car>[] = [
       <EditableCell
         type="date"
         className={`w-18 `}
-        noEditClassName={`${convertToADay(row.follow_up_date).getTime() === convertToADay(new Date().toISOString()).getTime() ? "bg-green-400" : convertToADay(row.follow_up_date) < convertToADay(new Date().toISOString()) ? "bg-red-300" : ""}`}
+        noEditClassName={`${convertToADay(`${row.follow_up_date}`).getTime() === convertToADay(new Date().toISOString()).getTime() ? "bg-green-400" : convertToADay(`${row.follow_up_date}`) < convertToADay(new Date().toISOString()) ? "bg-red-300" : ""}`}
         value={row.follow_up_date ? `${row.follow_up_date}` : ""}
         rowId={row.ad_link}
         field="follow_up_date"

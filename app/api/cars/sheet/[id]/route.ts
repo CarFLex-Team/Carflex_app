@@ -18,33 +18,40 @@ export async function GET(
     }
 
     const { id } = await context.params;
-    const date = searchParams.get("date");
-    let WherePart = "WHERE sheet_id = $1 AND ";
+    const page = searchParams.get("page");
+    const limit = searchParams.get("limit") || "20";
+    const offset = (Number(page) - 1) * Number(limit);
+    const search = searchParams.get("search") || ""; // Get the search parameter
+
+    let WherePart = "WHERE sheet_id = $1 ";
     let queryParams: any[] = [id.toLowerCase()];
-    if (date) {
-      queryParams.push(date);
-      WherePart += `created_at >= $2::date
-      AND created_at < $2::date + INTERVAL '1 day'`;
-    }
+
     if (session.user.role === "LEAD") {
       queryParams = [];
-      if (date) {
-        queryParams.push(date);
-        WherePart = `WHERE created_at >= $1::date
-      AND created_at < $1::date + INTERVAL '1 day'`;
-      }
+      WherePart = "";
     }
+
+    // Add search filter to WHERE clause if search term is provided
+    if (search && WherePart) {
+      WherePart += ` AND (title ILIKE $2 OR ad_link ILIKE $2 OR source ILIKE $2 OR sent_by ILIKE $2 OR VIN ILIKE $2) `;
+      queryParams.push(`%${search}%`);
+    } else if (search && !WherePart) {
+      WherePart += `WHERE (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1) `;
+      queryParams.push(`%${search}%`);
+    }
+
     const { rows } = await db.query<allRow>(
       `
-  SELECT
-       *
-      FROM "sheet_caller"
-      ${WherePart}
-      ORDER BY sent_at DESC
-      LIMIT 100
+        SELECT *
+        FROM "sheet_caller"
+        ${WherePart}
+        ORDER BY sent_at DESC
+        LIMIT ${limit} OFFSET ${offset}
       `,
       queryParams,
     );
+
+    // Add price status calculation
     const items = await Promise.all(
       rows.map(async (r) => ({
         ...r,
@@ -52,56 +59,27 @@ export async function GET(
       })),
     );
 
-    return NextResponse.json(items);
+    // Get total count for pagination purposes
+    const totalCountQuery = `
+      SELECT COUNT(*)
+      FROM "sheet_caller"
+      ${WherePart}
+    `;
+    const { rows: totalCountRows } = await db.query(
+      totalCountQuery,
+      queryParams,
+    );
+    const totalCount = totalCountRows[0].count;
+
+    // Determine if there's more data
+    const hasMore = offset + Number(limit) < totalCount;
+
+    return NextResponse.json({ items, totalCount, hasMore });
   } catch (err) {
     console.error("GET /api/cars/sheet/[id] error", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 },
     );
-  }
-}
-export async function POST(
-  req: Request,
-  context: { params: Promise<{ id: string }> },
-) {
-  try {
-    const { title, odometer, ad_link, price, source, sent_by } =
-      await req.json();
-    const session = await getServerSession(authOptions);
-    const { id } = await context.params;
-
-    if (!session?.user?.id) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-    if (
-      !title ||
-      !odometer ||
-      !ad_link ||
-      !price ||
-      !source ||
-      !sent_by ||
-      !id
-    ) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 },
-      );
-    }
-
-    const { rows } = await db.query(
-      `
- INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by)
-      VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)
-      RETURNING *
-      `,
-      [title, odometer, ad_link, price, source, id.toLowerCase(), sent_by],
-    );
-
-    emitEvent({ type: "sheet:caller:update" });
-    return NextResponse.json(rows[0], { status: 201 });
-  } catch (error: any) {
-    console.error("POST /api/cars/sheet/[id] error", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
