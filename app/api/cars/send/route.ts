@@ -121,7 +121,6 @@ WHERE "all".ad_link = update_table.ad_link
     await db.query("COMMIT");
 
     emitEvent({ type: "sheet:caller:update" });
-    // emitEvent({ type: "sheet:team:update" });
 
     return NextResponse.json({ success: true });
   } catch (err) {

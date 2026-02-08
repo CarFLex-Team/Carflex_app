@@ -1,4 +1,3 @@
-// components/SheetLiveListener.tsx
 "use client";
 
 import fetchData from "@/helpers/fetchData";
@@ -18,10 +17,12 @@ export function SheetLiveListener({
     const es = new EventSource("/api/cars/sheet/stream");
     es.onmessage = (event) => {
       const payload = JSON.parse(event.data);
+
       switch (payload.type) {
         case "sheet:caller:update":
+          console.log("Caller sheet updated, refetching data...");
           mutate(
-            `/api/cars/sheet/${session?.user?.name?.toLowerCase()}?date=${new Date().toISOString().slice(0, 10)}`,
+            `/api/cars/sheet/${session?.user?.name?.toLowerCase()}?page=1&search=`,
           );
           break;
         case "sheet:lead:update":
@@ -31,6 +32,7 @@ export function SheetLiveListener({
           );
           break;
         case "sheet:team:update":
+          if (session?.user?.role !== "TEAM") return;
           (async () => {
             const updatedData = await fetchData({ name: name || "", limit }); // Now `await` works
             mutate([name, Number(limit ?? 20)], updatedData, false); // Update cache with fresh data

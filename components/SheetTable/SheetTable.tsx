@@ -28,7 +28,6 @@ export default function SheetTable<T>({
   onRowClick,
   renderActions,
 }: DataTableProps<T>) {
-  console.log(isLoading);
   return (
     <div className="rounded-xl bg-white p-5 m-4 shadow-sm">
       {/* Header */}
