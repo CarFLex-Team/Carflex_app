@@ -7,7 +7,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
 } from "chart.js";
 
 // Register chart elements
@@ -20,40 +19,36 @@ ChartJS.register(
   Legend,
 );
 
-export default function CarSentChart({
+export default function AverageTimeChart({
   data,
 }: {
-  data: { employee: string; carsSent: number; carsAttack: number }[];
+  data: { employeeName: string; averageTimeInSeconds: number }[];
 }) {
+  // Prepare data for the chart
   const chartData = {
-    labels: data.map((item) => item.employee),
+    labels: data.map((item) => item.employeeName), // Employee names
     datasets: [
       {
-        label: "All Leads Cars",
-        data: data.map((item) => item.carsSent - item.carsAttack),
+        label: "Average Time to Send (Minutes)",
+        data: data.map((item) => item.averageTimeInSeconds / 60), // Average time for each employee
         backgroundColor: "#1d2a51",
         borderColor: "#1d2a51",
-        borderWidth: 0.5,
-      },
-      {
-        label: "Attack Cars",
-        data: data.map((item) => item.carsAttack),
-        backgroundColor: "#c10007",
-        borderColor: "#c10007",
-        borderWidth: 0.5,
+        borderWidth: 1,
       },
     ],
   };
 
-  const chartOptions: ChartOptions<"bar"> = {
+  const chartOptions = {
     responsive: true,
+
+    indexAxis: "y" as const, // Make bars horizontal
     plugins: {
       legend: {
         position: "bottom" as const,
       },
       title: {
         display: true, // Enable the title
-        text: "Cars Sent per Employee", // Title text
+        text: "Average Time to Send per Employee (Minutes)", // Title text
         font: {
           size: 18, // Title font size
           weight: "bold" as const, // Title font weight
@@ -64,17 +59,16 @@ export default function CarSentChart({
       },
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        stacked: true, // Stack the datasets
-      },
       x: {
-        stacked: true, // Stack the datasets
+        beginAtZero: true, // Ensures the X-axis starts from 0
+      },
+      y: {
         ticks: {
           font: {
             size: 10, // Font size of the labels
           },
         },
+        // Optional: Customize Y-axis properties if needed
       },
     },
   };
