@@ -7,13 +7,22 @@ export type NavItem = {
   // icon: React.ElementType;
 };
 export type NavBox = {
-  title: string;
+  title?: string;
   items?: NavItem[];
 };
 type Role = "LEAD" | "CALLER" | "TEAM" | "OTHER";
 
 export const navByRole: Record<Role, NavBox[]> = {
   LEAD: [
+    {
+      items: [
+        {
+          id: "leadsDashboard",
+          href: "/leads",
+          label: "Dashboard",
+        },
+      ],
+    },
     {
       title: "Listings",
       items: [

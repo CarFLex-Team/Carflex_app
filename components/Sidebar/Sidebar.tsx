@@ -102,7 +102,10 @@ export default function Sidebar({
                 >
                   {navItems.map((box) => {
                     return (
-                      <div className="flex flex-col gap-2 mb-4" key={box.title}>
+                      <div
+                        className="flex flex-col gap-2 mb-4"
+                        key={box.title ?? box.items?.[0].id}
+                      >
                         <p className="text-gray-500 ">{box.title}</p>
 
                         {box?.items?.map((item) => {
