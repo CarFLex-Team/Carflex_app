@@ -14,15 +14,15 @@ type Role = "LEAD" | "CALLER" | "TEAM" | "OTHER";
 
 export const navByRole: Record<Role, NavBox[]> = {
   LEAD: [
-    // {
-    //   items: [
-    //     {
-    //       id: "leadsDashboard",
-    //       href: "/leads",
-    //       label: "Dashboard",
-    //     },
-    //   ],
-    // },
+    {
+      items: [
+        {
+          id: "leadsDashboard",
+          href: "/leads",
+          label: "Dashboard",
+        },
+      ],
+    },
     {
       title: "Listings",
       items: [
