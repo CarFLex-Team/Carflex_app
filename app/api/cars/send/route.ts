@@ -77,9 +77,9 @@ export async function POST(req: Request) {
       INSERT INTO "sheet_caller" (
         id, title, price, location, odometer, ad_link,
         created_at, est_value, description, source,
-        is_sus, real_value, sheet_id, sent_by
+        is_sus, real_value, sheet_id, sent_by,status
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
       `,
       [
         body.id,
@@ -96,6 +96,7 @@ export async function POST(req: Request) {
         body.real_value,
         body.sheet_id,
         body.sent_by,
+        body.status,
       ],
     );
 

@@ -17,19 +17,19 @@ export async function PUT(req: Request) {
       `
     WITH update_table AS (
     UPDATE "${body.source}"
-    SET is_taken = true
-    WHERE ad_link = $1
+    SET is_taken = true, taken_by = $1
+    WHERE ad_link = $2
       AND created_at >= CURRENT_DATE - INTERVAL '1 day'
     RETURNING ad_link
 )
 UPDATE "all"
-SET is_taken = true
+SET is_taken = true, taken_by = $1
 FROM update_table
 WHERE "all".ad_link = update_table.ad_link
   AND created_at >= CURRENT_DATE - INTERVAL '1 day';
 
       `,
-      [body.ad_link],
+      [body.taken_by, body.ad_link],
     );
 
     emitEvent({ type: "sheet:team:update" });

@@ -52,12 +52,7 @@ export async function GET(
     );
 
     // Add price status calculation
-    const items = await Promise.all(
-      rows.map(async (r) => ({
-        ...r,
-        status: await priceStatus(r.price, r.est_value, r.real_value),
-      })),
-    );
+    const items = rows;
 
     // Get total count for pagination purposes
     const totalCountQuery = `

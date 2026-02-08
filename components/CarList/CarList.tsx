@@ -86,6 +86,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
         },
         body: JSON.stringify({
           is_taken: true,
+          taken_by: session?.user?.name || null,
           ad_link: carDetails.ad_link,
           source: carDetails.source,
         }),
