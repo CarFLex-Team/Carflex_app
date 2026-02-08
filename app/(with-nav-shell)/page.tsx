@@ -6,12 +6,18 @@ export default async function Home() {
 
   if (session) {
     if (session.user.role === "LEAD") {
-      redirect("/sheet-leads");
+      redirect("/leads");
     }
     if (session.user.role === "CALLER") {
-      redirect("/sheet-caller");
+      redirect("/caller");
     }
-    redirect("/listings");
   }
-  redirect("/login");
+  if (!session) {
+    redirect("/login");
+  }
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <h1 className="text-3xl font-bold">Welcome to Carflex!</h1>
+    </div>
+  );
 }

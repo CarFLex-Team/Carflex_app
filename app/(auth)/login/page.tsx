@@ -39,7 +39,13 @@ export default function SignInPage() {
     const session = await sessionRes.json();
 
     const role = session?.user?.role;
-    router.push(role === "LEADS" ? "/sheet-leads" : "/listings");
+    router.push(
+      role === "LEAD"
+        ? "/leads/sheet"
+        : role === "CALLER"
+          ? "/caller/sheet"
+          : "/listings",
+    );
   };
 
   return (

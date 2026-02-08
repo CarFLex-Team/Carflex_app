@@ -31,7 +31,7 @@ export default function CarsSheetPage() {
     page.toString(),
     search,
   );
-  console.log(data, "sheet data");
+
   useEffect(() => {
     if (data && data.items) {
       setSheetData((prevData) => [...prevData, ...data.items]); // Append new data

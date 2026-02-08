@@ -33,12 +33,12 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "leadsSheet",
           label: "Leads",
-          href: "/sheet-leads",
+          href: "/leads/sheet",
         },
         {
-          id: "sheets",
+          id: "callerSheet",
           label: "Callers Sheet",
-          href: "/sheet-caller",
+          href: "/caller/sheet",
         },
       ],
     },
@@ -73,7 +73,7 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "callerSheet",
           label: "Caller Sheet",
-          href: "/sheet-caller",
+          href: "/caller/sheet",
         },
       ],
     },
