@@ -28,7 +28,8 @@ export async function GET(req: Request) {
         is_sus,
         real_value,
         is_sent,
-        is_taken
+        is_taken,
+        taken_at
       FROM "all"
         ORDER BY title, price, odometer, created_at DESC)deduped
       ORDER BY created_at DESC
