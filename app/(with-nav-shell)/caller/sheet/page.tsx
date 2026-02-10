@@ -13,7 +13,7 @@ import { Plus } from "lucide-react";
 import { CarColumns, Car } from "@/components/Types/CarColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import FavoriteButton from "@/components/CustomButton/FavoriteButton";
-import { is } from "zod/v4/locales";
+import { ca } from "zod/v4/locales";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -36,14 +36,21 @@ export default function CarsSheetPage() {
     isAttacking,
     isFavorite,
   );
-
+  const [prevCount, setPrevCount] = useState<number>(data?.totalCount || 0);
   useEffect(() => {
     if (data && data.items) {
-      setSheetData((prevData) => [...prevData, ...data.items]); // Append new data
-      setHasMore(data.hasMore);
+      if (data.totalCount === prevCount) {
+        setSheetData((prevData) => [...prevData, ...data.items]); // Append new data
+        setHasMore(data.hasMore);
+      } else {
+        setSheetData(data.items);
+        setHasMore(data.hasMore);
+        setPrevCount(data.totalCount);
+        setPage(1);
+      }
     }
   }, [data]);
-  console.log("sheetData", sheetData);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value); // Update the search term
     setPage(1); // Reset to the first page when the search term changes

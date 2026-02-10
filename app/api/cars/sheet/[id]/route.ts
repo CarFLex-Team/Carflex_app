@@ -19,7 +19,7 @@ export async function GET(
 
     const { id } = await context.params;
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit") || "20";
+    const limit = searchParams.get("limit") || "50";
     const offset = (Number(page) - 1) * Number(limit);
     const search = searchParams.get("search") || ""; // Get the search parameter
     const isAttacking = searchParams.get("isAttacking") === "true"; // Get the isAttacking parameter
