@@ -22,28 +22,31 @@ export async function GET(
     const limit = searchParams.get("limit") || "20";
     const offset = (Number(page) - 1) * Number(limit);
     const search = searchParams.get("search") || ""; // Get the search parameter
+    const isAttacking = searchParams.get("isAttacking") === "true"; // Get the isAttacking parameter
+    const isFavorite = searchParams.get("isFavorite") === "true"; // Get the isFavorite parameter
+    let WherePart = "WHERE u.name=s.sent_by ";
+    let queryParams: any[] = [];
 
-    let WherePart = "WHERE sheet_id = $1 ";
-    let queryParams: any[] = [id.toLowerCase()];
-
-    if (session.user.role === "LEAD") {
-      queryParams = [];
-      WherePart = "";
+    if (session.user.role === "TEAM") {
+      WherePart += `AND s.sheeet_id = ${id.toLowerCase()}`;
     }
 
     // Add search filter to WHERE clause if search term is provided
-    if (search && WherePart) {
-      WherePart += ` AND (title ILIKE $2 OR ad_link ILIKE $2 OR source ILIKE $2 OR sent_by ILIKE $2 OR VIN ILIKE $2) `;
+    if (search) {
+      WherePart += ` AND (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1) `;
       queryParams.push(`%${search}%`);
-    } else if (search && !WherePart) {
-      WherePart += `WHERE (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1) `;
-      queryParams.push(`%${search}%`);
+    }
+    if (isAttacking) {
+      WherePart += ` AND s.status IN ('Steal', 'Good') `;
+    }
+    if (isFavorite) {
+      WherePart += ` AND is_favorite = true `;
     }
 
     const { rows } = await db.query<allRow>(
       `
-        SELECT *
-        FROM "sheet_caller"
+        SELECT s.*, u.team_no
+        FROM "sheet_caller" s , "User" u
         ${WherePart}
         ORDER BY sent_at DESC
         LIMIT ${limit} OFFSET ${offset}
@@ -57,7 +60,7 @@ export async function GET(
     // Get total count for pagination purposes
     const totalCountQuery = `
       SELECT COUNT(*)
-      FROM "sheet_caller"
+      FROM "sheet_caller" s , "User" u
       ${WherePart}
     `;
     const { rows: totalCountRows } = await db.query(

@@ -2,6 +2,7 @@ export const SHEETS = {
   caller: {
     table: "sheet_caller",
     editableFields: new Set([
+      "is_favorite",
       "notes",
       "call_status",
       "status",

@@ -8,9 +8,15 @@ const fetcher = (url: string) =>
       throw error; // re-throw to let SWR know the fetch failed
     });
 
-export function useCarsSheet(sheet: string, page?: string, search?: string) {
+export function useCarsSheet(
+  sheet: string,
+  page?: string,
+  search?: string,
+  isAttacking?: boolean,
+  isFavorite?: boolean,
+) {
   return useSWR(
-    `/api/cars/sheet/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}`,
+    `/api/cars/sheet/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}&isAttacking=${isAttacking}&isFavorite=${isFavorite}`,
     fetcher,
     {
       refreshInterval: 30_000, // fallback polling

@@ -4,6 +4,8 @@ import formatDate from "@/lib/formatDate";
 import { useEffect, useState } from "react";
 import { mutate } from "swr";
 
+import FavoriteButton from "../CustomButton/FavoriteButton";
+
 export function EditableCell({
   value,
   rowId,
@@ -32,9 +34,12 @@ export function EditableCell({
   useEffect(() => {
     setNewValue(value);
   }, [value]);
-  async function save() {
+  async function save(draftValue?: any) {
     if (loading) return;
-    if (draft === newValue) {
+    if (draftValue !== undefined) {
+      setDraft(draftValue);
+    }
+    if ((draftValue ?? draft) === newValue) {
       setEditing(false);
       return;
     }
@@ -49,22 +54,28 @@ export function EditableCell({
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          [field]: !draft ? null : type === "number" ? Number(draft) : draft,
+          [field]: !(draftValue ?? draft)
+            ? null
+            : type === "number"
+              ? Number(draftValue ?? draft)
+              : (draftValue ?? draft),
         }),
       },
     );
 
     setLoading(false);
     setEditing(false);
-    setNewValue(draft);
+    setNewValue(draftValue ?? draft);
 
     // 🔥 update sheet
     mutate(
-      `/api/cars/sheet/${sheet}${date ? `?date=${date}` : ""}`,
+      `/api/cars/sheet/${sheet}?page=1&search=&isAttacking=false&isFavorite=false`,
       (current: any) => {
         if (!current) return current;
         return current.map((row: any) =>
-          row.ad_link === rowId ? { ...row, [field]: draft } : row,
+          row.ad_link === rowId
+            ? { ...row, [field]: draftValue ?? draft }
+            : row,
         );
       },
 
@@ -72,7 +83,7 @@ export function EditableCell({
     );
   }
 
-  if (!editing) {
+  if (!editing && type !== "favorite") {
     return (
       <div
         onClick={() => setEditing(true)}
@@ -87,7 +98,7 @@ export function EditableCell({
     );
   }
   return (
-    <div className="flex gap-0.5">
+    <div>
       {type === "select" ? (
         <select
           value={draft ?? ""}
@@ -112,6 +123,15 @@ export function EditableCell({
             </option>
           ))}
         </select>
+      ) : type === "favorite" ? (
+        <FavoriteButton
+          onClick={() => {
+            setDraft((prev: any) => !prev);
+
+            save(!draft);
+          }}
+          isFavorite={draft}
+        />
       ) : (
         <input
           autoFocus

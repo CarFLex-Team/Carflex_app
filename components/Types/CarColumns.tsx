@@ -12,7 +12,7 @@ export type Car = {
   odometer: number;
   ad_link: string;
   est_value: number;
-
+  is_favorite: boolean;
   sent_at: string;
   notes: string;
   sent_by: string;
@@ -26,9 +26,23 @@ export type Car = {
   follow_up_date: string;
   lowest_price: number;
   source: string;
+  team_no: number;
 };
 
 export const CarColumns: TableColumn<Car>[] = [
+  {
+    header: "Favorite",
+    accessor: "is_favorite",
+    render: (row) => (
+      <EditableCell
+        type="favorite"
+        value={row.is_favorite}
+        rowId={row.ad_link}
+        field="is_favorite"
+        sheet="caller"
+      />
+    ),
+  },
   {
     header: "Sent At",
     accessor: "sent_at",
@@ -51,7 +65,17 @@ export const CarColumns: TableColumn<Car>[] = [
         />
       ),
   },
-  { header: "Sent By", accessor: "sent_by" },
+  {
+    header: "Sent By",
+    accessor: "sent_by",
+    render: (row) => (
+      <div
+        className={`${row.team_no === 1 ? "bg-purple-300" : row.team_no === 2 ? "bg-red-300" : row.team_no === 3 ? "bg-indigo-300" : ""}`}
+      >
+        {row.sent_by}
+      </div>
+    ),
+  },
   {
     header: "Call Status",
     accessor: "call_status",

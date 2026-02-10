@@ -22,7 +22,7 @@ export function SheetLiveListener({
         case "sheet:caller:update":
           console.log("Caller sheet updated, refetching data...");
           mutate(
-            `/api/cars/sheet/${session?.user?.name?.toLowerCase()}?page=1&search=`,
+            `/api/cars/sheet/${session?.user?.name?.toLowerCase()}?page=1&search=&isAttacking=false&isFavorite=false`,
           );
           break;
         case "sheet:lead:update":

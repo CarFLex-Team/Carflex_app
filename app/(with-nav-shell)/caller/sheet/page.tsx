@@ -12,6 +12,8 @@ import { AddCarForm } from "@/components/AddCarForm/AddCarForm";
 import { Plus } from "lucide-react";
 import { CarColumns, Car } from "@/components/Types/CarColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
+import FavoriteButton from "@/components/CustomButton/FavoriteButton";
+import { is } from "zod/v4/locales";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -21,6 +23,7 @@ export default function CarsSheetPage() {
   const [page, setPage] = useState<number>(1);
   const [sheetData, setSheetData] = useState<Car[]>([]);
   const [isAttacking, setIsAttacking] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const {
     data,
@@ -30,6 +33,8 @@ export default function CarsSheetPage() {
     session?.user?.name?.toLowerCase() || "",
     page.toString(),
     search,
+    isAttacking,
+    isFavorite,
   );
 
   useEffect(() => {
@@ -38,18 +43,13 @@ export default function CarsSheetPage() {
       setHasMore(data.hasMore);
     }
   }, [data]);
-
+  console.log("sheetData", sheetData);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value); // Update the search term
     setPage(1); // Reset to the first page when the search term changes
     setSheetData([]); // Clear the existing data when the search term is updated
   };
-  const filteredData = sheetData.filter((car) => {
-    if (isAttacking) {
-      return car.status === "Good" || car.status === "Steal";
-    }
-    return true; // Show all cars when not attacking
-  });
+
   if (error) return <p>Error loading sheet</p>;
 
   const handleNextPage = () => {
@@ -83,9 +83,9 @@ export default function CarsSheetPage() {
       {/* Table with Pagination */}
       <SheetTable
         columns={CarColumns}
-        data={filteredData} // Show filtered data
+        data={sheetData} // Show filtered data
         action={
-          <div className="flex justify-between w-full items-center">
+          <div className="flex justify-between w-full items-center mb-2">
             <input
               type="text"
               placeholder="Search Cars..."
@@ -94,9 +94,25 @@ export default function CarsSheetPage() {
               className="p-2 border-b border-gray-300 focus:outline-none min-w-25"
             />
             <div className="flex gap-4">
+              <div
+                className={`text-sm   rounded-lg p-0.5 cursor-pointer text-center ${isFavorite ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
+              >
+                <FavoriteButton
+                  onClick={() => {
+                    setIsFavorite(!isFavorite);
+                    setSheetData([]);
+                    setPage(1);
+                  }}
+                  isFavorite={isFavorite}
+                />
+              </div>
               <button
                 className={`text-sm   rounded-lg p-2  cursor-pointer text-center ${isAttacking ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
-                onClick={() => setIsAttacking(!isAttacking)}
+                onClick={() => {
+                  setIsAttacking(!isAttacking);
+                  setSheetData([]);
+                  setPage(1);
+                }}
               >
                 ATTACK
               </button>
@@ -108,7 +124,7 @@ export default function CarsSheetPage() {
               </button>
               <button
                 className="border border-primary text-sm hover:text-white transition-colors duration-300 bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
-                onClick={() => downloadCSV(filteredData ?? [])}
+                onClick={() => downloadCSV(sheetData ?? [])}
               >
                 Export CSV
               </button>
