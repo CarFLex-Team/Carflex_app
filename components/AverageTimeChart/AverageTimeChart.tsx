@@ -18,15 +18,22 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-
+const teams = ["Team 1 (Pota)", "Team 2 (Shehab)", "Team 3 (Gemy)"];
 export default function AverageTimeChart({
   data,
 }: {
-  data: { employeeName: string; averageTimeInSeconds: number }[];
+  data: {
+    employeeName?: string;
+    team_no?: string;
+    averageTimeInSeconds: number;
+  }[];
 }) {
+  console.log("AverageTimeChart data:", data); // Debug log to check the data structure
   // Prepare data for the chart
   const chartData = {
-    labels: data.map((item) => item.employeeName), // Employee names
+    labels: data.map((item) =>
+      item.team_no ? teams[parseInt(item.team_no) - 1] : item.employeeName,
+    ), // Employee names
     datasets: [
       {
         label: "Average Time to Send (Minutes)",
@@ -48,7 +55,9 @@ export default function AverageTimeChart({
       },
       title: {
         display: true, // Enable the title
-        text: "Average Time to Send per Employee (Minutes)", // Title text
+        text: data.some((item) => item.team_no)
+          ? "Average Time to Send per Team (Minutes)"
+          : "Average Time to Send per Employee (Minutes)",
         font: {
           size: 18, // Title font size
           weight: "bold" as const, // Title font weight
