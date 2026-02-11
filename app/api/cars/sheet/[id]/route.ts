@@ -81,3 +81,48 @@ export async function GET(
     );
   }
 }
+export async function POST(
+  req: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { title, odometer, ad_link, price, source, sent_by } =
+      await req.json();
+    const session = await getServerSession(authOptions);
+    const { id } = await context.params;
+
+    if (!session?.user?.id) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    if (
+      !title ||
+      !odometer ||
+      !ad_link ||
+      !price ||
+      !source ||
+      !sent_by ||
+      !id
+    ) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
+    }
+
+    const { rows } = await db.query(
+      `
+ INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)
+      RETURNING *
+      `,
+      [title, odometer, ad_link, price, source, id.toLowerCase(), sent_by],
+    );
+
+    emitEvent({ type: "sheet:caller:update" });
+    return NextResponse.json(rows[0], { status: 201 });
+  } catch (error: any) {
+    console.error("POST /api/cars/sheet/[id] error", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
