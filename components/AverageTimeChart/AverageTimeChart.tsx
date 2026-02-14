@@ -18,7 +18,11 @@ ChartJS.register(
   Tooltip,
   Legend,
 );
-const teams = ["Team 1 (Pota)", "Team 2 (Shehab)", "Team 3 (Gemy)"];
+const teams = [
+  { label: "Team 1 (Pota)", bgColor: "#1d2a51", borderColor: "#1d2a51" },
+  { label: "Team 2 (Shehab)", bgColor: "#663399", borderColor: "#663399" },
+  { label: "Team 3 (Gemy)", bgColor: "#00838F ", borderColor: "#00838F " },
+];
 export default function AverageTimeChart({
   data,
 }: {
@@ -32,15 +36,22 @@ export default function AverageTimeChart({
   // Prepare data for the chart
   const chartData = {
     labels: data.map((item) =>
-      item.team_no ? teams[parseInt(item.team_no) - 1] : item.employeeName,
+      item.team_no
+        ? teams[parseInt(item.team_no) - 1].label
+        : item.employeeName,
     ), // Employee names
     datasets: [
       {
         label: "Average Time to Send (Minutes)",
         data: data.map((item) => item.averageTimeInSeconds / 60), // Average time for each employee
-        backgroundColor: "#1d2a51",
-        borderColor: "#1d2a51",
+        backgroundColor: data.some((item) => item.team_no)
+          ? teams.map((team) => team.bgColor)
+          : "#1d2a51",
+        borderColor: data.some((item) => item.team_no)
+          ? teams.map((team) => team.borderColor)
+          : "#1d2a51",
         borderWidth: 1,
+        barPercentage: data.some((item) => item.team_no) ? 0.5 : 0.8,
       },
     ],
   };

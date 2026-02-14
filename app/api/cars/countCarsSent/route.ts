@@ -15,7 +15,7 @@ export async function GET(req: Request) {
     if (!month) {
       return NextResponse.json({ error: "Month is required" }, { status: 400 });
     }
-    const { rows } = await db.query(
+    const { rows: sentCars } = await db.query(
       `
         SELECT 
           sent_by AS "employeeName", 
@@ -34,8 +34,31 @@ export async function GET(req: Request) {
       `,
       [new Date(`${month}-01`), new Date(`${month}`)],
     );
-
-    return NextResponse.json(rows);
+    const { rows: adCars } = await db.query(
+      `
+        SELECT 
+          COUNT(*) AS "carsadded"
+        FROM "all"
+        WHERE created_at >= $1::date
+          AND created_at < ($2::date + INTERVAL '1 month')  
+       
+        
+      `,
+      [new Date(`${month}-01`), new Date(`${month}`)],
+    );
+    const { rows: seenCars } = await db.query(
+      `
+        SELECT 
+          COUNT(*) AS "carsSeen"
+        FROM "all"
+        WHERE created_at >= $1::date
+          AND created_at < ($2::date + INTERVAL '1 month')  AND is_taken = true
+       
+        
+      `,
+      [new Date(`${month}-01`), new Date(`${month}`)],
+    );
+    return NextResponse.json({ sentCars, adCars, seenCars });
   } catch (err) {
     console.error("GET /api/cars/countCarsSent error", err);
     return NextResponse.json(

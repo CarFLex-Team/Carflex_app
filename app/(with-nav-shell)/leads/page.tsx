@@ -4,6 +4,7 @@ import CarSentChart from "@/components/CarSentChart/CarSentChart";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import progressColumns from "@/components/ProgressTable/progresColumns";
 import ProgressTable from "@/components/ProgressTable/ProgressTable";
+import { SummaryCard } from "@/components/SummaryCard/SummaryCard";
 import { useState } from "react";
 import useSWR from "swr";
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -24,7 +25,7 @@ export default function Dashboard() {
     error: errorProgress,
   } = useSWR(`/api/cars/progress?month=${month}`, fetcher);
   const progressDataWithCalculations = progressData
-    ? progressData.map((item: any) => {
+    ? progressData?.map((item: any) => {
         const carsSentProgress = item.carsSentLastMonth
           ? ((item.carsSentThisMonth - item.carsSentLastMonth) /
               item.carsSentLastMonth) *
@@ -44,7 +45,7 @@ export default function Dashboard() {
       })
     : [];
   const top3ProgressData = progressDataWithCalculations
-    .map((item: any) => {
+    ?.map((item: any) => {
       const carsSentProgress = parseFloat(item.carsSentProgress);
       const averageTimeProgress = parseFloat(item.averageTimeProgress);
 
@@ -59,29 +60,21 @@ export default function Dashboard() {
     .sort(
       (a: { combinedProgress: number }, b: { combinedProgress: number }) =>
         b.combinedProgress - a.combinedProgress,
-    ); // Sort by combined progress in descending order
+    );
 
-  if (isLoading || isLoadingAverage || isLoadingProgress)
-    return (
-      <div className="flex justify-center items-center h-full">
-        <LoadingSpinner />
-      </div>
-    );
-  if (error || errorAverage || errorProgress)
-    return (
-      <div className="flex justify-center items-center h-full text-red-400 font-bold">
-        Error loading data
-      </div>
-    );
-  const carSentData = data.map(
+  const carSentData = data?.sentCars?.map(
     (item: {
       employeeName: string;
       carsSentCount: string;
       carsAttackCount: string;
+      totalAttacks: string;
+      totalCars: string;
     }) => ({
       employee: item.employeeName,
       carsSent: item.carsSentCount,
       carsAttack: item.carsAttackCount,
+      totalAttacks: item.totalAttacks,
+      totalCars: item.totalCars,
     }),
   );
 
@@ -97,56 +90,101 @@ export default function Dashboard() {
           className="rounded border-gray-300 px-3 py-2 shadow-sm bg-gray-100 border focus:border-blue-500 focus:ring-blue-500 text-sm"
         />
       </div>
-      <div className="w-full flex  items-center gap-5 flex-col ">
-        <div className="w-full  flex  items-center gap-5 flex-col md:flex-row">
-          <div className="bg-primary border border-gray-200 rounded-lg p-4 shadow-sm w-full  min-h-28  ">
-            <p className="text-base text-gray-200 font-semibold">Total Cars:</p>
-            <p className=" text-white font-bold text-2xl ">
-              {data.length > 0 ? data[0].totalCars : 0}
-            </p>
-          </div>
-          <div className="bg-green-800 border border-gray-200 rounded-lg p-4 shadow-sm w-full min-h-28 ">
-            <p className="text-base text-gray-200 font-semibold">
-              All Leads Cars:
-            </p>
-            <p className=" text-white  font-bold text-2xl ">
-              {data.length > 0 ? data[0].totalCars - data[0].totalAttacks : 0}
-            </p>
-          </div>
-          <div className="bg-red-800 border border-gray-200 rounded-lg p-4 shadow-sm w-full  min-h-28 ">
-            <p className="text-base text-gray-200 font-semibold">
-              Attack Cars:
-            </p>
-            <p className="font-bold text-2xl text-white">
-              {data.length > 0 ? data[0].totalAttacks : 0}
-            </p>
-          </div>
+      {error || errorAverage || errorProgress ? (
+        <div className="flex justify-center items-center h-full text-red-400 font-bold">
+          Error loading data
         </div>
-        <div className="flex space-x-6 w-full">
-          <div className="flex flex-col w-2/3 gap-4">
-            {/* <div className="w-full mb-8 flex  items-center gap-5 flex-col md:flex-row"> */}
-            <div className="flex-1 ">
-              <AverageTimeChart data={averageData.employeeAverageTime} />
-            </div>
-            <div className="flex-1 ">
-              <CarSentChart data={carSentData} />
-            </div>
-            {/* </div> */}
-            {/* <div className="w-full mb-8 flex  items-center gap-5 flex-col md:flex-row"> */}
-            <div className="flex-1 ">
-              <AverageTimeChart data={averageData.teamAverageTime} />
-              {/* </div> */}
-            </div>
-          </div>
-          <div className="w-1/3 bg-gray-100 rounded-lg shadow-sm">
-            <ProgressTable
-              title="Employees Progress"
-              data={top3ProgressData}
-              columns={progressColumns}
+      ) : isLoading || isLoadingAverage || isLoadingProgress ? (
+        <div className="flex justify-center items-center h-full">
+          <LoadingSpinner />
+        </div>
+      ) : (
+        <div className="w-full flex  items-center gap-5 flex-col ">
+          <div className="w-full  flex  items-center gap-5 flex-col md:flex-row">
+            <SummaryCard
+              title="All Ads"
+              data={data?.adCars[0]?.carsadded || 0}
+              bgColor="bg-primary"
+            />
+            <SummaryCard
+              title="Seen Cars"
+              data={data?.seenCars[0]?.carsSeen || 0}
+              bgColor="bg-cyan-900"
+              percentage={
+                data?.adCars[0]?.carsadded &&
+                (
+                  (data?.seenCars[0]?.carsSeen / data?.adCars[0]?.carsadded) *
+                  100
+                ).toFixed(0)
+              }
+              percentageLabel="Ads"
+            />
+            <SummaryCard
+              title="Sent Cars"
+              data={carSentData[0]?.totalCars || 0}
+              bgColor="bg-purple-900"
+              percentage={
+                data?.seenCars[0]?.carsSeen &&
+                (
+                  (carSentData[0]?.totalCars / data?.seenCars[0]?.carsSeen) *
+                  100
+                ).toFixed(0)
+              }
+              percentageLabel="Seen"
+            />
+            <SummaryCard
+              title="All Leads Cars"
+              data={
+                carSentData[0]?.totalCars - carSentData[0]?.totalAttacks || 0
+              }
+              bgColor="bg-green-800"
+              percentage={
+                carSentData[0]?.totalCars &&
+                (
+                  ((carSentData[0]?.totalCars - carSentData[0]?.totalAttacks) /
+                    carSentData[0]?.totalCars) *
+                  100
+                ).toFixed(0)
+              }
+              percentageLabel="Sent"
+            />
+            <SummaryCard
+              title="Attack Cars"
+              data={carSentData[0]?.totalAttacks || 0}
+              bgColor="bg-red-800"
+              percentage={
+                carSentData[0]?.totalCars &&
+                (
+                  (carSentData[0]?.totalAttacks / carSentData[0]?.totalCars) *
+                  100
+                ).toFixed(0)
+              }
+              percentageLabel="Sent"
             />
           </div>
+          <div className="flex space-x-6 w-full">
+            <div className="flex flex-col w-2/3 gap-4">
+              <div className="flex-1 ">
+                <AverageTimeChart data={averageData.employeeAverageTime} />
+              </div>
+              <div className="flex-1 ">
+                <CarSentChart data={carSentData} />
+              </div>
+
+              <div className="flex-1 ">
+                <AverageTimeChart data={averageData.teamAverageTime} />
+              </div>
+            </div>
+            <div className="w-1/3 bg-gray-100 rounded-lg shadow-sm">
+              <ProgressTable
+                title="Employees Progress"
+                data={top3ProgressData}
+                columns={progressColumns}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
