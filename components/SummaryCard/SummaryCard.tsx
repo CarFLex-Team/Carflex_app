@@ -28,7 +28,7 @@ export function SummaryCard({
             ></div>
           </div>
           <div className="text-sm  text-gray-300">
-            {percentage || 0}% From {percentageLabel}
+            {percentage || 0}% Of {percentageLabel}
           </div>
         </>
       )}

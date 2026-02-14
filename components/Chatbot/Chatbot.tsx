@@ -99,6 +99,7 @@ const FreeTextMode = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
         id="message"
         name="message"
         value={userInput}
+        autoComplete="off"
         onChange={(e) => setUserInput(e.target.value)}
         type="text"
         placeholder="Ask your question or describe your issue..."
