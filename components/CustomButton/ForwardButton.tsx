@@ -17,7 +17,7 @@ export default function CopyToClipboardButton({
     try {
       setIsLoading(true);
 
-      const res = await fetch("api/cars/sheet/forward", {
+      const res = await fetch("/api/cars/sheet/forward", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

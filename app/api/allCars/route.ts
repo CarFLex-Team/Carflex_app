@@ -26,6 +26,7 @@ export async function GET(req: Request) {
         description,
         source,
         is_sus,
+        sus_type,
         real_value,
         is_sent,
         is_taken,

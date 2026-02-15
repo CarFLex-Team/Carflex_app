@@ -21,11 +21,11 @@ export async function GET(req: Request) {
         image_src,
         ad_link,
         created_at,
-       
         est_value,
         description,
         source,
         is_sus,
+        sus_type,
         real_value,
         is_sent,
         is_taken,
