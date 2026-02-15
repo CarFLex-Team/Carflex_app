@@ -36,7 +36,9 @@ export const checkTrim = async (carDetails: any) => {
       }
 
       const result = await response.json();
-      return result.class ?? "N/A"; // Return the class or "N/A"
+      return result.class && result.confidence > 0.9
+        ? result.class
+        : (carDetails.trim ?? "N/A");
     } else {
       return "out"; // Return "out" if no matching link was found
     }
