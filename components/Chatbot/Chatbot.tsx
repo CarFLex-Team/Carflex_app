@@ -1,12 +1,6 @@
-import {
-  LucideArrowUpSquare,
-  LucideArrowLeft,
-  Home,
-  MessageCircle,
-  X,
-} from "lucide-react";
-import { useState, useEffect, useRef, use } from "react";
-
+import { LucideArrowUpSquare, LucideArrowLeft, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { useSession } from "next-auth/react";
 // Message Type Definition
 type Message = {
   text: string;
@@ -14,19 +8,27 @@ type Message = {
 };
 
 const FormBasedMode = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
-  const [employeeName, setEmployeeName] = useState("");
-  const [employeeEmail, setEmployeeEmail] = useState("");
-  const [remainingLeaveDays, setRemainingLeaveDays] = useState(5);
-  const [requestedDays, setRequestedDays] = useState(0);
+  const { data: session } = useSession();
+  const remainingLeaveDays = session?.user?.remainingLeaveDays || 0;
+  const [requestedDays, setRequestedDays] = useState("");
   const [leaveStart, setLeaveStart] = useState("");
   const [leaveEnd, setLeaveEnd] = useState("");
 
   const handleSubmit = () => {
+    if (
+      !requestedDays ||
+      !leaveStart ||
+      !leaveEnd ||
+      isNaN(Number(requestedDays))
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
     onSubmit({
       mode: "hr",
       data: {
-        employee_name: employeeName,
-        employee_email: employeeEmail,
+        employee_name: session?.user?.name,
+        employee_email: session?.user?.email,
         remaining_leave_days: remainingLeaveDays,
         requested_days: requestedDays,
         leave_start: leaveStart,
@@ -37,16 +39,11 @@ const FormBasedMode = ({ onSubmit }: { onSubmit: (data: any) => void }) => {
 
   return (
     <div className="space-y-4">
-      <input
-        value={remainingLeaveDays}
-        onChange={(e) => setRemainingLeaveDays(Number(e.target.value))}
-        placeholder="Remaining Leave Days"
-        className="w-full p-2 border border-gray-300 rounded-md"
-      />
+      <p>Remaining Leave Days: {remainingLeaveDays}</p>
       <input
         value={requestedDays}
-        onChange={(e) => setRequestedDays(Number(e.target.value))}
-        placeholder="Requested Days"
+        onChange={(e) => setRequestedDays(e.target.value)}
+        placeholder="Number of Requested Days"
         className="w-full p-2 border border-gray-300 rounded-md"
       />
       <input
@@ -145,11 +142,16 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://webhooks.eliaracarflex.cfd/webhook/virtual",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      );
 
       const result = await response.json();
 
@@ -158,6 +160,7 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
         { text: result.reply || "AI response failed", sender: "bot" },
       ]);
     } catch (error) {
+      console.error("Error in ChatBot:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -209,6 +212,7 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       {/* HR Mode Options */}
+
       {mode === "home" && (
         <div className="space-y-4">
           <button
@@ -260,30 +264,6 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
 
       {/* Message Input Section */}
       {mode === "text" && <FreeTextMode onSubmit={handleDataSubmission} />}
-
-      {/* Mode Switcher Fixed to Bottom
-      {mode !== "text" && (
-        <div className="absolute bottom-0 left-0 right-0 h-20 flex justify-center py-2 px-4 bg-white shadow-md ">
-          <button
-            onClick={() => {
-              setMode("home");
-              setHrOptionSelected(null);
-            }}
-            className={`px-4 py-2 rounded-l-xl  transition flex items-center justify-center flex-1 text-primary ${mode === "home" ? "bg-gray-300 " : "hover:bg-gray-100"}`}
-          >
-            <Home size={25} />
-          </button>
-          <button
-            onClick={() => {
-              setMode("text");
-              setHrOptionSelected(null);
-            }}
-            className={`px-4 py-2  rounded-r-xl transition flex items-center justify-center flex-1 text-primary ${mode === "text" ? "bg-gray-300 " : "hover:bg-gray-100"}`}
-          >
-            <MessageCircle size={25} />
-          </button>
-        </div>
-      )} */}
 
       {/* Loading Indicator */}
       {isLoading && <LoadingIndicator />}

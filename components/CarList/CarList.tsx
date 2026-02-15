@@ -3,13 +3,7 @@ import { JSX, useEffect, useState } from "react";
 import AutotraderLogo from "../Logos/AutotraderLogo";
 import FacebookLogo from "../Logos/FacebookLogo";
 import KijijiLogo from "../Logos/KijijiLogo";
-import {
-  CheckCheck,
-  CircleGauge,
-  Save,
-  SearchCheck,
-  SquarePen,
-} from "lucide-react";
+import { CircleGauge, Save, SearchCheck, SquarePen, X } from "lucide-react";
 import Link from "next/link";
 import CopyToClipboardButton from "../CustomButton/CopyToClipboardButton";
 import timeAgo from "@/helpers/timeAgoCalculator";
@@ -19,12 +13,11 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import priceStatus from "@/helpers/priceStatus";
 import formatNumber from "@/helpers/formatNumber";
 import { useSession } from "next-auth/react";
+import { checkTrim } from "@/helpers/checkTrim";
 export default function CarList({ carDetails }: { carDetails: any }) {
   const { data: session } = useSession();
-  const [trimStatus, setTrimStatus] = useState<{
-    status: boolean;
-    value: string;
-  }>();
+  const [trimStatus, setTrimStatus] = useState("");
+  const [trimLoading, setTrimLoading] = useState(false);
   const [isTaken, setIsTaken] = useState(carDetails.is_taken || false);
   const [estimatedValue, setEstimatedValue] = useState<number>(
     carDetails.real_value ||
@@ -42,13 +35,19 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       setIsTaken(true);
     }
   }, [carDetails.is_taken]);
-  const onCheck = (e: React.MouseEvent) => {
+  const onCheck = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setTrimStatus({ status: true, value: "" });
-    setTimeout(() => {
-      setTrimStatus(undefined);
-    }, 3000);
+
+    try {
+      setTrimLoading(true);
+      const result = await checkTrim(carDetails);
+      setTrimStatus(result);
+    } catch (error) {
+      console.error("Error checking trim:", error);
+    } finally {
+      setTrimLoading(false);
+    }
   };
 
   async function handleSave() {
@@ -140,13 +139,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       onClick={role !== "LEAD" ? handleIsTaken : undefined}
     >
       <div
-        className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 ${
-          trimStatus?.status === true
-            ? "border-4 border-green-500"
-            : trimStatus?.status === false
-              ? "border-4 border-red-500"
-              : ""
-        }`}
+        className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 `}
       >
         <img
           src={carDetails.image_src || "/Car-placeholder.png"}
@@ -157,10 +150,12 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           onClick={onCheck}
           className="absolute top-2 left-2 p-2 rounded-md border border-gray-400 shadow-sm bg-white hover:bg-gray-200 transition cursor-pointer"
         >
-          {trimStatus?.status === true ? (
-            <CheckCheck size={18} />
-          ) : trimStatus?.status === false ? (
-            trimStatus.value
+          {trimLoading ? (
+            <LoadingSpinner size={4} />
+          ) : trimStatus === "out" ? (
+            <X size={18} className="text-red-500" />
+          ) : trimStatus ? (
+            trimStatus
           ) : (
             <SearchCheck size={18} />
           )}

@@ -32,7 +32,6 @@ export default function AverageTimeChart({
     averageTimeInSeconds: number;
   }[];
 }) {
-  console.log("AverageTimeChart data:", data); // Debug log to check the data structure
   // Prepare data for the chart
   const chartData = {
     labels: data.map((item) =>

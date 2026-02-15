@@ -11,6 +11,7 @@ declare module "next-auth" {
       email?: string | null;
       name?: string | null;
       role?: string;
+      remainingLeaveDays?: number;
     };
   }
 }
@@ -19,6 +20,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: number;
     role?: string;
+    remainingLeaveDays?: number;
   }
 }
 
@@ -40,7 +42,7 @@ export const authOptions: AuthOptions = {
 
         const result = await db
           .query(
-            ' SELECT id,name, email, password, role FROM "User" WHERE email = $1',
+            ' SELECT id,name, email, password, role, remaining_leave_days FROM "User" WHERE email = $1',
             [credentials.email],
           )
           .then((res) => res)
@@ -60,6 +62,7 @@ export const authOptions: AuthOptions = {
           name: user.name,
           email: user.email,
           role: user.role,
+          remainingLeaveDays: user.remaining_leave_days,
         };
       },
     }),
@@ -70,6 +73,7 @@ export const authOptions: AuthOptions = {
         token.id = user.id;
         token.role = user.role;
         token.name = user.name;
+        token.remainingLeaveDays = user.remainingLeaveDays;
       }
       return token;
     },
@@ -78,6 +82,7 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id as number;
         session.user.role = token.role;
         session.user.name = token.name;
+        session.user.remainingLeaveDays = token.remainingLeaveDays;
       }
       return session;
     },
