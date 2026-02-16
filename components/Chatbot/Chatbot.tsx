@@ -3,13 +3,28 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import FreeTextMode from "./FreeTextMode";
 import FormBasedMode from "./FormBasedMode";
-
+import useSWR from "swr";
 const ChatBot = ({ onClose }: { onClose: () => void }) => {
   const [mode, setMode] = useState<"home" | "off" | "text" | "salary">("home");
   const { data: session } = useSession();
+  const { data } = useSWR(
+    session ? ["/api/employeesDetails", session.user?.id] : null,
+    async ([url, id]) => {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch employee details");
+      }
+      return res.json();
+    },
+  );
   return (
     <div className="flex flex-col w-full h-full rounded-4xl rounded-br-none shadow-lg overflow-auto ">
-      {/* Close Button */}
       <div className="flex justify-between items-center bg-primary  text-white p-4 rounded-tl-3xl sticky top-0 z-10 ">
         {mode !== "home" ? (
           <button
@@ -40,7 +55,7 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
             {mode === "salary" && "Ask for Salary"}
             {mode == "home" && (
               <div className="">
-                <p>Hi {session?.user?.name || "User"},</p>
+                <p>Hi {session?.user.name || "User"},</p>
                 <p>How can we help?</p>
               </div>
             )}
@@ -64,8 +79,8 @@ const ChatBot = ({ onClose }: { onClose: () => void }) => {
             </div>
           )}
         </div>
-        {mode === "off" && <FormBasedMode session={session} />}
-        {mode === "text" && <FreeTextMode session={session} />}
+        {mode === "off" && <FormBasedMode employeeDetails={data} />}
+        {mode === "text" && <FreeTextMode employeeDetails={data} />}
       </div>
     </div>
   );

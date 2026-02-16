@@ -1,6 +1,11 @@
 import { useState } from "react";
-export default function FormBasedMode({ session }: { session?: any }) {
-  const remainingLeaveDays = session?.user?.remainingLeaveDays || 0;
+export default function FormBasedMode({
+  employeeDetails,
+}: {
+  employeeDetails?: any;
+}) {
+  console.log("FormBasedMode Employee Details:", employeeDetails);
+  const remainingLeaveDays = employeeDetails?.remaining_leave_days || 0;
   const [requestedDays, setRequestedDays] = useState("");
   const [leaveStart, setLeaveStart] = useState("");
   const [leaveEnd, setLeaveEnd] = useState("");
@@ -31,8 +36,8 @@ export default function FormBasedMode({ session }: { session?: any }) {
           body: JSON.stringify({
             mode: "hr",
             data: {
-              employee_name: session?.user?.name,
-              employee_email: session?.user?.email,
+              employee_name: employeeDetails?.name,
+              employee_email: employeeDetails?.email,
               remaining_leave_days: remainingLeaveDays,
               requested_days: requestedDays,
               leave_start: leaveStart,

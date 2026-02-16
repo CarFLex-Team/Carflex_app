@@ -207,12 +207,12 @@ export default function CarList({ carDetails }: { carDetails: any }) {
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    handleSave(); // 🔥 your existing save function
+                    handleSave();
                   }
 
                   if (e.key === "Escape") {
                     e.preventDefault();
-                    setEditMode(false); // optional but recommended
+                    setEditMode(false);
                   }
                 }}
               />

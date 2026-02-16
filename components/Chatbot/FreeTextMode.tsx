@@ -5,7 +5,11 @@ type Message = {
   text: string;
   sender: "user" | "bot";
 };
-export default function FreeTextMode({ session }: { session?: any }) {
+export default function FreeTextMode({
+  employeeDetails,
+}: {
+  employeeDetails?: any;
+}) {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     { text: "Hi How Can I Help You Today?", sender: "bot" },
