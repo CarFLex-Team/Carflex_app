@@ -316,7 +316,11 @@ export default function LeadsSheetPage() {
           value={row.status}
           rowId={row.ad_link}
           field="status"
-          options={["Pending", "Purchasd", "Lost"]}
+          options={[
+            { value: "Pending", bg: "transparent" },
+            { value: "Purchased", bg: "transparent" },
+            { value: "Lost", bg: "transparent" },
+          ]}
           sheet="lead"
         />
       ),
