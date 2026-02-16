@@ -136,7 +136,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
-      onClick={role !== "LEAD" ? handleIsTaken : undefined}
+      onClick={role === "TEAM" ? handleIsTaken : undefined}
     >
       <div
         className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 `}
