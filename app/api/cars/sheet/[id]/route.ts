@@ -27,8 +27,8 @@ export async function GET(
     let WherePart = "WHERE u.name=s.sent_by ";
     let queryParams: any[] = [];
 
-    if (session.user.role === "TEAM") {
-      WherePart += `AND s.sheeet_id = ${id.toLowerCase()}`;
+    if (session.user.role === "CALLER") {
+      WherePart += `AND s.sheet_id = '${id.toLowerCase()}' `;
     }
 
     // Add search filter to WHERE clause if search term is provided

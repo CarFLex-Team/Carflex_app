@@ -86,23 +86,49 @@ export const CarColumns: TableColumn<Car>[] = [
         value={row.call_status}
         rowId={row.ad_link}
         field="call_status"
+        noEditClassName={`${
+          row.call_status === "Deal Made"
+            ? "bg-green-200"
+            : row.call_status === "Follow Up"
+              ? "bg-yellow-200"
+              : row.call_status === "In Progress"
+                ? "bg-cyan-200"
+                : row.call_status.startsWith("No Deal")
+                  ? "bg-orange-200"
+                  : row.call_status === "No Contact"
+                    ? "bg-zinc-200"
+                    : row.call_status === "Voicemail Left"
+                      ? "bg-rose-200"
+                      : row.call_status === "Ad Removed"
+                        ? "bg-red-400"
+                        : row.call_status === "Rebuilt"
+                          ? "bg-red-400"
+                          : row.call_status === "Scammer"
+                            ? "bg-rose-200"
+                            : row.call_status === "Chat on Kijiji"
+                              ? "bg-blue-200"
+                              : row.call_status === "Not Picking Up"
+                                ? "bg-gray-200"
+                                : row.call_status === "Text Message"
+                                  ? "bg-blue-200"
+                                  : ""
+        }`}
         options={[
-          "Deal Made",
-          "Follow Up",
-          "In Progress",
-          "No Deal (Price)",
-          "No Deal (Other)",
-          "No Deal (Language)",
-          "No Deal (Dealer)",
-          "No Contact",
-          "Voicemail Left",
-          "Ad Removed",
-          "Rebuilt",
-          "Scammer",
-          "Chat on Kijiji",
-          "No Answer",
-          "Text Message",
-          "Sold",
+          { value: "Deal Made", bg: "green-200" },
+          { value: "Follow Up", bg: "yellow-200" },
+          { value: "In Progress", bg: "cyan-200" },
+          { value: "No Deal (Price)", bg: "orange-200" },
+          { value: "No Deal (Other)", bg: "orange-200" },
+          { value: "No Deal (Language)", bg: "orange-200" },
+          { value: "No Deal (Dealer)", bg: "orange-200" },
+          { value: "No Contact", bg: "zinc-200" },
+          { value: "Voicemail Left", bg: "rose-200" },
+          { value: "Ad Removed", bg: "red-400" },
+          { value: "Rebuilt", bg: "red-400" },
+          { value: "Scammer", bg: "rose-200" },
+          { value: "Chat on Kijiji", bg: "blue-200" },
+          { value: "Not Picking Up", bg: "gray-200" },
+          { value: "Text Message", bg: "blue-200" },
         ]}
         sheet="caller"
       />

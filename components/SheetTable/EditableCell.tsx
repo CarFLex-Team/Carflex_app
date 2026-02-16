@@ -22,7 +22,7 @@ export function EditableCell({
   field: string;
   type: string;
   sheet: string;
-  options?: string[];
+  options?: { value: string; bg: string }[];
   className?: string;
   noEditClassName?: string;
   date?: string;
@@ -96,7 +96,7 @@ export function EditableCell({
     return (
       <div
         onClick={() => setEditing(true)}
-        className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""}`}
+        className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""} `}
       >
         {newValue === "" || newValue == null
           ? "—"
@@ -127,8 +127,12 @@ export function EditableCell({
           }}
         >
           {options?.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option
+              key={option.value}
+              value={option.value}
+              className={`bg-${option.bg} `}
+            >
+              {option.value}
             </option>
           ))}
         </select>
