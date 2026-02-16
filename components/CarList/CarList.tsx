@@ -189,14 +189,14 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             </p>
             <p
               className={`border border-solid ${statusStyleMap[status]?.border} 
-            flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-base`}
+            flex items-center shadow-md text-gray-700 px-2.5 py-0.5 max-[490px]:rounded-l-md rounded-r-md text-xs w-fit sm:text-sm`}
             >
               Est. ~ CA$
               <input
                 autoFocus
                 onClick={(e) => e.preventDefault()}
                 type="text"
-                className={` max-w-10 text-gray-700 focus:outline-none  ${
+                className={` max-w-7 sm:max-w-10 text-gray-700 focus:outline-none  ${
                   editMode ? " bg-white" : " bg-transparent"
                 }`}
                 value={estimatedValue ? estimatedValue.toLocaleString() : ""}
@@ -246,12 +246,20 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
-          <p
-            className={`text-black  overflow-ellipsis line-clamp-1 font-bold text-base sm:text-lg pr-2.5 ${isTaken ? "line-through" : ""}`}
-          >
-            {carDetails.title}
-          </p>
-          <p className="text-gray-700 text-sm">
+          <div>
+            <p
+              className={`text-black  overflow-ellipsis line-clamp-1 font-bold text-sm sm:text-base md:text-lg pr-2.5 ${isTaken ? "line-through" : ""}`}
+            >
+              {carDetails.title}
+            </p>
+            {isTaken && (
+              <p className="text-gray-500">
+                Taken by:{" "}
+                {carDetails.taken_by ? carDetails.taken_by.split(" ")[0] : ""}
+              </p>
+            )}
+          </div>
+          <p className="text-gray-700 sm:text-sm text-xs">
             {timeAgo(carDetails.created_at)}
           </p>
         </div>
@@ -261,13 +269,13 @@ export default function CarList({ carDetails }: { carDetails: any }) {
           </p>
         </div>
         <div className="w-full flex justify-between items-center mt-1">
-          <p className="text-gray-500 flex items-center text-sm sm:text-base gap-2">
+          <p className="text-gray-500 flex items-center text-xs sm:text-base gap-2">
             <CircleGauge className="w-4 h-4" />
             {formatNumber(carDetails.odometer)} Km
           </p>
           {carDetails.is_sus !== null ? (
             <div
-              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm  ${
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-xs  ${
                 carDetails.is_sus ? "bg-red-600" : "bg-green-600"
               }`}
             >
@@ -275,7 +283,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             </div>
           ) : (
             <div
-              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-sm bg-gray-500 `}
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-xs bg-gray-500 `}
             >
               Unknown
             </div>
