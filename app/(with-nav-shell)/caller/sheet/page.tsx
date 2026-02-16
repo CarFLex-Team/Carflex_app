@@ -1,5 +1,5 @@
 "use client";
-import SheetTable, { TableColumn } from "@/components/SheetTable/SheetTable";
+import SheetTable from "@/components/SheetTable/SheetTable";
 import { useCarsSheet } from "@/lib/useCarSheet";
 import { SheetLiveListener } from "@/components/sheetLiveListener/SheetLiveListener";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { Plus } from "lucide-react";
 import { CarColumns, Car } from "@/components/Types/CarColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import FavoriteButton from "@/components/CustomButton/FavoriteButton";
-import { ca } from "zod/v4/locales";
+import removeDubsSheetData from "@/helpers/removeDubsSheetData";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -72,7 +72,7 @@ export default function CarsSheetPage() {
       setHasMore(true); // Reset hasMore when going back
     }
   };
-
+  const filteredSheetData = removeDubsSheetData(sheetData);
   return (
     <>
       {open && (
@@ -83,14 +83,14 @@ export default function CarsSheetPage() {
           />
         </Modal>
       )}
-      <CarWatcher cars={sheetData ?? []} otherSound={true} />
+      <CarWatcher cars={filteredSheetData ?? []} otherSound={true} />
       {/* 👂 listens for SEND events */}
       <SheetLiveListener />
 
       {/* Table with Pagination */}
       <SheetTable
         columns={CarColumns}
-        data={sheetData} // Show filtered data
+        data={filteredSheetData} // Show filtered data
         action={
           <div className="flex justify-between w-full items-center mb-2">
             <input
@@ -131,7 +131,7 @@ export default function CarsSheetPage() {
               </button>
               <button
                 className="border border-primary text-sm hover:text-white transition-colors duration-300 bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
-                onClick={() => downloadCSV(sheetData ?? [])}
+                onClick={() => downloadCSV(filteredSheetData ?? [])}
               >
                 Export CSV
               </button>

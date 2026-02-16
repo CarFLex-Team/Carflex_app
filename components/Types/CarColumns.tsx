@@ -24,9 +24,10 @@ export type Car = {
   vin: string;
   color: string;
   follow_up_date: string;
-  lowest_price: number;
+  lowest_price: string;
   source: string;
   team_no: number;
+  updated_at: string;
 };
 
 export const CarColumns: TableColumn<Car>[] = [
@@ -252,7 +253,13 @@ export const CarColumns: TableColumn<Car>[] = [
       <EditableCell
         type="text"
         className="w-15"
-        value={row.lowest_price ? `$${row.lowest_price}` : ""}
+        value={
+          isNaN(Number(row.lowest_price))
+            ? row.lowest_price
+            : row.lowest_price
+              ? `$${row.lowest_price}`
+              : ""
+        }
         rowId={row.ad_link}
         field="lowest_price"
         sheet="caller"

@@ -67,7 +67,7 @@ export default function AverageTimeChart({
         display: true, // Enable the title
         text: data.some((item) => item.team_no)
           ? "Average Time to Send per Team (Minutes)"
-          : "Average Time to Send per Employee (Minutes)",
+          : "Average Time spent in a car per Employee (Minutes)",
         font: {
           size: 18, // Title font size
           weight: "bold" as const, // Title font weight

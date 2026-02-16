@@ -45,42 +45,51 @@ export function EditableCell({
     }
 
     setLoading(true);
+    try {
+      const res = await fetch(
+        `/api/cars/sheet/editCell?sheet=${sheet}&ad_link=${encodeURIComponent(
+          rowId,
+        )}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            [field]: !(draftValue ?? draft)
+              ? null
+              : type === "number"
+                ? Number(draftValue ?? draft)
+                : (draftValue ?? draft),
+          }),
+        },
+      );
+      if (!res.ok) {
+        throw new Error("Failed to update cell");
+      }
+      setLoading(false);
+      setEditing(false);
+      setNewValue(draftValue ?? draft);
 
-    await fetch(
-      `/api/cars/sheet/editCell?sheet=${sheet}&ad_link=${encodeURIComponent(
-        rowId,
-      )}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          [field]: !(draftValue ?? draft)
-            ? null
-            : type === "number"
-              ? Number(draftValue ?? draft)
-              : (draftValue ?? draft),
-        }),
-      },
-    );
+      // 🔥 update sheet
+      mutate(
+        `/api/cars/sheet/${sheet}?page=1&search=&isAttacking=false&isFavorite=false`,
+        (current: any) => {
+          if (!current) return current;
+          return current.map((row: any) =>
+            row.ad_link === rowId
+              ? { ...row, [field]: draftValue ?? draft }
+              : row,
+          );
+        },
 
-    setLoading(false);
-    setEditing(false);
-    setNewValue(draftValue ?? draft);
-
-    // 🔥 update sheet
-    mutate(
-      `/api/cars/sheet/${sheet}?page=1&search=&isAttacking=false&isFavorite=false`,
-      (current: any) => {
-        if (!current) return current;
-        return current.map((row: any) =>
-          row.ad_link === rowId
-            ? { ...row, [field]: draftValue ?? draft }
-            : row,
-        );
-      },
-
-      false,
-    );
+        false,
+      );
+    } catch (error) {
+      console.error("Error updating cell:", error);
+      alert("Failed to update cell. Please try again.");
+      setLoading(false);
+      setEditing(false);
+      return;
+    }
   }
 
   if (!editing && type !== "favorite") {
