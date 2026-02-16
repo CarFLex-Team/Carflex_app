@@ -61,7 +61,7 @@ export default function FreeTextMode({ session }: { session?: any }) {
   };
   useEffect(() => {
     const handleEnterKey = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && userInput.trim() !== "" && !botTyping) {
         e.preventDefault();
         handleSubmit();
       }
@@ -72,8 +72,8 @@ export default function FreeTextMode({ session }: { session?: any }) {
     };
   }, [userInput]);
   return (
-    <>
-      <div className="flex-1 overflow-y-auto space-y-2">
+    <div className="flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto space-y-2 p-4 h-full">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -99,7 +99,7 @@ export default function FreeTextMode({ session }: { session?: any }) {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="flex items-center gap-1 ">
+      <div className="flex items-center gap-1 sticky bottom-0  p-2 rounded-bl-4xl bg-linear-to-b from-gray-200 to-gray-100">
         <input
           id="message"
           name="message"
@@ -108,15 +108,17 @@ export default function FreeTextMode({ session }: { session?: any }) {
           onChange={(e) => setUserInput(e.target.value)}
           type="text"
           placeholder="Ask your question or describe your issue..."
-          className="w-full p-2 rounded-xl h-10 m-0 border border-gray-400 focus:ring-1 focus:ring-primary focus:border-transparent text-primary"
+          className="w-full p-2 rounded-xl h-10 m-0 border border-gray-400 focus:ring-1 focus:ring-primary focus:border-transparent text-primary "
         />
         <button
           onClick={handleSubmit}
-          className="p-1  text-primary rounded-md hover:bg-primary hover:text-white transition duration-300"
+          className={`p-1  text-primary rounded-md hover:bg-primary hover:text-white transition duration-300 
+            disabled:hover:bg-transparent disabled:hover:text-primary disabled:cursor-not-allowed disabled:opacity-50`}
+          disabled={!userInput.trim() || botTyping}
         >
           <LucideArrowUpSquare size={26} />
         </button>
       </div>
-    </>
+    </div>
   );
 }

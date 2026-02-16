@@ -55,7 +55,7 @@ export default function FormBasedMode({ session }: { session?: any }) {
     }
   };
   return (
-    <div className="space-y-4 flex-1 flex flex-col justify-center">
+    <div className="space-y-4 flex-3 flex flex-col  p-4">
       <p className="text-left text-gray-200">
         Remaining Leave Days: {remainingLeaveDays}
       </p>
