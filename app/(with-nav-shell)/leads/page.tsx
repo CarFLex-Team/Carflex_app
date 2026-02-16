@@ -100,7 +100,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className="w-full flex  items-center gap-5 flex-col ">
-          <div className="w-full  flex  items-center gap-5 flex-col md:flex-row">
+          <div className="w-full  flex  items-center gap-5 flex-col lg:flex-row">
             <SummaryCard
               title="All Ads"
               data={data?.adCars[0]?.carsadded || 0}
@@ -162,8 +162,8 @@ export default function Dashboard() {
               percentageLabel="Sent"
             />
           </div>
-          <div className="flex space-x-6 w-full">
-            <div className="flex flex-col w-2/3 gap-4">
+          <div className="flex space-x-6 w-full lg:flex-row flex-col ">
+            <div className="flex flex-col lg:w-2/3 w-full gap-4">
               <div className="flex-1 ">
                 <AverageTimeChart data={averageData.employeeAverageTime} />
               </div>
@@ -175,7 +175,7 @@ export default function Dashboard() {
                 <AverageTimeChart data={averageData.teamAverageTime} />
               </div>
             </div>
-            <div className="w-1/3 bg-gray-100 rounded-lg shadow-sm">
+            <div className="lg:w-1/3 w-full bg-gray-100 rounded-lg shadow-sm">
               <ProgressTable
                 title="Employees Progress"
                 data={top3ProgressData}

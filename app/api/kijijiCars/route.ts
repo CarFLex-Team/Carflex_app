@@ -30,7 +30,8 @@ export async function GET(req: Request) {
         is_sent,
         is_taken,
         taken_at,
-        trim
+        trim,
+        taken_by
       FROM "kijiji"
       ORDER BY created_at DESC
       LIMIT $1
