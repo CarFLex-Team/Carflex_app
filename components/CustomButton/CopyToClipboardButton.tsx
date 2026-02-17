@@ -16,7 +16,7 @@ export default function CopyToClipboardButton({
   carDetails: any;
   status?: string;
   estimatedValue?: number;
-  session: any;
+  session?: any;
 }) {
   const callerName = useSettingsStore((s) => s.callerName);
   const [isCopied, setIsCopied] = useState(carDetails.is_sent || false);
