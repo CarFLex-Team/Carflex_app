@@ -11,13 +11,14 @@ export default function CopyToClipboardButton({
   carDetails,
   status,
   estimatedValue,
+  session,
 }: {
   carDetails: any;
   status?: string;
   estimatedValue?: number;
+  session: any;
 }) {
   const callerName = useSettingsStore((s) => s.callerName);
-  const { data: session } = useSession();
   const [isCopied, setIsCopied] = useState(carDetails.is_sent || false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);

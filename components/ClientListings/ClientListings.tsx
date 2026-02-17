@@ -3,11 +3,11 @@ import { useState } from "react";
 import useSWR from "swr";
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
-import SelectView from "../SelectView/SelectView";
 import fetchData from "@/helpers/fetchData";
 import CarWatcher from "../CarWatcher/CarWatcher";
 import CallerPicker from "../CallerPicker/CallerPicker";
 import { SheetLiveListener } from "../sheetLiveListener/SheetLiveListener";
+import { useSession } from "next-auth/react";
 
 type Item = {
   id: number;
@@ -35,9 +35,11 @@ export default function ClientListings({
   initialCarsData: any[];
   limit?: number;
 }) {
+  const { data: session } = useSession();
   const [view, setView] = useState<"card" | "list">("list");
   const SOURCES = ["facebook", "kijiji", "autotrader"];
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
+
   const { data, error, isLoading } = useSWR(
     [`${active.toLowerCase()}`, limit ?? 20],
     ([name, limit]) => {
@@ -116,7 +118,11 @@ export default function ClientListings({
         {view === "list" ? (
           <div className="grid grid-cols-1 gap-5">
             {items.map((carDetails) => (
-              <CarList key={carDetails.id} carDetails={carDetails} />
+              <CarList
+                key={carDetails.id}
+                carDetails={carDetails}
+                session={session}
+              />
             ))}
           </div>
         ) : (

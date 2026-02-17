@@ -14,8 +14,14 @@ import priceStatus from "@/helpers/priceStatus";
 import formatNumber from "@/helpers/formatNumber";
 import { useSession } from "next-auth/react";
 import { checkTrim } from "@/helpers/checkTrim";
-export default function CarList({ carDetails }: { carDetails: any }) {
-  const { data: session } = useSession();
+export default function CarList({
+  carDetails,
+  session,
+}: {
+  carDetails: any;
+  session: any;
+}) {
+  // const { data: session } = useSession();
   const [trimStatus, setTrimStatus] = useState("");
   const [trimLoading, setTrimLoading] = useState(false);
   const [isTaken, setIsTaken] = useState(carDetails.is_taken || false);
@@ -251,6 +257,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             }}
             status={status}
             estimatedValue={estimatedValue}
+            session={session}
           />
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
