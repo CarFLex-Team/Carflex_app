@@ -31,10 +31,10 @@ export default function Dashboard() {
               item.carsSentLastMonth) *
             100
           : 0;
-        const averageTimeProgress = item.averageTimeInMinutesLastMonth
-          ? ((item.averageTimeInMinutesThisMonth -
-              item.averageTimeInMinutesLastMonth) /
-              item.averageTimeInMinutesLastMonth) *
+        const averageTimeProgress = item.averageTimeInSecondsLastMonth
+          ? ((item.averageTimeInSecondsLastMonth -
+              item.averageTimeInSecondsThisMonth) /
+              item.averageTimeInSecondsLastMonth) *
             100
           : 0;
         return {
@@ -77,7 +77,9 @@ export default function Dashboard() {
       totalCars: item.totalCars,
     }),
   );
-
+  console.log("Car Sent Data:", carSentData);
+  console.log("Average Data:", averageData);
+  console.log("Progress Data:", progressData);
   return (
     <div className=" px-4 sm:px-9 py-6 ">
       <div className="flex justify-between items-center mb-3">
@@ -162,7 +164,7 @@ export default function Dashboard() {
               percentageLabel="Sent"
             />
           </div>
-          <div className="flex space-x-6 w-full lg:flex-row flex-col ">
+          <div className="flex gap-4 w-full lg:flex-row flex-col ">
             <div className="flex flex-col lg:w-2/3 w-full gap-4">
               <div className="flex-1 ">
                 <AverageTimeChart data={averageData.employeeAverageTime} />

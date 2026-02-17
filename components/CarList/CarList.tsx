@@ -132,7 +132,6 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       border: "border-gray-500",
     },
   } as const;
-  console.log("Car details:", carDetails);
   return (
     <Link
       href={`${carDetails.ad_link}`}

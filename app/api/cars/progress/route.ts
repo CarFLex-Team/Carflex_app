@@ -30,14 +30,19 @@ export async function GET(req: Request) {
       SELECT 
         sent_by AS "employeeName", 
         -- Current month cars sent
-        COUNT(CASE WHEN created_at >= $1::date AND created_at < $2::date THEN 1 END) AS "carsSentThisMonth",
+        COUNT(CASE WHEN created_at >= $1::date AND created_at < ($2::date + INTERVAL '1 day') THEN 1 END) AS "carsSentThisMonth",
         -- Last month cars sent
         COUNT(CASE WHEN created_at >= $3::date AND created_at < $4::date THEN 1 END) AS "carsSentLastMonth",
         
         -- Current month average time
-        AVG(EXTRACT(EPOCH FROM (sent_at - taken_at))) / 60 AS "averageTimeInMinutesThisMonth",
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (sent_at - taken_at))) 
+        AS "averageTimeInSecondsThisMonth",
         -- Last month average time
-        AVG(CASE WHEN created_at >= $3::date AND created_at < $4::date THEN EXTRACT(EPOCH FROM (sent_at - taken_at)) END) / 60 AS "averageTimeInMinutesLastMonth"
+       PERCENTILE_CONT(0.5) WITHIN GROUP (
+        ORDER BY EXTRACT(EPOCH FROM (sent_at - taken_at))
+    ) 
+        FILTER (WHERE created_at >= $3::date AND created_at < $4::date) 
+        AS "averageTimeInSecondsLastMonth"
       FROM "sheet_caller"
       WHERE sent_by IS NOT NULL
         AND taken_at IS NOT NULL
