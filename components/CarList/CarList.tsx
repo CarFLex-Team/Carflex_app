@@ -19,6 +19,9 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   const [trimStatus, setTrimStatus] = useState("");
   const [trimLoading, setTrimLoading] = useState(false);
   const [isTaken, setIsTaken] = useState(carDetails.is_taken || false);
+  const [takenAt, setTakenAt] = useState<Date | null>(
+    carDetails.taken_at ? new Date(carDetails.taken_at) : null,
+  );
   const [estimatedValue, setEstimatedValue] = useState<number>(
     carDetails.real_value ||
       carDetails.real_value === 0 ||
@@ -33,6 +36,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
   useEffect(() => {
     if (carDetails.is_taken) {
       setIsTaken(true);
+      setTakenAt(carDetails.taken_at ? new Date(carDetails.taken_at) : null);
     }
   }, [carDetails.is_taken]);
   const onCheck = async (e: React.MouseEvent) => {
@@ -94,6 +98,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
         throw new Error("Failed to take car" + res.statusText);
       }
       setIsTaken(true);
+      setTakenAt(new Date());
     } catch (error) {
       console.error("Failed to mark car as taken", error);
     }
@@ -127,7 +132,7 @@ export default function CarList({ carDetails }: { carDetails: any }) {
       border: "border-gray-500",
     },
   } as const;
-
+  console.log("Car details:", carDetails);
   return (
     <Link
       href={`${carDetails.ad_link}`}
@@ -239,8 +244,12 @@ export default function CarList({ carDetails }: { carDetails: any }) {
               </button>
             </p>
           </div>
+
           <CopyToClipboardButton
-            carDetails={carDetails}
+            carDetails={{
+              ...carDetails,
+              taken_at: takenAt,
+            }}
             status={status}
             estimatedValue={estimatedValue}
           />
