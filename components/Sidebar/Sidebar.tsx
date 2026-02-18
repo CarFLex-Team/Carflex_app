@@ -1,13 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import NavButton from "../NavButton/NavButton";
-import {
-  X,
-  PanelLeftClose,
-  LogOut,
-  Settings,
-  PanelLeftOpen,
-} from "lucide-react";
+import { PanelLeftClose, LogOut, PanelLeftOpen } from "lucide-react";
 
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -18,19 +12,6 @@ type Item = {
   href: string;
   label: string;
 };
-
-const ITEMS: Item[] = [
-  { id: "all", href: "/", label: "All" },
-  { id: "autotrader", href: "/autotrader", label: "Autotrader" },
-  { id: "kijiji", href: "/kijiji", label: "Kijiji" },
-  { id: "marketplace", href: "/marketplace", label: "Marketplace" },
-
-  {
-    id: "vin-decoder",
-    href: "/vin-decoder",
-    label: "Vin Decoder",
-  },
-];
 
 export default function Sidebar({
   open,

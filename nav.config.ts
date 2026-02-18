@@ -32,7 +32,12 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "marketplace",
           href: "/listings/marketplace",
-          label: "Marketplace",
+          label: "Swoopa Marketplace",
+        },
+        {
+          id: "facebook",
+          href: "/listings/facebook",
+          label: "Facebook Marketplace",
         },
       ],
     },
@@ -72,7 +77,12 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "marketplace",
           href: "/listings/marketplace",
-          label: "Marketplace",
+          label: "Swoopa Marketplace",
+        },
+        {
+          id: "facebook",
+          href: "/listings/facebook",
+          label: "Facebook Marketplace",
         },
       ],
     },
@@ -107,7 +117,12 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "marketplace",
           href: "/listings/marketplace",
-          label: "Marketplace",
+          label: "Swoopa Marketplace",
+        },
+        {
+          id: "facebook",
+          href: "/listings/facebook",
+          label: "Facebook Marketplace",
         },
       ],
     },
@@ -132,7 +147,12 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "marketplace",
           href: "/listings/marketplace",
-          label: "Marketplace",
+          label: "Swoopa Marketplace",
+        },
+        {
+          id: "facebook",
+          href: "/listings/facebook",
+          label: "Facebook Marketplace",
         },
       ],
     },

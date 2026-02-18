@@ -259,6 +259,11 @@ export default function CarList({
             estimatedValue={estimatedValue}
             session={session}
           />
+          <p>
+            {carDetails.active_listings
+              ? ` (${carDetails.active_listings} active)`
+              : ""}
+          </p>
         </div>
         <div className="flex justify-between flex-wrap items-center  ">
           <div>
