@@ -10,7 +10,7 @@ export default function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
     >
       {session && (
         <p className="hidden md:block font-semibold text-2xl text-gray-500">
-          Welcome: {session.user?.name?.split(" ")[0]}
+          Welcome: {session.user?.name}
         </p>
       )}
       <button
