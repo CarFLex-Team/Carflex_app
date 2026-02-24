@@ -3,7 +3,7 @@ function timeAgo(dateString: string) {
   const now = new Date();
   const past = new Date(dateString);
   const seconds = Math.floor((now.getTime() - past.getTime()) / 1000);
-
+  console.log("Seconds since past date:", past, now, seconds);
   const intervals = [
     { label: "year", seconds: 31536000 },
     { label: "month", seconds: 2592000 },
