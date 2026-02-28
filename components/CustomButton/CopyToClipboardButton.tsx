@@ -31,6 +31,7 @@ export default function CopyToClipboardButton({
   const handleCopyClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
+      e.stopPropagation();
       setIsLoading(true);
 
       const res = await fetch("/api/cars/send", {
