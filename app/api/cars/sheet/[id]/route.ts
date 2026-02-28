@@ -25,6 +25,7 @@ export async function GET(
     const isAttacking = searchParams.get("isAttacking") === "true"; // Get the isAttacking parameter
     const callStatus = searchParams.get("callStatus") || ""; // Get the callStatus parameter
     const isFavorite = searchParams.get("isFavorite") === "true"; // Get the isFavorite parameter
+    const isTruck = searchParams.get("isTruck") === "true"; // Get the isTruck parameter
     let WherePart = "WHERE u.name=s.sent_by ";
     let queryParams: any[] = [];
 
@@ -45,6 +46,9 @@ export async function GET(
     }
     if (callStatus) {
       WherePart += ` AND s.call_status = '${callStatus}' `;
+    }
+    if (isTruck) {
+      WherePart += ` AND s.is_truck = true `;
     }
 
     const { rows } = await db.query<allRow>(

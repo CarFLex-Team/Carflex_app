@@ -25,6 +25,7 @@ export default function CarsSheetPage() {
   const [isAttacking, setIsAttacking] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [callStatus, setCallStatus] = useState("");
+  const [isTruck, setIsTruck] = useState(false);
   const {
     data,
     error,
@@ -36,6 +37,7 @@ export default function CarsSheetPage() {
     isAttacking,
     isFavorite,
     callStatus,
+    isTruck,
   );
   const [prevCount, setPrevCount] = useState<number>(data?.totalCount || 0);
   useEffect(() => {
@@ -102,6 +104,38 @@ export default function CarsSheetPage() {
               className="p-2 border-b border-gray-300 focus:outline-none min-w-25"
             />
             <div className="flex gap-4">
+              <div
+                className={`text-sm   rounded-lg p-0.5 cursor-pointer text-center ${isFavorite ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
+              >
+                <FavoriteButton
+                  onClick={() => {
+                    setIsFavorite(!isFavorite);
+                    setSheetData([]);
+                    setPage(1);
+                  }}
+                  isFavorite={isFavorite}
+                />
+              </div>
+              <button
+                className={`text-sm   rounded-lg p-2  cursor-pointer text-center ${isTruck ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
+                onClick={() => {
+                  setIsTruck(!isTruck);
+                  setSheetData([]);
+                  setPage(1);
+                }}
+              >
+                Trucks
+              </button>
+              <button
+                className={`text-sm   rounded-lg p-2  cursor-pointer text-center ${isAttacking ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
+                onClick={() => {
+                  setIsAttacking(!isAttacking);
+                  setSheetData([]);
+                  setPage(1);
+                }}
+              >
+                ATTACK
+              </button>
               <select
                 name="callStatus"
                 id="callStatus"
@@ -129,28 +163,6 @@ export default function CarsSheetPage() {
                 <option value="Not Picking Up">Not Picking Up</option>
                 <option value="Text Message">Text Message</option>
               </select>
-              <div
-                className={`text-sm   rounded-lg p-0.5 cursor-pointer text-center ${isFavorite ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
-              >
-                <FavoriteButton
-                  onClick={() => {
-                    setIsFavorite(!isFavorite);
-                    setSheetData([]);
-                    setPage(1);
-                  }}
-                  isFavorite={isFavorite}
-                />
-              </div>
-              <button
-                className={`text-sm   rounded-lg p-2  cursor-pointer text-center ${isAttacking ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
-                onClick={() => {
-                  setIsAttacking(!isAttacking);
-                  setSheetData([]);
-                  setPage(1);
-                }}
-              >
-                ATTACK
-              </button>
               <button
                 className="border border-primary text-sm hover:text-white transition-colors duration-300 bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
                 onClick={() => setOpen(true)}
