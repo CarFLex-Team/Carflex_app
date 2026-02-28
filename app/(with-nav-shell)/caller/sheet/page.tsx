@@ -24,7 +24,7 @@ export default function CarsSheetPage() {
   const [sheetData, setSheetData] = useState<Car[]>([]);
   const [isAttacking, setIsAttacking] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const [callStatus, setCallStatus] = useState("");
   const {
     data,
     error,
@@ -35,6 +35,7 @@ export default function CarsSheetPage() {
     search,
     isAttacking,
     isFavorite,
+    callStatus,
   );
   const [prevCount, setPrevCount] = useState<number>(data?.totalCount || 0);
   useEffect(() => {
@@ -52,9 +53,9 @@ export default function CarsSheetPage() {
   }, [data]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value); // Update the search term
-    setPage(1); // Reset to the first page when the search term changes
-    setSheetData([]); // Clear the existing data when the search term is updated
+    setSearch(e.target.value);
+    setPage(1);
+    setSheetData([]);
   };
 
   if (error) return <p>Error loading sheet</p>;
@@ -101,6 +102,33 @@ export default function CarsSheetPage() {
               className="p-2 border-b border-gray-300 focus:outline-none min-w-25"
             />
             <div className="flex gap-4">
+              <select
+                name="callStatus"
+                id="callStatus"
+                className="text-sm   rounded-lg  cursor-pointer text-center bg-primary text-white"
+                onChange={(e) => {
+                  setCallStatus(e.target.value);
+                  setSheetData([]);
+                  setPage(1);
+                }}
+              >
+                <option value="">All Calls</option>
+                <option value="Deal Made">Deal Made</option>
+                <option value="No Contact">No Contact</option>
+                <option value="Follow Up">Follow Up</option>
+                <option value="In Progress">In Progress</option>
+                <option value="No Deal (Price)">No Deal (Price)</option>
+                <option value="No Deal (Other)">No Deal (Other)</option>
+                <option value="No Deal (Language)">No Deal (Language)</option>
+                <option value="No Deal (Dealer)">No Deal (Dealer)</option>
+                <option value="Voicemail Left">Voicemail Left</option>
+                <option value="Ad Removed">Ad Removed</option>
+                <option value="Rebuilt">Rebuilt</option>
+                <option value="Scammer">Scammer</option>
+                <option value="Chat on Kijiji">Chat on Kijiji</option>
+                <option value="Not Picking Up">Not Picking Up</option>
+                <option value="Text Message">Text Message</option>
+              </select>
               <div
                 className={`text-sm   rounded-lg p-0.5 cursor-pointer text-center ${isFavorite ? "bg-primary text-white" : "bg-gray-200 border border-primary text-primary"}`}
               >
