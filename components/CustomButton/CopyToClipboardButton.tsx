@@ -43,6 +43,7 @@ export default function CopyToClipboardButton({
         carDetails.title.toLowerCase().includes("tundra") ||
         carDetails.title.toLowerCase().includes("tacoma")
       ) {
+        console.log("Identified as truck based on title:", carDetails.title);
         setIsTruck(true);
       }
       const res = await fetch("/api/cars/send", {
