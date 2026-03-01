@@ -6,6 +6,21 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
 import { useSettingsStore } from "@/store/useSettingStore";
 
+function truckChecker(title: string) {
+  const truckKeywords = [
+    "150",
+    "250",
+    "350",
+    "ram",
+    "sierra",
+    "silverado",
+    "tundra",
+    "tacoma",
+  ];
+  return truckKeywords.some((keyword) =>
+    title.toLowerCase().includes(keyword.toLowerCase()),
+  );
+}
 export default function CopyToClipboardButton({
   carDetails,
   status,
@@ -22,7 +37,6 @@ export default function CopyToClipboardButton({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
-  const [is_truck, setIsTruck] = useState(false);
   useEffect(() => {
     if (carDetails.is_sent) {
       setIsCopied(true);
@@ -33,19 +47,7 @@ export default function CopyToClipboardButton({
       e.preventDefault();
       e.stopPropagation();
       setIsLoading(true);
-      if (
-        carDetails.title.toLowerCase().includes("150") ||
-        carDetails.title.toLowerCase().includes("250") ||
-        carDetails.title.toLowerCase().includes("350") ||
-        carDetails.title.toLowerCase().includes("ram") ||
-        carDetails.title.toLowerCase().includes("sierra") ||
-        carDetails.title.toLowerCase().includes("silverado") ||
-        carDetails.title.toLowerCase().includes("tundra") ||
-        carDetails.title.toLowerCase().includes("tacoma")
-      ) {
-        console.log("Identified as truck based on title:", carDetails.title);
-        setIsTruck(true);
-      }
+
       const res = await fetch("/api/cars/send", {
         method: "POST",
         headers: {
@@ -57,7 +59,7 @@ export default function CopyToClipboardButton({
           real_value: Number(estimatedValue),
           sheet_id: callerName,
           sent_by: session?.user?.name,
-          is_truck,
+          is_truck: truckChecker(carDetails.title),
         }),
       });
       setIsLoading(false);

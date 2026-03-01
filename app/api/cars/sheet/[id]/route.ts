@@ -35,7 +35,7 @@ export async function GET(
 
     // Add search filter to WHERE clause if search term is provided
     if (search) {
-      WherePart += ` AND (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1 OR odometer ILIKE $1 OR notes ILIKE $1) `;
+      WherePart += ` AND (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1  OR notes ILIKE $1) `;
       queryParams.push(`%${search}%`);
     }
     if (isAttacking) {
