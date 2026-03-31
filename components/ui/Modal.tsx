@@ -1,5 +1,6 @@
 "use client";
 
+import { X } from "lucide-react";
 import { useEffect } from "react";
 
 interface ConfirmDialogProps {
@@ -36,11 +37,17 @@ export default function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
-      <div onClick={onClose} className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/40" />
 
       {/* Modal */}
       <div className="relative z-10 w-full max-w-sm rounded-lg bg-white p-6 shadow-lg max-h-[90vh] overflow-auto">
-        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        <div className="flex justify-between">
+          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <X
+            className="h-5 w-5 text-gray-700 hover:text-black cursor-pointer"
+            onClick={onClose}
+          />
+        </div>
 
         {children}
       </div>
