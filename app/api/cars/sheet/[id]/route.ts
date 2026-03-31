@@ -94,8 +94,16 @@ export async function POST(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
-    const { title, odometer, ad_link, price, source, sent_by } =
-      await req.json();
+    const {
+      title,
+      odometer,
+      ad_link,
+      price,
+      source,
+      sent_by,
+      est_value,
+      is_truck,
+    } = await req.json();
     const session = await getServerSession(authOptions);
     const { id } = await context.params;
 
@@ -119,11 +127,21 @@ export async function POST(
 
     const { rows } = await db.query(
       `
- INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by)
-      VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7)
+ INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by, est_value, is_truck)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7, $8, $9)
       RETURNING *
       `,
-      [title, odometer, ad_link, price, source, id.toLowerCase(), sent_by],
+      [
+        title,
+        odometer,
+        ad_link,
+        price,
+        source,
+        id.toLowerCase(),
+        sent_by,
+        est_value,
+        is_truck,
+      ],
     );
 
     emitEvent({ type: "sheet:caller:update" });

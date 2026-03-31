@@ -8,6 +8,10 @@ import CarWatcher from "../CarWatcher/CarWatcher";
 import CallerPicker from "../CallerPicker/CallerPicker";
 import { SheetLiveListener } from "../sheetLiveListener/SheetLiveListener";
 import { useSession } from "next-auth/react";
+import Modal from "../ui/Modal";
+import { AddCarForm } from "../AddCarForm/AddCarForm";
+import { useSettingsStore } from "@/store/useSettingStore";
+import { Plus } from "lucide-react";
 
 type Item = {
   id: number;
@@ -39,7 +43,9 @@ export default function ClientListings({
   const [view, setView] = useState<"card" | "list">("list");
   const SOURCES = ["facebook", "kijiji", "autotrader"];
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
-
+  const callerName = useSettingsStore((s) => s.callerName);
+  const [open, setOpen] = useState(false);
+  console.log("Initial cars data:", callerName);
   const { data, error, isLoading } = useSWR(
     [`${active.toLowerCase()}`, limit ?? 20],
     ([name, limit]) => {
@@ -75,6 +81,15 @@ export default function ClientListings({
 
   return (
     <>
+      {open && (
+        <Modal isOpen={open} onClose={() => setOpen(false)} title="Add Car">
+          <AddCarForm
+            onSuccess={() => setOpen(false)}
+            sheet={callerName}
+            sent_by_team={session?.user?.name || ""}
+          />
+        </Modal>
+      )}
       <SheetLiveListener name={`${active.toLowerCase()}`} limit={limit ?? 20} />
       <CarWatcher cars={data.items} />
       <div className=" px-4 sm:px-9 py-6 ">
@@ -85,6 +100,12 @@ export default function ClientListings({
 
           <div className="flex items-center gap-4">
             {/* <AutoSwitch /> */}
+            <button
+              className="border border-primary text-sm hover:text-white transition-colors duration-300 bg-primary rounded-lg p-2 text-white hover:bg-lightPrimary cursor-pointer text-center"
+              onClick={() => setOpen(true)}
+            >
+              <Plus size={18} />
+            </button>
             <CallerPicker />
 
             {/* <SelectView view={view} setView={setView} /> */}

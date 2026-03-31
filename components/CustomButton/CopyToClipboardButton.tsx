@@ -5,22 +5,8 @@ import { Check, Copy, Loader, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
 import { useSettingsStore } from "@/store/useSettingStore";
+import truckChecker from "@/lib/truckChecker";
 
-function truckChecker(title: string) {
-  const truckKeywords = [
-    "150",
-    "250",
-    "350",
-    "ram",
-    "sierra",
-    "silverado",
-    "tundra",
-    "tacoma",
-  ];
-  return truckKeywords.some((keyword) =>
-    title.toLowerCase().includes(keyword.toLowerCase()),
-  );
-}
 export default function CopyToClipboardButton({
   carDetails,
   status,

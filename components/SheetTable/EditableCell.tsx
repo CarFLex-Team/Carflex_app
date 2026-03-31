@@ -16,6 +16,7 @@ export function EditableCell({
   sheet,
   noEditClassName,
   date,
+  icon,
 }: {
   value: any;
   rowId: string;
@@ -26,6 +27,7 @@ export function EditableCell({
   className?: string;
   noEditClassName?: string;
   date?: string;
+  icon?: string;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
@@ -96,13 +98,14 @@ export function EditableCell({
     return (
       <div
         onClick={() => setEditing(true)}
-        className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""} `}
+        className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""} ${icon === "$" ? "flex flex-row-reverse justify-center" : ""} `}
       >
         {newValue === "" || newValue == null
           ? "—"
           : type === "date"
             ? formatDate(newValue)
             : newValue}
+        {icon && <span className="text-black ml-1">{icon}</span>}
       </div>
     );
   }

@@ -167,19 +167,17 @@ export const CarColumns: TableColumn<Car>[] = [
   {
     header: "Odometer",
     accessor: "odometer",
-    render: (row) =>
-      row.odometer ? (
-        `${row.odometer} km`
-      ) : (
-        <EditableCell
-          type="text"
-          className="w-15"
-          value={row.odometer ? `${row.odometer}` : ""}
-          rowId={row.ad_link}
-          field="odometer"
-          sheet="caller"
-        />
-      ),
+    render: (row) => (
+      <EditableCell
+        type="text"
+        className="w-15"
+        value={row.odometer ? `${row.odometer}` : ""}
+        rowId={row.ad_link}
+        field="odometer"
+        sheet="caller"
+        icon="km"
+      />
+    ),
   },
   {
     header: "Ad Link",
@@ -228,14 +226,15 @@ export const CarColumns: TableColumn<Car>[] = [
         className="w-15"
         value={
           row.real_value || row.real_value === 0
-            ? `$${row.real_value}`
+            ? `${row.real_value}`
             : row.est_value
-              ? `$${row.est_value}`
+              ? `${row.est_value}`
               : ""
         }
         rowId={row.ad_link}
         field="real_value"
         sheet="caller"
+        icon="$"
       />
     ),
   },
@@ -253,6 +252,7 @@ export const CarColumns: TableColumn<Car>[] = [
           rowId={row.ad_link}
           field="price"
           sheet="caller"
+          icon="$"
         />
       ),
   },
@@ -265,10 +265,11 @@ export const CarColumns: TableColumn<Car>[] = [
       <EditableCell
         type="text"
         className="w-15"
-        value={row.purch_value ? `$${row.purch_value}` : ""}
+        value={row.purch_value ? `${row.purch_value}` : ""}
         rowId={row.ad_link}
         field="purch_value"
         sheet="caller"
+        icon="$"
       />
     ),
   },
@@ -283,12 +284,13 @@ export const CarColumns: TableColumn<Car>[] = [
           isNaN(Number(row.lowest_price))
             ? row.lowest_price
             : row.lowest_price
-              ? `$${row.lowest_price}`
+              ? `${row.lowest_price}`
               : ""
         }
         rowId={row.ad_link}
         field="lowest_price"
         sheet="caller"
+        icon="$"
       />
     ),
   },
