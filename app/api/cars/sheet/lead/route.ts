@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import type { allRow } from "@/lib/db.postgres";
-import priceStatus from "@/helpers/priceStatus";
+
 
 export async function GET(req: Request) {
   try {

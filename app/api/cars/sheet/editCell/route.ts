@@ -26,7 +26,7 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const keys = Object.keys(body);
 
-    if (keys.length !== 1) {
+    if (keys.length !== 1 && !(keys.length === 2 && keys.includes("status"))) {
       return NextResponse.json(
         { error: "Update one field at a time" },
         { status: 400 },
@@ -45,10 +45,10 @@ export async function PATCH(req: Request) {
     await db.query(
       `
       UPDATE "${config.table}"
-      SET ${field} = $1, updated_at = NOW()
+      SET ${field} = $1, updated_at = NOW(),status = $3
       WHERE ad_link = $2
       `,
-      [body[field], adLink],
+      [body[field], adLink, body.status],
     );
 
     // 🔥 Notify only relevant sheet listeners

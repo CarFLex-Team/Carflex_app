@@ -72,7 +72,7 @@ export default function CarList({
         estimatedValue,
       );
       mutate(`/api/cars/${carDetails.ad_link}?source=${carDetails.source}`);
-      const newStatus = await priceStatus(
+      const newStatus = priceStatus(
         carDetails.price,
         carDetails.est_value,
         estimatedValue,

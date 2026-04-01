@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { mutate } from "swr";
 
 import FavoriteButton from "../CustomButton/FavoriteButton";
+import priceStatus from "@/helpers/priceStatus";
 
 export function EditableCell({
   value,
@@ -17,6 +18,7 @@ export function EditableCell({
   noEditClassName,
   date,
   icon,
+  rowPrice,
 }: {
   value: any;
   rowId: string;
@@ -28,6 +30,7 @@ export function EditableCell({
   noEditClassName?: string;
   date?: string;
   icon?: string;
+  rowPrice?: number;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
@@ -61,6 +64,10 @@ export function EditableCell({
               : type === "number"
                 ? Number(draftValue ?? draft)
                 : (draftValue ?? draft),
+            status:
+              field === "real_value"
+                ? priceStatus(rowPrice ?? 0, 0, draftValue ?? draft)
+                : undefined,
           }),
         },
       );

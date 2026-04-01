@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import type { allRow } from "@/lib/db.postgres";
-import priceStatus from "@/helpers/priceStatus";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { emitEvent } from "@/lib/sheetEvents/sheetEvents";

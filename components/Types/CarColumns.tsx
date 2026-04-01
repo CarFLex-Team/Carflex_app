@@ -3,6 +3,7 @@ import { TableColumn } from "../SheetTable/SheetTable";
 import { EditableCell } from "../SheetTable/EditableCell";
 import formatTime from "@/lib/formatTime";
 import convertToADay from "@/lib/convertToADay";
+import priceStatus from "@/helpers/priceStatus";
 
 export type Car = {
   id: string;
@@ -235,6 +236,7 @@ export const CarColumns: TableColumn<Car>[] = [
         field="real_value"
         sheet="caller"
         icon="$"
+        rowPrice={row.price}
       />
     ),
   },
@@ -256,7 +258,11 @@ export const CarColumns: TableColumn<Car>[] = [
         />
       ),
   },
-  { header: "Status", accessor: "status" },
+  {
+    header: "Status",
+    accessor: "status",
+    render: (row) => <div>{row.status}</div>,
+  },
 
   {
     header: "Target Price",

@@ -1,4 +1,4 @@
-export default async function priceStatus(
+export default function priceStatus(
   price: number | null,
   est_value: number | null,
   real_value?: number | null,
