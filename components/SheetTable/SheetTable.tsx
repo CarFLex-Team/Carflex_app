@@ -12,7 +12,8 @@ type DataTableProps<T> = {
   columns: TableColumn<T>[];
   data: any[];
   action?: React.ReactNode;
-
+  rowActiveId?: string;
+  setRowActiveId?: (id: string) => void;
   isLoading?: boolean;
   onRowClick?: (row: T) => void;
   renderActions?: (row: T) => React.ReactNode;
@@ -23,7 +24,8 @@ export default function SheetTable<T>({
   columns,
   data,
   action,
-
+  rowActiveId,
+  setRowActiveId,
   isLoading = false,
   onRowClick,
   renderActions,
@@ -31,7 +33,10 @@ export default function SheetTable<T>({
   return (
     <div className="rounded-xl bg-white p-5 m-4 shadow-sm">
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between gap-4">
+      <div
+        className="mb-4 flex items-center justify-between gap-4"
+        onClick={setRowActiveId ? () => setRowActiveId("") : undefined}
+      >
         {title && <h2 className="text-lg font-semibold">{title}</h2>}
         {action}
       </div>
@@ -74,7 +79,7 @@ export default function SheetTable<T>({
                 <tr
                   key={rowIndex}
                   onClick={() => onRowClick?.(row)}
-                  className={`border border-gray-300 ${onRowClick ? "cursor-pointer" : ""}`}
+                  className={`border border-gray-300 ${onRowClick ? "cursor-pointer" : ""} ${rowActiveId === row.id ? "bg-gray-200" : ""}`}
                 >
                   {columns.map((col, colIndex) => (
                     <td

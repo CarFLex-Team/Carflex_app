@@ -26,6 +26,7 @@ export default function CarsSheetPage() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [callStatus, setCallStatus] = useState("");
   const [isTruck, setIsTruck] = useState(false);
+  const [rowActive, setRowActive] = useState("");
   const {
     data,
     error,
@@ -179,6 +180,11 @@ export default function CarsSheetPage() {
           </div>
         }
         renderActions={(row) => <ForwardButton carDetails={row} />}
+        rowActiveId={rowActive}
+        setRowActiveId={setRowActive}
+        onRowClick={(row) => {
+          setRowActive((prev) => (prev === row.id ? "" : row.id));
+        }}
       />
 
       {/* Pagination Buttons */}
