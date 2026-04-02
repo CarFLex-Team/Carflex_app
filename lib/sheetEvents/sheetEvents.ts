@@ -1,5 +1,5 @@
 type EventPayload = {
-  type: "sheet:caller:update" | "sheet:lead:update" | "sheet:team:update";
+  type: "sheet:caller:update" | "sheet:lead:update" ;
 
   data?: any;
 };

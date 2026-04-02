@@ -1,17 +1,15 @@
 "use client";
 import { useState } from "react";
-import useSWR from "swr";
 import CarCard from "../CarCard/CarCard";
 import CarList from "../CarList/CarList";
-import fetchData from "@/helpers/fetchData";
 import CarWatcher from "../CarWatcher/CarWatcher";
 import CallerPicker from "../CallerPicker/CallerPicker";
-import { SheetLiveListener } from "../sheetLiveListener/SheetLiveListener";
 import { useSession } from "next-auth/react";
 import Modal from "../ui/Modal";
 import { AddCarForm } from "../AddCarForm/AddCarForm";
 import { useSettingsStore } from "@/store/useSettingStore";
 import { Plus } from "lucide-react";
+import useRealtimeCars from "@/hooks/useRealtimeCars";
 
 type Item = {
   id: number;
@@ -45,19 +43,24 @@ export default function ClientListings({
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const callerName = useSettingsStore((s) => s.callerName);
   const [open, setOpen] = useState(false);
-  console.log("Initial cars data:", callerName);
-  const { data, error, isLoading } = useSWR(
-    [`${active.toLowerCase()}`, limit ?? 20],
-    ([name, limit]) => {
-      const result = fetchData({ name: name || "", limit });
+  // console.log("Initial cars data:", callerName);
+  //   const { data, error, isLoading } = useSWR(
+  //   [`${active.toLowerCase()}`, limit ?? 20],
+  //   ([name, limit]) => {
+  //     const result = fetchData({ name: name || "", limit });
 
-      return result;
-    },
-    {
-      refreshInterval: 30_000, // poll every 30 seconds
-      fallbackData: { items: initialCarsData },
-      revalidateOnFocus: true,
-    },
+  //     return result;
+  //   },
+  //   {
+  //     refreshInterval: 30_000, // poll every 30 seconds
+  //     fallbackData: { items: initialCarsData },
+  //     revalidateOnFocus: true,
+  //   },
+  // );
+  const { data, error, isLoading } = useRealtimeCars(
+    active,
+    limit,
+    initialCarsData,
   );
   function toggleSource(source: string) {
     setSelectedSources((prev) =>
@@ -90,7 +93,7 @@ export default function ClientListings({
           />
         </Modal>
       )}
-      <SheetLiveListener name={`${active.toLowerCase()}`} limit={limit ?? 20} />
+
       <CarWatcher cars={data.items} />
       <div className=" px-4 sm:px-9 py-6 ">
         <div className="sm:w-full mb-8 flex justify-between items-center ">

@@ -31,13 +31,7 @@ export function SheetLiveListener({
               new Date().toISOString().slice(0, 10),
           );
           break;
-        case "sheet:team:update":
-          if (session?.user?.role !== "TEAM") return;
-          (async () => {
-            const updatedData = await fetchData({ name: name || "", limit }); // Now `await` works
-            mutate([name, Number(limit ?? 20)], updatedData, false); // Update cache with fresh data
-          })(); // Immediately invoking the async function
-          break;
+        
       }
     };
 

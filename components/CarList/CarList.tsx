@@ -13,6 +13,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import priceStatus from "@/helpers/priceStatus";
 import formatNumber from "@/helpers/formatNumber";
 import { checkTrim } from "@/helpers/checkTrim";
+import { supabase } from "@/lib/supabase";
 export default function CarList({
   carDetails,
   session,
@@ -99,6 +100,16 @@ export default function CarList({
           ad_link: carDetails.ad_link,
           source: carDetails.source,
         }),
+      });
+      await supabase.channel("broadcast-updates").send({
+        type: "broadcast",
+        event: "is_taken_changed",
+        payload: {
+          ad_link: carDetails.ad_link,
+          new_is_taken: true,
+          taken_by: session?.user?.name || null,
+          source: carDetails.source,
+        },
       });
       if (!res.ok) {
         throw new Error("Failed to take car" + res.statusText);
