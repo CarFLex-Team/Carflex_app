@@ -78,7 +78,7 @@ export default function CarsSheetPage() {
     }
   };
   const filteredSheetData = removeDubsSheetData(sheetData);
-  console.log("Rendering with data count:", filteredSheetData);
+
   return (
     <>
       {open && (

@@ -44,10 +44,8 @@ export default function useRealtimeCars(
       .channel(`realtime-caller-insert`)
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: newTableName },
-        async (payload) => {
-          console.log("Change received!", payload.new);
-
+        { event: "*", schema: "public", table: newTableName },
+        () => {
           mutate(undefined, true);
         },
       )

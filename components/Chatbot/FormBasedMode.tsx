@@ -4,7 +4,7 @@ export default function FormBasedMode({
 }: {
   employeeDetails?: any;
 }) {
-  console.log("FormBasedMode Employee Details:", employeeDetails);
+
   const remainingLeaveDays = employeeDetails?.remaining_leave_days || 0;
   const [requestedDays, setRequestedDays] = useState("");
   const [leaveStart, setLeaveStart] = useState("");

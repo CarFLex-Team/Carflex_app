@@ -47,7 +47,7 @@ export default function FreeTextMode({
       );
 
       const result = await response.json();
-      console.log("AI Response:", result);
+     
       //   setBotTyping(false);
       setMessages((prevMessages) => [
         ...prevMessages,

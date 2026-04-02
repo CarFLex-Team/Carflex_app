@@ -25,7 +25,7 @@ export function AddCarForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log({ error });
+ 
     if (!sheet) {
       setError(true);
       setErrorText("Make Sure to select a caller before adding a car");

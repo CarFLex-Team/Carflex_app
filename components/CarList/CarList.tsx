@@ -88,7 +88,7 @@ export default function CarList({
   }
   async function handleIsTaken() {
     try {
-      console.log("Marking car as taken:");
+      
       const res = await fetch("/api/cars/take", {
         method: "PUT",
         headers: {

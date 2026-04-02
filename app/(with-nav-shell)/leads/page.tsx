@@ -77,9 +77,7 @@ export default function Dashboard() {
       totalCars: item.totalCars,
     }),
   );
-  console.log("Car Sent Data:", carSentData);
-  console.log("Average Data:", averageData);
-  console.log("Progress Data:", progressData);
+
   return (
     <div className=" px-4 sm:px-9 py-6 ">
       <div className="flex justify-between items-center mb-3">
