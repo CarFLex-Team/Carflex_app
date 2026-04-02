@@ -1,7 +1,7 @@
 "use client";
 import SheetTable from "@/components/SheetTable/SheetTable";
 import { useCarsSheet } from "@/lib/useCarSheet";
-import { SheetLiveListener } from "@/components/sheetLiveListener/SheetLiveListener";
+
 import { useEffect, useState } from "react";
 import ForwardButton from "@/components/CustomButton/ForwardButton";
 import downloadCSV from "@/lib/downloadCSV";
@@ -90,8 +90,7 @@ export default function CarsSheetPage() {
         </Modal>
       )}
       <CarWatcher cars={filteredSheetData ?? []} otherSound={true} />
-      {/* 👂 listens for SEND events */}
-      <SheetLiveListener />
+
 
       {/* Table with Pagination */}
       <SheetTable

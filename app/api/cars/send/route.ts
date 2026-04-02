@@ -51,7 +51,7 @@
 
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
-import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
+
 
 export const runtime = "nodejs";
 
@@ -123,7 +123,7 @@ WHERE "all".ad_link = update_table.ad_link
 
     await db.query("COMMIT");
 
-    // emitEvent({ type: "sheet:caller:update" });
+
 
     return NextResponse.json({ success: true });
   } catch (err) {

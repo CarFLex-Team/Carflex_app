@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
-import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
+
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       ],
     );
 
-    emitEvent({ type: "sheet:lead:update" });
+
 
     return NextResponse.json({ success: true });
   } catch (err) {

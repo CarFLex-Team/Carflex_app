@@ -1,7 +1,7 @@
 "use client";
 import SheetTable, { TableColumn } from "@/components/SheetTable/SheetTable";
 import { useCarsSheet } from "@/lib/useCarSheet";
-import { SheetLiveListener } from "@/components/sheetLiveListener/SheetLiveListener";
+
 import { useState } from "react";
 import { formatTime } from "@/lib/formatTime";
 import formatDate from "@/lib/formatDate";
@@ -331,8 +331,7 @@ export default function LeadsSheetPage() {
 
   return (
     <>
-      {/* 👂 listens for SEND events */}
-      <SheetLiveListener />
+     
       <SheetTable
         columns={DealColumns}
         data={

@@ -4,7 +4,7 @@ import type { allRow } from "@/lib/db.postgres";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
-import { emitEvent } from "@/lib/sheetEvents/sheetEvents";
+
 
 export async function GET(
   req: Request,
@@ -144,7 +144,7 @@ export async function POST(
       ],
     );
 
-    // emitEvent({ type: "sheet:caller:update" });
+
     return NextResponse.json(rows[0], { status: 201 });
   } catch (error: any) {
     console.error("POST /api/cars/sheet/[id] error", error);
