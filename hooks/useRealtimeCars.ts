@@ -28,8 +28,7 @@ export default function useRealtimeCars(
       revalidateOnFocus: true,
     },
   );
-  // console.log("useRealtimeCars data:", tableName);
-  //not working for all except kijiji
+
   useEffect(() => {
     if (!tableName) return;
     const currentMonth = new Date().getMonth() + 1; // 1 = Jan, 4 = Apr

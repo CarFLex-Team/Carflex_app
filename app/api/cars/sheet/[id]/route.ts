@@ -144,7 +144,7 @@ export async function POST(
       ],
     );
 
-    emitEvent({ type: "sheet:caller:update" });
+    // emitEvent({ type: "sheet:caller:update" });
     return NextResponse.json(rows[0], { status: 201 });
   } catch (error: any) {
     console.error("POST /api/cars/sheet/[id] error", error);

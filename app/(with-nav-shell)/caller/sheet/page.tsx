@@ -14,6 +14,7 @@ import { CarColumns, Car } from "@/components/Types/CarColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import FavoriteButton from "@/components/CustomButton/FavoriteButton";
 import removeDubsSheetData from "@/helpers/removeDubsSheetData";
+import useRealtimeCars from "@/hooks/useRealtimeSheet";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -31,7 +32,7 @@ export default function CarsSheetPage() {
     data,
     error,
     isLoading: sheetLoading,
-  } = useCarsSheet(
+  } = useRealtimeCars(
     session?.user?.name?.toLowerCase() || "",
     page.toString(),
     search,
@@ -77,6 +78,7 @@ export default function CarsSheetPage() {
     }
   };
   const filteredSheetData = removeDubsSheetData(sheetData);
+  console.log("Rendering with data count:", filteredSheetData);
   return (
     <>
       {open && (

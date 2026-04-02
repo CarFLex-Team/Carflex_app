@@ -1,6 +1,4 @@
 "use client";
-
-import fetchData from "@/helpers/fetchData";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { mutate } from "swr";
