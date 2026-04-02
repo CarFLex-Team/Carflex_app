@@ -32,8 +32,6 @@ WHERE "all".ad_link = update_table.ad_link
       [body.taken_by, body.ad_link, new Date()],
     );
 
-    emitEvent({ type: "sheet:team:update" });
-
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Edit Take Status error:", err);
