@@ -41,16 +41,21 @@ export async function PATCH(req: Request) {
         { status: 403 },
       );
     }
+    let extraSet = "";
+    let extraarr = [];
+    if (field === "real_value") {
+      extraSet = ", status = $3";
+      extraarr.push(body.status);
+    }
 
     await db.query(
       `
       UPDATE "${config.table}"
-      SET ${field} = $1, updated_at = NOW(),status = $3
+      SET ${field} = $1, updated_at = NOW()${extraSet}
       WHERE ad_link = $2
       `,
-      [body[field], adLink, body.status],
+      [body[field], adLink, ...extraarr],
     );
-
 
     return NextResponse.json({ success: true });
   } catch (err) {
