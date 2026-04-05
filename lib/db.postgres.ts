@@ -13,7 +13,7 @@ const pool =
     ssl: { rejectUnauthorized: false }, // required for Supabase
     max: 20, // maximum number of connections in the pool
     idleTimeoutMillis: 30000, // close idle connections after 30 seconds
-    connectionTimeoutMillis: 2000, // wait for 2 seconds to get a connection
+    connectionTimeoutMillis: 5000, // wait for 5 seconds to get a connection
   });
 
 if (process.env.NODE_ENV === "development") {

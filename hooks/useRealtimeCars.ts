@@ -55,19 +55,13 @@ export default function useRealtimeCars(
               payload.new.real_value,
             ),
           };
-          mutate(
-            (current: any) => ({
-              items: [transformedRow, ...(current?.items || [])],
-            }),
-            false,
-          );
+          mutate();
         },
       )
       .subscribe();
     const broadcastSubscription = supabase
       .channel("broadcast-updates")
       .on("broadcast", { event: "is_taken_changed" }, (msg) => {
-       
         const { ad_link, new_is_taken, taken_by } = msg.payload;
 
         // Update SWR cache accordingly
