@@ -25,7 +25,7 @@ export function EditableCell({
   field: string;
   type: string;
   sheet: string;
-  options?: { value: string; bg: string }[];
+  options?: { value: string; bg?: string; label?: string }[];
   className?: string;
   noEditClassName?: string;
   date?: string;
@@ -80,7 +80,7 @@ export function EditableCell({
 
       // 🔥 update sheet
       mutate(
-        `/api/cars/sheet/${sheet}?page=1&search=&isAttacking=false&isFavorite=false`,
+        `/api/cars/sheet/caller/${sheet}?page=1&search=&isAttacking=false&isFavorite=false`,
         (current: any) => {
           if (!current) return current;
           return current.map((row: any) =>

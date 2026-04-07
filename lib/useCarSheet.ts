@@ -18,7 +18,7 @@ export function useCarsSheet(
   isTruck?: boolean,
 ) {
   return useSWR(
-    `/api/cars/sheet/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}&isAttacking=${isAttacking}&isFavorite=${isFavorite}&callStatus=${callStatus || ""}&isTruck=${isTruck}`,
+    `/api/cars/sheet/caller/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}&isAttacking=${isAttacking}&isFavorite=${isFavorite}&callStatus=${callStatus || ""}&isTruck=${isTruck}`,
     fetcher,
     {
       refreshInterval: 30_000, // fallback polling

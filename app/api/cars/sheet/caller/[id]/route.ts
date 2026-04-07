@@ -67,7 +67,7 @@ export async function GET(
     const hasMore = offset + Number(limit) < totalCount;
     return NextResponse.json({ items, totalCount, hasMore });
   } catch (err) {
-    console.error("GET /api/cars/sheet/[id] error", err);
+    console.error("GET /api/cars/sheet/caller/[id] error", err);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 },
@@ -128,7 +128,7 @@ export async function POST(
     );
     return NextResponse.json(rows[0], { status: 201 });
   } catch (error: any) {
-    console.error("POST /api/cars/sheet/[id] error", error);
+    console.error("POST /api/cars/sheet/caller/[id] error", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
