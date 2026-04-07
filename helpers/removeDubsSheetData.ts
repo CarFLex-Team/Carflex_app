@@ -1,6 +1,9 @@
 import { Car } from "@/components/Types/CarColumns";
+import { CarLeaders } from "@/components/Types/leaderSheetColumns";
 
-export default function removeDubsSheetData(sheetData: Car[]): Car[] {
+export default function removeDubsSheetData(
+  sheetData: Car[] | CarLeaders[],
+): Car[] | CarLeaders[] {
   const uniqueCars = new Map();
 
   // Iterate through the cars in sheetData

@@ -1,18 +1,17 @@
 "use client";
 import SheetTable from "@/components/SheetTable/SheetTable";
-import { useCarsSheet } from "@/lib/useCarSheet";
 
 import { useEffect, useState } from "react";
-import ForwardButton from "@/components/CustomButton/ForwardButton";
+
 import downloadCSV from "@/lib/downloadCSV";
 import { useSession } from "next-auth/react";
-import CarWatcher from "@/components/CarWatcher/CarWatcher";
+
 import Modal from "@/components/ui/Modal";
 import { AddCarForm } from "@/components/AddCarForm/AddCarForm";
-import { Plus } from "lucide-react";
-import { CarColumns, Car } from "@/components/Types/CarColumns";
+
+import { CarLeaders } from "@/components/Types/leaderSheetColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
-import FavoriteButton from "@/components/CustomButton/FavoriteButton";
+
 import removeDubsSheetData from "@/helpers/removeDubsSheetData";
 import useRealtimeCars from "@/hooks/useRealtimeSheet";
 import { leaderSheetColumns } from "@/components/Types/leaderSheetColumns";
@@ -23,7 +22,7 @@ export default function CarsSheetPage() {
   const [search, setSearch] = useState("");
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
-  const [sheetData, setSheetData] = useState<Car[]>([]);
+  const [sheetData, setSheetData] = useState<CarLeaders[]>([]);
 
   const [rowActive, setRowActive] = useState("");
   const {
@@ -79,7 +78,6 @@ export default function CarsSheetPage() {
           />
         </Modal>
       )}
-      <CarWatcher cars={filteredSheetData ?? []} otherSound={true} />
 
       {/* Table with Pagination */}
       <SheetTable

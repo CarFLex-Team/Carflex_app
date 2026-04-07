@@ -31,7 +31,8 @@ export async function GET(req: Request) {
         is_taken,
         taken_at,
         trim,
-        taken_by
+        taken_by,
+        lead_taken
       FROM "kijiji"
       ORDER BY created_at DESC
       LIMIT $1
@@ -43,7 +44,7 @@ export async function GET(req: Request) {
       rows.map(async (r) => ({
         ...r,
         image_src: await getValidFirstImage(r.image_src),
-        status:  priceStatus(r.price, r.est_value, r.real_value),
+        status: priceStatus(r.price, r.est_value, r.real_value),
       })),
     );
 

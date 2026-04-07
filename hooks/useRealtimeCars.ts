@@ -62,19 +62,29 @@ export default function useRealtimeCars(
     const broadcastSubscription = supabase
       .channel("broadcast-updates")
       .on("broadcast", { event: "is_taken_changed" }, (msg) => {
-        const { ad_link, new_is_taken, taken_by } = msg.payload;
-
-        // Update SWR cache accordingly
-        mutate(
-          (current: any) => ({
-            items: current.items.map((r: any) =>
-              r.ad_link === ad_link
-                ? { ...r, is_taken: new_is_taken, taken_by }
-                : r,
-            ),
-          }),
-          false,
-        );
+        const { ad_link, new_is_taken, taken_by, lead_taken } = msg.payload;
+        if (lead_taken) {
+          mutate(
+            (current: any) => ({
+              items: current.items.map((r: any) =>
+                r.ad_link === ad_link ? { ...r, lead_taken } : r,
+              ),
+            }),
+            false,
+          );
+        } else {
+          // Update SWR cache accordingly
+          mutate(
+            (current: any) => ({
+              items: current.items.map((r: any) =>
+                r.ad_link === ad_link
+                  ? { ...r, is_taken: new_is_taken, taken_by, lead_taken }
+                  : r,
+              ),
+            }),
+            false,
+          );
+        }
       })
       .subscribe();
     return () => {

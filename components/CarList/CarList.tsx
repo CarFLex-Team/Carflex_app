@@ -88,7 +88,6 @@ export default function CarList({
   }
   async function handleIsTaken() {
     try {
-      
       const res = await fetch("/api/cars/take", {
         method: "PUT",
         headers: {
@@ -115,6 +114,35 @@ export default function CarList({
         throw new Error("Failed to take car" + res.statusText);
       }
       setIsTaken(true);
+    } catch (error) {
+      console.error("Failed to mark car as taken", error);
+    }
+  }
+  async function handleLeaderTaken() {
+    try {
+      const res = await fetch("/api/cars/take", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lead_taken: session?.user?.name || null,
+          ad_link: carDetails.ad_link,
+          source: carDetails.source,
+        }),
+      });
+      await supabase.channel("broadcast-updates").send({
+        type: "broadcast",
+        event: "is_taken_changed",
+        payload: {
+          ad_link: carDetails.ad_link,
+          lead_taken: session?.user?.name || null,
+          source: carDetails.source,
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Failed to take car" + res.statusText);
+      }
     } catch (error) {
       console.error("Failed to mark car as taken", error);
     }
@@ -156,7 +184,13 @@ export default function CarList({
       className={` h-full  flex bg-gray-200 rounded-lg  shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300 ease-in-out relative ${
         carDetails.source === "r" ? "border-2 border-red-500 " : ""
       } `}
-      onClick={role === "TEAM" ? handleIsTaken : undefined}
+      onClick={
+        role === "TEAM"
+          ? handleIsTaken
+          : role === "LEADER"
+            ? handleLeaderTaken
+            : undefined
+      }
     >
       <div
         className={`relative w-20 sm:w-40 md:w-50 aspect-8/3 overflow-hidden rounded-md shrink-0 `}
@@ -282,6 +316,15 @@ export default function CarList({
             >
               {carDetails.title}
             </p>
+            {carDetails.lead_taken !== null &&
+              (role === "OWNER" || role === "LEADER") && (
+                <p className="text-gray-500">
+                  Seen by:{" "}
+                  {carDetails.lead_taken
+                    ? carDetails.lead_taken.split(" ")[0]
+                    : ""}
+                </p>
+              )}
             {isTaken && (
               <p className="text-gray-500">
                 Taken by:{" "}

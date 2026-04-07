@@ -32,7 +32,8 @@ export async function GET(req: Request) {
         is_taken,
         taken_at,
         trim,
-        taken_by
+        taken_by,
+        lead_taken
       FROM "all"
         ORDER BY title, price, odometer, created_at DESC)deduped
       ORDER BY created_at DESC
