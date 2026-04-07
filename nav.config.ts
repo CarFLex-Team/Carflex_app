@@ -10,15 +10,15 @@ export type NavBox = {
   title?: string;
   items?: NavItem[];
 };
-type Role = "LEAD" | "CALLER" | "TEAM" | "OTHER";
+type Role = "OWNER" | "LEADER" | "CALLER" | "TEAM" | "OTHER";
 
 export const navByRole: Record<Role, NavBox[]> = {
-  LEAD: [
+  OWNER: [
     {
       items: [
         {
           id: "leadsDashboard",
-          href: "/leads",
+          href: "/owner",
           label: "Dashboard",
         },
       ],
@@ -45,9 +45,54 @@ export const navByRole: Record<Role, NavBox[]> = {
       title: "Sheets",
       items: [
         {
-          id: "leadsSheet",
-          label: "Leads",
-          href: "/leads/sheet",
+          id: "leadersSheet",
+          label: "Leaders Sheet",
+          href: "/leaders/sheet",
+        },
+        {
+          id: "callerSheet",
+          label: "Callers Sheet",
+          href: "/caller/sheet",
+        },
+      ],
+    },
+    {
+      title: "VIN",
+      items: [
+        {
+          id: "vin-decoder",
+          href: "/vin-decoder",
+          label: "Vin Decoder",
+        },
+      ],
+    },
+  ],
+  LEADER: [
+    {
+      title: "Listings",
+      items: [
+        { id: "all", href: "/listings", label: "All" },
+        { id: "autotrader", href: "/listings/autotrader", label: "Autotrader" },
+        { id: "kijiji", href: "/listings/kijiji", label: "Kijiji" },
+        {
+          id: "marketplace",
+          href: "/listings/marketplace",
+          label: "Swoopa Marketplace",
+        },
+        {
+          id: "facebook",
+          href: "/listings/facebook",
+          label: "Facebook Marketplace",
+        },
+      ],
+    },
+    {
+      title: "Sheets",
+      items: [
+        {
+          id: "leadersSheet",
+          label: "Leaders Sheet",
+          href: "/leaders/sheet",
         },
         {
           id: "callerSheet",

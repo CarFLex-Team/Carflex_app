@@ -40,11 +40,13 @@ export default function SignInPage() {
 
     const role = session?.user?.role;
     router.push(
-      role === "LEAD"
-        ? "/leads/sheet"
-        : role === "CALLER"
-          ? "/caller/sheet"
-          : "/listings",
+      role === "OWNER"
+        ? "/owner"
+        : role === "LEADER"
+          ? "/leaders/sheet"
+          : role === "CALLER"
+            ? "/caller/sheet"
+            : "/listings",
     );
   };
 

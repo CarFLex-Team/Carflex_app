@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db.postgres";
 import type { allRow } from "@/lib/db.postgres";
-
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
-
-
 export async function GET(
   req: Request,
   context: { params: Promise<{ id: string }> },
@@ -16,24 +13,20 @@ export async function GET(
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
     const { id } = await context.params;
     const page = searchParams.get("page");
     const limit = searchParams.get("limit") || "50";
     const offset = (Number(page) - 1) * Number(limit);
-    const search = searchParams.get("search") || ""; // Get the search parameter
-    const isAttacking = searchParams.get("isAttacking") === "true"; // Get the isAttacking parameter
-    const callStatus = searchParams.get("callStatus") || ""; // Get the callStatus parameter
-    const isFavorite = searchParams.get("isFavorite") === "true"; // Get the isFavorite parameter
-    const isTruck = searchParams.get("isTruck") === "true"; // Get the isTruck parameter
+    const search = searchParams.get("search") || "";
+    const isAttacking = searchParams.get("isAttacking") === "true";
+    const callStatus = searchParams.get("callStatus") || "";
+    const isFavorite = searchParams.get("isFavorite") === "true";
+    const isTruck = searchParams.get("isTruck") === "true";
     let WherePart = "WHERE u.name=s.sent_by ";
     let queryParams: any[] = [];
-
     if (session.user.role === "CALLER") {
       WherePart += `AND s.sheet_id = '${id.toLowerCase()}' `;
     }
-
-    // Add search filter to WHERE clause if search term is provided
     if (search) {
       WherePart += ` AND (title ILIKE $1 OR ad_link ILIKE $1 OR source ILIKE $1 OR sent_by ILIKE $1 OR VIN ILIKE $1  OR notes ILIKE $1) `;
       queryParams.push(`%${search}%`);
@@ -50,7 +43,6 @@ export async function GET(
     if (isTruck) {
       WherePart += ` AND s.is_truck = true `;
     }
-
     const { rows } = await db.query<allRow>(
       `
         SELECT s.*, u.team_no
@@ -61,11 +53,7 @@ export async function GET(
       `,
       queryParams,
     );
-
-    // Add price status calculation
     const items = rows;
-
-    // Get total count for pagination purposes
     const totalCountQuery = `
       SELECT COUNT(*)
       FROM "sheet_caller" s , "User" u
@@ -76,10 +64,7 @@ export async function GET(
       queryParams,
     );
     const totalCount = totalCountRows[0].count;
-
-    // Determine if there's more data
     const hasMore = offset + Number(limit) < totalCount;
-
     return NextResponse.json({ items, totalCount, hasMore });
   } catch (err) {
     console.error("GET /api/cars/sheet/[id] error", err);
@@ -106,7 +91,6 @@ export async function POST(
     } = await req.json();
     const session = await getServerSession(authOptions);
     const { id } = await context.params;
-
     if (!session?.user?.id) {
       return new Response("Unauthorized", { status: 401 });
     }
@@ -124,10 +108,9 @@ export async function POST(
         { status: 400 },
       );
     }
-
     const { rows } = await db.query(
       `
- INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by, est_value, is_truck)
+      INSERT INTO "sheet_caller" (title, odometer, ad_link, price, source, sheet_id, created_at,sent_by, est_value, is_truck)
       VALUES ($1, $2, $3, $4, $5, $6, NOW(), $7, $8, $9)
       RETURNING *
       `,
@@ -143,8 +126,6 @@ export async function POST(
         is_truck,
       ],
     );
-
-
     return NextResponse.json(rows[0], { status: 201 });
   } catch (error: any) {
     console.error("POST /api/cars/sheet/[id] error", error);

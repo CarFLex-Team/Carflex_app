@@ -331,7 +331,6 @@ export default function LeadsSheetPage() {
 
   return (
     <>
-     
       <SheetTable
         columns={DealColumns}
         data={
@@ -366,7 +365,7 @@ export default function LeadsSheetPage() {
             </button>
           </div>
         }
-        title="Leads Sheet"
+        title="Leaders Sheet"
       />
     </>
   );
