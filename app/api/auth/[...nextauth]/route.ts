@@ -12,6 +12,7 @@ declare module "next-auth" {
       name?: string | null;
       role?: string;
       remainingLeaveDays?: number;
+      tokenVersion?: number;
     };
   }
 }
@@ -21,6 +22,7 @@ declare module "next-auth/jwt" {
     id: number;
     role?: string;
     remainingLeaveDays?: number;
+    tokenVersion?: number;
   }
 }
 
@@ -74,6 +76,12 @@ export const authOptions: AuthOptions = {
         token.role = user.role;
         token.name = user.name;
         token.remainingLeaveDays = user.remainingLeaveDays;
+        // Add token version from DB
+        const result = await db.query(
+          'SELECT token_version FROM "User" WHERE id = $1',
+          [user.id],
+        );
+        token.tokenVersion = result.rows[0]?.token_version || 0;
       }
       return token;
     },
@@ -83,6 +91,7 @@ export const authOptions: AuthOptions = {
         session.user.role = token.role;
         session.user.name = token.name;
         session.user.remainingLeaveDays = token.remainingLeaveDays;
+        session.user.tokenVersion = token.tokenVersion;
       }
       return session;
     },
