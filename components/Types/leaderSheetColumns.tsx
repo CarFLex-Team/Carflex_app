@@ -2,10 +2,9 @@ import formatDate from "@/lib/formatDate";
 import { TableColumn } from "../SheetTable/SheetTable";
 import { EditableCell } from "../SheetTable/EditableCell";
 import formatTime from "@/lib/formatTime";
-import convertToADay from "@/lib/convertToADay";
-import priceStatus from "@/helpers/priceStatus";
 
 export type CarLeaders = {
+  id: string;
   ad_link: string;
   seller_name: string;
   seller_address: string;
@@ -27,7 +26,7 @@ export type CarLeaders = {
   damage_location: string;
 };
 
-export const CarColumns: TableColumn<CarLeaders>[] = [
+export const leaderSheetColumns: TableColumn<CarLeaders>[] = [
   //   {
   //     header: "Pickup Date",
   //     accessor: "pick_date",
@@ -44,24 +43,16 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
   {
     header: "Pickup Date",
     accessor: "pick_date",
-    render: (row) =>
-      row.pick_date ? (
-        <div>
-          <div>{formatDate(row.pick_date)}</div>
-          <div className="text-xs text-gray-400">
-            at {formatTime(row.pick_date)}
-          </div>
-        </div>
-      ) : (
-        <EditableCell
-          type="date"
-          className={`w-18 `}
-          value={row.pick_date ? `${row.pick_date}` : ""}
-          rowId={row.ad_link}
-          field="pick_date"
-          sheet="lead"
-        />
-      ),
+    render: (row) => (
+      <EditableCell
+        type="datetime"
+        className={`w-18 `}
+        value={row.pick_date ? `${row.pick_date}` : ""}
+        rowId={row.ad_link}
+        field="pick_date"
+        sheet="lead"
+      />
+    ),
   },
   {
     header: "Car Title",
@@ -175,20 +166,17 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
   {
     header: "Price",
     accessor: "price",
-    render: (row) =>
-      row.price ? (
-        `$${row.price}`
-      ) : (
-        <EditableCell
-          type="text"
-          className="w-15"
-          value={row.price ? `$${row.price}` : ""}
-          rowId={row.ad_link}
-          field="price"
-          sheet="lead"
-          icon="$"
-        />
-      ),
+    render: (row) => (
+      <EditableCell
+        type="text"
+        className="w-15"
+        value={row.price ? `${row.price}` : ""}
+        rowId={row.ad_link}
+        field="price"
+        sheet="lead"
+        icon="$"
+      />
+    ),
   },
   {
     header: "Payment Method",
@@ -215,7 +203,7 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
           { value: "false", label: "No" },
         ]}
         className="w-15"
-        value={row.lien}
+        value={row.lien ? "Yes" : "No"}
         rowId={row.ad_link}
         field="lien"
         sheet="lead"
@@ -229,7 +217,7 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
       <EditableCell
         type="text"
         className="w-15"
-        value={row.lien_amount ? `$${row.lien_amount}` : ""}
+        value={row.lien_amount ? `${row.lien_amount}` : ""}
         rowId={row.ad_link}
         field="lien_amount"
         sheet="lead"
@@ -262,7 +250,7 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
           { value: "false", label: "No" },
         ]}
         className="w-15"
-        value={row.accidents}
+        value={row.accidents ? "Yes" : "No"}
         rowId={row.ad_link}
         field="accidents"
         sheet="lead"
@@ -276,11 +264,57 @@ export const CarColumns: TableColumn<CarLeaders>[] = [
       <EditableCell
         type="text"
         className="w-15"
-        value={row.claim ? `$${row.claim}` : ""}
+        value={row.claim ? `${row.claim}` : ""}
         rowId={row.ad_link}
         field="claim"
         sheet="lead"
         icon="$"
+      />
+    ),
+  },
+  {
+    header: "Damage",
+    accessor: "damage",
+    render: (row) => (
+      <EditableCell
+        type="select"
+        options={[
+          { value: "true", label: "Yes" },
+          { value: "false", label: "No" },
+        ]}
+        className="w-15"
+        value={row.damage ? "Yes" : "No"}
+        rowId={row.ad_link}
+        field="damage"
+        sheet="lead"
+      />
+    ),
+  },
+  {
+    header: "Damage Condition",
+    accessor: "damage_condition",
+    render: (row) => (
+      <EditableCell
+        type="text"
+        className="w-15"
+        value={row.damage_condition}
+        rowId={row.ad_link}
+        field="damage_condition"
+        sheet="lead"
+      />
+    ),
+  },
+  {
+    header: "Damage Location",
+    accessor: "damage_location",
+    render: (row) => (
+      <EditableCell
+        type="text"
+        className="w-15"
+        value={row.damage_location}
+        rowId={row.ad_link}
+        field="damage_location"
+        sheet="lead"
       />
     ),
   },

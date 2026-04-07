@@ -24,46 +24,79 @@ export default function useRealtimeCars(
   callStatus?: string,
   isTruck?: boolean,
 ) {
-  const { data, error, isLoading, mutate } = useSWR(
-    `/api/cars/sheet/caller/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}&isAttacking=${isAttacking}&isFavorite=${isFavorite}&callStatus=${callStatus || ""}&isTruck=${isTruck}`,
-    fetcher,
-    {
-      // refreshInterval: 30_000, // fallback polling
-      revalidateOnFocus: true,
-    },
-  );
+  if (sheet === "lead") {
+    const { data, error, isLoading, mutate } = useSWR(
+      `/api/cars/sheet/lead/?page=${page || "1"}&search=${search || ""}`,
+      fetcher,
+      {
+        // refreshInterval: 30_000, // fallback polling
+        revalidateOnFocus: true,
+      },
+    );
 
-  useEffect(() => {
-    if (!sheet) return;
-    const currentMonth = new Date().getMonth() + 1; // 1 = Jan, 4 = Apr
-    const year = new Date().getFullYear();
-    let newTableName = `sheet_caller_${year}_${currentMonth.toString().padStart(2, "0")}`;
+    useEffect(() => {
+      if (!sheet) return;
 
-    console.log("Setting up real-time listener for", newTableName);
-    const insertSubscription = supabase
-      .channel(`realtime-caller-insert`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: newTableName },
-        () => {
-          mutate(undefined, true);
-        },
-      )
-      .subscribe();
+      console.log("Setting up real-time listener for", "sheet_leads");
+      const insertSubscription = supabase
+        .channel(`realtime-leads-insert`)
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "sheet_leads" },
+          () => {
+            mutate(undefined, true);
+          },
+        )
+        .subscribe();
 
-    return () => {
-      supabase.removeChannel(insertSubscription);
-    };
-  }, [
-    mutate,
-    sheet,
-    page,
-    search,
-    isAttacking,
-    isFavorite,
-    callStatus,
-    isTruck,
-  ]);
+      return () => {
+        supabase.removeChannel(insertSubscription);
+      };
+    }, [mutate, sheet, page, search]);
 
-  return { data, error, isLoading };
+    return { data, error, isLoading };
+  } else {
+    const { data, error, isLoading, mutate } = useSWR(
+      `/api/cars/sheet/caller/${sheet ? sheet : "leads"}?page=${page || "1"}&search=${search || ""}&isAttacking=${isAttacking}&isFavorite=${isFavorite}&callStatus=${callStatus || ""}&isTruck=${isTruck}`,
+      fetcher,
+      {
+        // refreshInterval: 30_000, // fallback polling
+        revalidateOnFocus: true,
+      },
+    );
+
+    useEffect(() => {
+      if (!sheet) return;
+      const currentMonth = new Date().getMonth() + 1; // 1 = Jan, 4 = Apr
+      const year = new Date().getFullYear();
+      let newTableName = `sheet_caller_${year}_${currentMonth.toString().padStart(2, "0")}`;
+
+      console.log("Setting up real-time listener for", newTableName);
+      const insertSubscription = supabase
+        .channel(`realtime-caller-insert`)
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: newTableName },
+          () => {
+            mutate(undefined, true);
+          },
+        )
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(insertSubscription);
+      };
+    }, [
+      mutate,
+      sheet,
+      page,
+      search,
+      isAttacking,
+      isFavorite,
+      callStatus,
+      isTruck,
+    ]);
+
+    return { data, error, isLoading };
+  }
 }

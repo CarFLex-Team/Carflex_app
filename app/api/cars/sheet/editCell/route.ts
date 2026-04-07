@@ -35,12 +35,6 @@ export async function PATCH(req: Request) {
 
     const field = keys[0];
 
-    if (!config.editableFields.has(field)) {
-      return NextResponse.json(
-        { error: "Field not editable for this sheet" },
-        { status: 403 },
-      );
-    }
     let extraSet = "";
     let extraarr = [];
     if (field === "real_value") {

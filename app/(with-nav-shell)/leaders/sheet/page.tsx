@@ -15,6 +15,7 @@ import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import FavoriteButton from "@/components/CustomButton/FavoriteButton";
 import removeDubsSheetData from "@/helpers/removeDubsSheetData";
 import useRealtimeCars from "@/hooks/useRealtimeSheet";
+import { leaderSheetColumns } from "@/components/Types/leaderSheetColumns";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
@@ -82,7 +83,7 @@ export default function CarsSheetPage() {
 
       {/* Table with Pagination */}
       <SheetTable
-        columns={CarColumns}
+        columns={leaderSheetColumns}
         data={filteredSheetData} // Show filtered data
         action={
           <div className="flex justify-between w-full items-center mb-2">
@@ -109,7 +110,6 @@ export default function CarsSheetPage() {
             </div>
           </div>
         }
-        renderActions={(row) => <ForwardButton carDetails={row} />}
         rowActiveId={rowActive}
         setRowActiveId={setRowActive}
         onRowClick={(row) => {

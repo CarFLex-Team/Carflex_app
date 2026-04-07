@@ -6,6 +6,7 @@ import { mutate } from "swr";
 
 import FavoriteButton from "../CustomButton/FavoriteButton";
 import priceStatus from "@/helpers/priceStatus";
+import { formatTime } from "@/lib/formatTime";
 
 export function EditableCell({
   value,
@@ -107,11 +108,20 @@ export function EditableCell({
         onClick={() => setEditing(true)}
         className={`cursor-pointer border border-transparent hover:border-gray-300 ${newValue ? noEditClassName : ""} ${icon === "$" ? "flex flex-row-reverse justify-center" : ""} `}
       >
-        {newValue === "" || newValue == null
-          ? "—"
-          : type === "date"
-            ? formatDate(newValue)
-            : newValue}
+        {newValue === "" || newValue == null ? (
+          "—"
+        ) : type === "date" ? (
+          formatDate(newValue)
+        ) : type === "datetime" ? (
+          <div>
+            <div>{formatDate(newValue)}</div>
+            <div className="text-xs text-gray-400">
+              at {formatTime(newValue)}
+            </div>
+          </div>
+        ) : (
+          newValue
+        )}
         {icon && <span className="text-black ml-1">{icon}</span>}
       </div>
     );
@@ -139,10 +149,10 @@ export function EditableCell({
           {options?.map((option) => (
             <option
               key={option.value}
-              value={option.value}
+              value={option.label || option.value}
               className={`bg-${option.bg} `}
             >
-              {option.value}
+              {option.label || option.value}
             </option>
           ))}
         </select>
@@ -158,7 +168,7 @@ export function EditableCell({
       ) : (
         <input
           autoFocus
-          type={type}
+          type={type === "datetime" ? "datetime-local" : type}
           value={draft ?? ""}
           onBlur={() => save()}
           onChange={(e) => setDraft(e.target.value)}
