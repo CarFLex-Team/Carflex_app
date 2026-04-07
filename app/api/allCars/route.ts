@@ -12,8 +12,7 @@ export async function GET(req: Request) {
 
     const { rows } = await db.query<allRow>(
       `
-      SELECT* FROM(
-        SELECT DISTINCT ON (title, price, odometer)
+      SELECT
         id,
         title,
         price,
@@ -21,7 +20,7 @@ export async function GET(req: Request) {
         odometer,
         image_src,
         ad_link,
-        created_at,       
+        created_at,
         est_value,
         description,
         source,
@@ -35,7 +34,6 @@ export async function GET(req: Request) {
         taken_by,
         lead_taken
       FROM "all"
-        ORDER BY title, price, odometer, created_at DESC)deduped
       ORDER BY created_at DESC
       LIMIT $1
       `,
