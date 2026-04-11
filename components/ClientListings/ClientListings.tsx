@@ -76,12 +76,17 @@ export default function ClientListings({
 
   if (error) return <div className="text-red-600">Failed to load</div>;
   if (isLoading && !data) return <div>Loading...</div>;
-
-  const items: Item[] = data.items.filter(
+  const seenIds = new Set<string>();
+  const uniqueItems: Item[] = data.items.filter((item: { ad_link: string }) => {
+    if (seenIds.has(item.ad_link)) return false;
+    seenIds.add(item.ad_link);
+    return true;
+  });
+  const items: Item[] = uniqueItems.filter(
     (item: { source: string }) =>
       selectedSources.length === 0 || selectedSources.includes(item.source),
   );
-
+  console.log("Filtered items:", items);
   return (
     <>
       {open && (
