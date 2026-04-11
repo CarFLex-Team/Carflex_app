@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // 🔒 Validate (example)
     if (!body) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
@@ -16,35 +15,50 @@ export async function POST(req: Request) {
       `
       INSERT INTO "sheet_leads" (
       
-        purch_address,
-        odometer,
-        ad_link,
-        year,
-        make,
-        model,
-      vin,
-        color,      
-        purch_price,
-         purch_date
-      
+       pick_date,
+       title,
+       vin,
+        reg_name,
+        seller_name,
+        pick_location,
+        price,
+        payment_method,
+        lien,
+        lien_amount,
+        lien_bank,
+        accidents,
+        claim,
+        damage,
+        damage_condition,
+        damage_location,
+       
+      updated_at, 
+      ad_link
         
          )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9, Now())
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
       `,
       [
-        body.location,
-        body.odometer,
-        body.ad_link,
-        body.title.split(" ")[0], // year
-        body.title.split(" ")[1], // make
-        body.title.split(" ")[2], // model
+        body.pickDate,
+        body.title,
         body.vin,
-        body.color,
-        body.purch_value,
+        body.regName,
+        body.sellerName,
+        body.pickLocation,
+        body.price,
+        body.paymentMethod,
+        body.lien,
+        body.lienAmount,
+        body.lienBank,
+        body.accidents,
+        body.claims,
+        body.damage,
+        body.damageCondition,
+        body.damageLocation,
+        new Date(),
+        body.adLink,
       ],
     );
-
-
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -4,11 +4,7 @@ import { Check, Forward, X } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import NotifyDialog from "../NotifyDialog/ConfirmDialog";
 
-export default function CopyToClipboardButton({
-  carDetails,
-}: {
-  carDetails: any;
-}) {
+export default function ForwardButton({ carDetails }: { carDetails: any }) {
   const [isForwarded, setIsForwarded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);

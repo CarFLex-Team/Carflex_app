@@ -35,12 +35,12 @@ export default function ConfirmDialog({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center ">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Modal */}
-      <div className="relative z-10 w-full max-w-sm rounded-lg bg-white p-6 shadow-lg max-h-[90vh] overflow-auto">
+      <div className="relative z-10 w-full max-w-md rounded-lg bg-white p-6 shadow-lg max-h-[90vh] overflow-auto">
         <div className="flex justify-between">
           <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
           <X

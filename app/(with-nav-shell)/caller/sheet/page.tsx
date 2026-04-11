@@ -9,16 +9,18 @@ import { useSession } from "next-auth/react";
 import CarWatcher from "@/components/CarWatcher/CarWatcher";
 import Modal from "@/components/ui/Modal";
 import { AddCarForm } from "@/components/AddCarForm/AddCarForm";
-import { Plus } from "lucide-react";
+import { Forward, Plus } from "lucide-react";
 import { CarColumns, Car } from "@/components/Types/CarColumns";
 import LoadingSpinner from "@/components/LoadingSpinner/LoadingSpinner";
 import FavoriteButton from "@/components/CustomButton/FavoriteButton";
 import removeDubsSheetData from "@/helpers/removeDubsSheetData";
 import useRealtimeCars from "@/hooks/useRealtimeSheet";
+import ForwardCarDetailsForm from "@/components/ForwardCarDetailsForm/ForwardCarDetailsForm";
 
 export default function CarsSheetPage() {
   const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
+  const [forwardOpen, setForwardOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
@@ -28,6 +30,7 @@ export default function CarsSheetPage() {
   const [callStatus, setCallStatus] = useState("");
   const [isTruck, setIsTruck] = useState(false);
   const [rowActive, setRowActive] = useState("");
+  const [carDetails, setCarDetails] = useState<Car | null>(null);
   const {
     data,
     error,
@@ -81,6 +84,18 @@ export default function CarsSheetPage() {
 
   return (
     <>
+      {forwardOpen && carDetails && (
+        <Modal
+          isOpen={forwardOpen}
+          onClose={() => setForwardOpen(false)}
+          title="Forward Car Details"
+        >
+          <ForwardCarDetailsForm
+            carDetails={carDetails}
+            onSuccess={() => setForwardOpen(false)}
+          />
+        </Modal>
+      )}
       {open && (
         <Modal isOpen={open} onClose={() => setOpen(false)} title="Add Car">
           <AddCarForm
@@ -90,7 +105,6 @@ export default function CarsSheetPage() {
         </Modal>
       )}
       <CarWatcher cars={filteredSheetData ?? []} otherSound={true} />
-
 
       {/* Table with Pagination */}
       <SheetTable
@@ -180,7 +194,17 @@ export default function CarsSheetPage() {
             </div>
           </div>
         }
-        renderActions={(row) => <ForwardButton carDetails={row} />}
+        renderActions={(row) => (
+          <button
+            className="border border-primary   text-sm  hover:text-white transition-colors duration-300  bg-primary rounded-lg p-1.5 text-white hover:bg-lightPrimary cursor-pointer text-center"
+            onClick={() => {
+              setCarDetails(row);
+              setForwardOpen(true);
+            }}
+          >
+            <Forward size={16} />
+          </button>
+        )}
         rowActiveId={rowActive}
         setRowActiveId={setRowActive}
         onRowClick={(row) => {
