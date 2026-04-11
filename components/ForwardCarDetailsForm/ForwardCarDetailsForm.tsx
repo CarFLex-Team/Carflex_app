@@ -208,7 +208,11 @@ export default function ForwardCarDetailsForm({
           id="source"
           className="p-2 border border-gray-300 rounded-lg flex-5"
           value={lien ? "yes" : "no"}
-          onChange={(e) => setLien(e.target.value === "yes")}
+          onChange={(e) => {
+            setLien(e.target.value === "yes");
+            setLienAmount("");
+            setLienBank("");
+          }}
           required
         >
           <option value="" disabled>
@@ -254,7 +258,10 @@ export default function ForwardCarDetailsForm({
           id="source"
           className="p-2 border border-gray-300 rounded-lg flex-5"
           value={accidents ? "yes" : "no"}
-          onChange={(e) => setAccidents(e.target.value === "yes")}
+          onChange={(e) => {
+            setAccidents(e.target.value === "yes");
+            setClaims("");
+          }}
           required
         >
           <option value="" disabled>
@@ -290,7 +297,11 @@ export default function ForwardCarDetailsForm({
           id="damage"
           className="p-2 border border-gray-300 rounded-lg flex-5"
           value={damage ? "yes" : "no"}
-          onChange={(e) => setDamage(e.target.value === "yes")}
+          onChange={(e) => {
+            setDamage(e.target.value === "yes");
+            setDamageCondition("");
+            setDamageLocation("");
+          }}
           required
         >
           <option value="" disabled>
