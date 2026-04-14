@@ -15,11 +15,17 @@ type Role = "OWNER" | "LEADER" | "CALLER" | "TEAM" | "OTHER";
 export const navByRole: Record<Role, NavBox[]> = {
   OWNER: [
     {
+      title: "Dashboards",
       items: [
         {
           id: "leadsDashboard",
           href: "/owner",
           label: "Dashboard",
+        },
+        {
+          id: "WebsiteDashboard",
+          href: "/dashboard",
+          label: "Cars Dashboard",
         },
       ],
     },
@@ -69,6 +75,15 @@ export const navByRole: Record<Role, NavBox[]> = {
   ],
   LEADER: [
     {
+      items: [
+        {
+          id: "WebsiteDashboard",
+          href: "/dashboard",
+          label: "Cars Dashboard",
+        },
+      ],
+    },
+    {
       title: "Listings",
       items: [
         { id: "all", href: "/listings", label: "All" },
@@ -113,6 +128,15 @@ export const navByRole: Record<Role, NavBox[]> = {
     },
   ],
   CALLER: [
+    {
+      items: [
+        {
+          id: "WebsiteDashboard",
+          href: "/dashboard",
+          label: "Cars Dashboard",
+        },
+      ],
+    },
     {
       title: "Listings",
       items: [
