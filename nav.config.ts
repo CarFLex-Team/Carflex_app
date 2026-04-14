@@ -25,7 +25,7 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "WebsiteDashboard",
           href: "/dashboard",
-          label: "Cars Dashboard",
+          label: "Website Leads",
         },
       ],
     },
@@ -79,7 +79,7 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "WebsiteDashboard",
           href: "/dashboard",
-          label: "Cars Dashboard",
+          label: "Website Leads",
         },
       ],
     },
@@ -133,7 +133,7 @@ export const navByRole: Record<Role, NavBox[]> = {
         {
           id: "WebsiteDashboard",
           href: "/dashboard",
-          label: "Cars Dashboard",
+          label: "Website Leads",
         },
       ],
     },
