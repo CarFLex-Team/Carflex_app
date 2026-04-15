@@ -219,8 +219,10 @@ export default function CarDetails({ vehicleId }: { vehicleId: string }) {
           <p
             className={`text-primary overflow-ellipsis font-bold text-2xl sm:text-3xl md:text-4xl pr-1 mt-2 `}
           >
-            {vehicle.year || "-"} {vehicle.make_name || "-"}{" "}
-            {vehicle.model_name || "-"} {vehicle.trim_name || "-"}
+            {vehicle.v_year || vehicle.year || "-"}{" "}
+            {vehicle.make_name || vehicle.make || "-"}{" "}
+            {vehicle.model_name || vehicle.model || "-"}{" "}
+            {vehicle.trim_name || vehicle.trim || "-"}
           </p>
           {/* <div className="flex sm:w-2/3  md:w-2/5 gap-3 justify-between my-1 flex-wrap">
           <div>
@@ -234,10 +236,16 @@ export default function CarDetails({ vehicleId }: { vehicleId: string }) {
             {formatDate(vehicle.created_at)}
           </p>
 
-          <section className="grid grid-cols-1  md:grid-cols-3  mt-6 gap-4 border-b border-gray-300 pb-6 ">
+          <section className="grid grid-cols-1   md:grid-cols-3 lg:md:grid-cols-4 mt-6 gap-4 border-b border-gray-300 pb-6 ">
             {/* <h3 className="col-span-1 md:col-span-3 font-semibold text-3xl">
             Basic Info
           </h3> */}
+            {vehicle.vin && (
+              <div>
+                <strong>VIN:</strong> {vehicle.vin || "-"}
+              </div>
+            )}
+
             <div>
               <strong>Mileage:</strong>{" "}
               {vehicle.mileage?.toLocaleString() || "-"} km

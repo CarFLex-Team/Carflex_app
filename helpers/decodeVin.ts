@@ -11,5 +11,6 @@ export default async function decodeVin(vin: string) {
   }
 
   const data = await res.json();
+  console.log("Decoded VIN data:", data);
   return data;
 }

@@ -9,13 +9,13 @@ export async function GET(
   const { id } = await context.params;
   try {
     const { rows } = await db.query(
-      `SELECT c.*, v.year, m.name as make_name, mo.name as model_name, t.name as trim_name, u.full_name, u.email, u.phone
+      `SELECT c.*, v.year AS v_year, m.name as make_name, mo.name as model_name, t.name as trim_name, u.full_name, u.email, u.phone
       FROM cars_sent c
       JOIN users u ON c.user_id = u.id
-      JOIN vehicle_years v ON c.vehicle_year_id = v.id
-      JOIN makes m ON v.make_id = m.id
-      JOIN models mo ON v.model_id = mo.id
-      JOIN trims t ON v.trim_id = t.id
+      LEFT JOIN vehicle_years v ON c.vehicle_year_id IS NOT NULL AND c.vehicle_year_id = v.id
+      LEFT JOIN makes m ON v.make_id = m.id
+      LEFT JOIN models mo ON v.model_id = mo.id
+      LEFT JOIN trims t ON v.trim_id = t.id
         WHERE c.id = $1
       `,
       [id],

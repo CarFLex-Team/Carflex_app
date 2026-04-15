@@ -15,8 +15,10 @@ export default function CarList({ carDetails }: { carDetails: any }) {
             <p
               className={`text-primary overflow-ellipsis line-clamp-1 font-bold text-sm sm:text-base md:text-lg pr-2.5 `}
             >
-              {carDetails.year || "-"} {carDetails.make_name || "-"}{" "}
-              {carDetails.model_name || "-"} {carDetails.trim_name || "-"}
+              {carDetails.v_year || carDetails.year || "-"}{" "}
+              {carDetails.make_name || carDetails.make || "-"}{" "}
+              {carDetails.model_name || carDetails.model || "-"}{" "}
+              {carDetails.trim_name || carDetails.trim || "-"}
             </p>
           </div>
           <p className="text-gray-500 sm:text-sm text-xs">
