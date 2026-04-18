@@ -28,7 +28,7 @@ export default function DecodeResults({
 
   return (
     <div className=" flex justify-between mt-4 bg-gray-100 rounded-md border border-gray-300 p-4">
-      {data.decode_version === 1 ? (
+      {data.reason === "NO HISTORY FOUND" ? (
         <div className="text-red-600">
           Unable to decode VIN. Please check the VIN and try again.
         </div>
