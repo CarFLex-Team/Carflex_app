@@ -86,7 +86,7 @@ export default function ClientListings({
     (item: { source: string }) =>
       selectedSources.length === 0 || selectedSources.includes(item.source),
   );
-  console.log("Filtered items:", items);
+  // console.log("Filtered items:", items);
   return (
     <>
       {open && (

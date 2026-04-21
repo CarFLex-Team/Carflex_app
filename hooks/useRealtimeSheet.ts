@@ -37,7 +37,7 @@ export default function useRealtimeCars(
     useEffect(() => {
       if (!sheet) return;
 
-      console.log("Setting up real-time listener for", "sheet_leads");
+      // console.log("Setting up real-time listener for", "sheet_leads");
       const insertSubscription = supabase
         .channel(`realtime-leads-insert`)
         .on(
@@ -71,7 +71,7 @@ export default function useRealtimeCars(
       const year = new Date().getFullYear();
       let newTableName = `sheet_caller_${year}_${currentMonth.toString().padStart(2, "0")}`;
 
-      console.log("Setting up real-time listener for", newTableName);
+      // console.log("Setting up real-time listener for", newTableName);
       const insertSubscription = supabase
         .channel(`realtime-caller-insert`)
         .on(

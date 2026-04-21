@@ -10,6 +10,6 @@ export default async function decodeVin(vin: string) {
     throw new Error(`HTTP error ${res.status}`);
   }
   const data = await res.json();
-  console.log("Decoded VIN data:", data);
+  // console.log("Decoded VIN data:", data);
   return data;
 }

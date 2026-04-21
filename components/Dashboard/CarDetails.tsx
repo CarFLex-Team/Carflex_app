@@ -54,7 +54,7 @@ export default function CarDetails({ vehicleId }: { vehicleId: string }) {
       }
 
       const data = await res.json();
-      console.log("Success:", data);
+      // console.log("Success:", data);
       setSuccess(true);
       return data;
     } catch (err) {
