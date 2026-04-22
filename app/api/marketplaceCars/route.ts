@@ -67,7 +67,8 @@ export async function GET(req: Request) {
         taken_at,
         trim,
         taken_by,
-        lead_taken
+        lead_taken,
+        seller_name
       FROM "marketplace"
       ORDER BY created_at DESC
       LIMIT $1

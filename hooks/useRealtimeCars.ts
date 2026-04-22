@@ -38,7 +38,7 @@ export default function useRealtimeCars(
       newTableName = `${tableName}_${tableName === "marketplace" ? "p_" : ""}${year}_${currentMonth.toString().padStart(2, "0")}`;
     }
 
-    console.log("Setting up real-time listener for", newTableName || tableName);
+    // console.log("Setting up real-time listener for", newTableName || tableName);
     const insertSubscription = supabase
       .channel(`realtime-${newTableName || tableName}-insert`)
       .on(

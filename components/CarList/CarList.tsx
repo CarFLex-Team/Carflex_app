@@ -346,7 +346,16 @@ export default function CarList({
             <CircleGauge className="w-4 h-4" />
             {formatNumber(carDetails.odometer)} Km
           </p>
-          {carDetails.is_sus !== null ? (
+          {carDetails.seller_name !== null &&
+          carDetails.seller_name !== "Safe" ? (
+            <div
+              className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-xs 
+                bg-red-600
+              `}
+            >
+              {carDetails.seller_name}
+            </div>
+          ) : carDetails.is_sus !== null ? (
             <div
               className={`border border-gray-300 text-gray-200  shadow-md px-2.5 py-0.5 rounded-md cursor-default  w-fit sm:text-base text-xs  ${
                 carDetails.is_sus ? "bg-red-600" : "bg-green-600"
