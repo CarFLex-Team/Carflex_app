@@ -39,10 +39,10 @@ export default function CarDetails({ vehicleId }: { vehicleId: string }) {
         body: JSON.stringify({
           offer,
           not_interested: notInterested,
-          year: vehicle.year,
-          make_name: vehicle.make_name,
-          model_name: vehicle.model_name,
-          trim_name: vehicle.trim_name,
+          year: vehicle.v_year || vehicle.year,
+          make_name: vehicle.make_name || vehicle.make,
+          model_name: vehicle.model_name || vehicle.model,
+          trim_name: vehicle.trim_name || vehicle.trim,
           email: vehicle.email,
         }),
       });
