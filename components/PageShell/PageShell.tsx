@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { SessionProvider } from "next-auth/react";
 import { BotMessageSquare } from "lucide-react";
 import Chatbot from "../Chatbot/Chatbot";
+import TimeTracker from "../TimeTracker/TimeTracker";
 
 export default function PageShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +27,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
 
   return (
     <SessionProvider>
+      <TimeTracker />
       <div className="flex h-screen">
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
