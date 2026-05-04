@@ -1,9 +1,13 @@
 import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function TimeTracker() {
-  const { data: session } = useSession();
-
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status, router]);
   useEffect(() => {
     if (!session?.user?.id) return;
     console.log("TimeTracker initialized for user:", session.user.id);

@@ -29,6 +29,7 @@ declare module "next-auth/jwt" {
 export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
+      maxAge:60*60*14,
   },
   providers: [
     CredentialsProvider({
@@ -69,7 +70,22 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  jwt: {
+    maxAge:60*60*14, 
+  },
+
   callbacks: {
+  //    async signIn({ user }) {
+  //   // Create work session
+  //   await db.query(
+  //     `
+  //     INSERT INTO "work_session" (user_id, start_time)
+  //     VALUES ($1, $2)
+  //     `,
+  //     [user.id, new Date()]
+  //   );
+  //   return true;
+  // },
     async jwt({ token, user }: { token: JWT; user?: any }) {
       if (user) {
         token.id = user.id;
