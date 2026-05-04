@@ -47,3 +47,29 @@ export async function POST(req: Request) {
     );
   }
 }
+export async function GET() {
+  try {
+    const { rows } = await db.query(
+      `
+     SELECT
+    u.name AS employee_Name,
+    DATE(start_time) AS work_Date,
+    MIN(start_time) AS start_Time,
+    MAX(end_time) AS last_End_Time,
+    SUM(EXTRACT(EPOCH FROM (end_time - start_time))/3600) AS hours_Worked
+FROM work_session as ws
+JOIN "User" u ON ws.user_id = u.id
+WHERE end_time IS NOT NULL
+GROUP BY u.name, DATE(start_time)
+ORDER BY u.name, work_Date;
+      `,
+    );
+    return NextResponse.json({ sessions: rows });
+  } catch (error: any) {
+    console.error("Error fetching sessions:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+}
