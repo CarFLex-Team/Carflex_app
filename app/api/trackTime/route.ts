@@ -51,17 +51,36 @@ export async function GET() {
   try {
     const { rows } = await db.query(
       `
-     SELECT
-    u.name AS employee_Name,
-    DATE(start_time) AS work_Date,
-    MIN(start_time) AS start_Time,
-    MAX(end_time) AS last_End_Time,
-    SUM(EXTRACT(EPOCH FROM (end_time - start_time))/3600) AS hours_Worked
-FROM work_session as ws
-JOIN "User" u ON ws.user_id = u.id
-WHERE end_time IS NOT NULL
-GROUP BY u.name, DATE(start_time)
-ORDER BY u.name, work_Date;
+WITH ordered_sessions AS (
+    SELECT
+        ws.user_id,
+        start_time,
+        end_time,
+        u.name AS employee_name,
+        LAG(end_time) OVER (PARTITION BY ws.user_id ORDER BY start_time) AS prev_end
+    FROM work_session ws
+    JOIN "User" u ON ws.user_id = u.id
+    WHERE end_time IS NOT NULL
+),
+session_groups AS (
+    SELECT
+        *,
+        SUM(
+            CASE 
+                WHEN prev_end IS NULL OR start_time - prev_end > INTERVAL '9 hours' 
+                THEN 1 ELSE 0 
+            END
+        ) OVER (PARTITION BY user_id ORDER BY start_time) AS group_id
+    FROM ordered_sessions
+)
+SELECT
+    employee_name,
+    MIN(start_time) AS start_time,
+    MAX(end_time) AS last_end_time,
+    SUM(EXTRACT(EPOCH FROM (end_time - start_time))/3600) AS hours_worked
+FROM session_groups
+GROUP BY employee_name, group_id
+ORDER BY employee_name, start_time;
       `,
     );
     return NextResponse.json({ sessions: rows });
