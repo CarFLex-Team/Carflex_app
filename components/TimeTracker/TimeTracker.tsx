@@ -9,7 +9,11 @@ export default function TimeTracker() {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
   useEffect(() => {
-    if (!session?.user?.id || session.user.role !== "TEAM") return;
+    if (
+      !session?.user?.id ||
+      (session.user.role !== "TEAM" && session.user.role !== "CALLER")
+    )
+      return;
     console.log("TimeTracker initialized for user:", session.user.id);
     console.log("Session data:", sessionStorage.getItem("tabSessionStarted"));
     let startTime: Date;
