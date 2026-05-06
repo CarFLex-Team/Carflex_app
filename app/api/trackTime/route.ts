@@ -80,7 +80,7 @@ SELECT
     SUM(EXTRACT(EPOCH FROM (end_time - start_time))/3600) AS hours_worked
 FROM session_groups
 GROUP BY employee_name, group_id
-ORDER BY employee_name, start_time;
+ORDER BY  start_time DESC ,employee_name;
       `,
     );
     return NextResponse.json({ sessions: rows });
