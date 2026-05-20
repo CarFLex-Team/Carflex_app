@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const limitParam = url.searchParams.get("limit") || "50";
-    const limit = Math.max(1, Math.min(500, Number(limitParam) || 50));
+    const limit = 50
 
     const { rows } = await db.query<allRow>(
       `
