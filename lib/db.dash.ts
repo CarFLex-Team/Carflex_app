@@ -1,23 +1,19 @@
 import "server-only";
+// dashboard db.ts
 import { Pool } from "pg";
 
 declare global {
-  // eslint-disable-next-line no-var
-  var __pgDashPool__: Pool | undefined;
+  var pgDashPool: Pool | undefined;
 }
 
-const pool =
-  global.__pgDashPool__ ??
-  new Pool({
-    connectionString: process.env.DATABASEDASH_URL,
-    ssl: { rejectUnauthorized: false }, // required for Supabase
-    max: 20, // maximum number of connections in the pool
-    idleTimeoutMillis: 30000, // close idle connections after 30 seconds
-    connectionTimeoutMillis: 20000, // 10 seconds
-  });
+const dashPool = global.pgDashPool ?? new Pool({
+  connectionString: process.env.DATABASEDASH_URL,
+  ssl: { rejectUnauthorized: false },
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 20000,
+});
 
-if (process.env.NODE_ENV === "development") {
-  global.__pgDashPool__ = pool;
-}
+if (!global.pgDashPool) global.pgDashPool = dashPool;
 
-export default pool;
+export default dashPool;
