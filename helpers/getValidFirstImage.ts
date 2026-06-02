@@ -49,15 +49,8 @@ async function getValidFirstImage(
     .replace(/\.jpg\/.*$/, ".jpg")
     .replace("kijijica-200", "kijijica-800");
 
-  // Optional validation (can be removed for speed)
-  try {
-    const res = await fetch(url, { method: "HEAD" });
-    if (res.ok) return url;
-  } catch {
-    // ignore
-  }
 
-  return "";
+  return url;
 }
 
 export default getValidFirstImage;
